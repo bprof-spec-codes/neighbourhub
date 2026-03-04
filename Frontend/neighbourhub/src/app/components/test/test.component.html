@@ -1,0 +1,2 @@
+<h1>If the response is "Test" then everything works</h1>
+<h2 *ngFor="let test of (testService.testData$ | async)">Response: {{ test.testName }}</h2>
