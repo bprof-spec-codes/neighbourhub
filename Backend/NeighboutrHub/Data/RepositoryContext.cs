@@ -7,6 +7,7 @@ namespace Data;
 public class RepositoryContext : IdentityDbContext
 {
     public DbSet<Test> Tests { get; set; }
+    public DbSet<User> Users { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
