@@ -1,0 +1,25 @@
+﻿using Entities.Helpers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Entities.Models
+{
+    public class User
+    {
+        [StringLength(50)]
+        public string FirstName { get; set; } = string.Empty;
+
+        [StringLength(50)]
+        public string LastName { get; set; } = string.Empty;
+        [StringLength(50)]
+        public string apartmentNumber { get; set; } = string.Empty;
+        [StringLength(50)]
+        public string parkingSpace { get; set; } = string.Empty;
+
+        //public FileContent Image { get; set; } = null!;
+    }
+}
