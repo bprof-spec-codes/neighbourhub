@@ -1,0 +1,58 @@
+<aside class="sidebar" [class.sidebar-collapsed]="collapsed">
+  <header class="sidebar-header">
+    <div class="brand" [class.justify-content-center]="collapsed">
+      <div
+        class="brand-icon"
+        [class.brand-icon-clickable]="collapsed"
+        (click)="collapsed && toggleSidebar()"
+        [attr.title]="collapsed ? 'Open sidebar' : null"
+      >
+        <i class="bi bi-buildings-fill"></i>
+      </div>
+
+      <div *ngIf="!collapsed" class="brand-text">
+        <h5>BuildingHub</h5>
+        <small>Property Management</small>
+      </div>
+
+      <button
+        *ngIf="!collapsed"
+        type="button"
+        class="sidebar-toggle"
+        (click)="toggleSidebar()"
+        aria-label="Close sidebar"
+        title="Close sidebar"
+      >
+        <i class="bi bi-chevron-left"></i>
+      </button>
+    </div>
+  </header>
+
+  <nav class="sidebar-nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+      class="nav-link-item"
+      [class.justify-content-center]="collapsed"
+      [title]="item.label"
+    >
+      <i [class]="item.iconClass + ' nav-icon'"></i>
+      <span *ngIf="!collapsed">{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <footer class="sidebar-footer">
+    <button class="profile-button" [class.justify-content-center]="collapsed">
+      <div class="profile-avatar">
+        JR
+      </div>
+
+      <div *ngIf="!collapsed" class="profile-details">
+        <div class="profile-name">John Resident</div>
+        <small>Apt 4B</small>
+      </div>
+    </button>
+  </footer>
+</aside>
