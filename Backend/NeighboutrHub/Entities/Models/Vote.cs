@@ -34,6 +34,8 @@ namespace Entities.Models
         //public User CreatedByUser { get; set; } = null!;
 
         public ICollection<VoteEntry> Entries { get; set; } = new List<VoteEntry>();
+
+        public bool IsActive => Deadline > DateTime.Now;
     }
 }
 
