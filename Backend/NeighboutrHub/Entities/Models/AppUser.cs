@@ -27,7 +27,5 @@ namespace Entities.Models
         public List<string> ApartmentNumber { get; set; } = new List<string>();
         [StringLength(50)]
         public List<string> ParkingSpace { get; set; } = new List<string>();
-
-
     }
 }
