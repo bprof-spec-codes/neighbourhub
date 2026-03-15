@@ -31,6 +31,7 @@ namespace Endpoint.Controllers
             if (await userManager.FindByEmailAsync(dto.Email) != null) throw new ArgumentException("Az emalcím már létezik!");
 
             if (!(IsValidEmail(dto.Email))) throw new ArgumentException("Az email cím formátuma nem megfelelő!");
+            if (!(IsValidPhoneNumber(dto.PhoneNumber))) throw new ArgumentException("A telefonszám formátuma nem megfelelő!");
 
             var user = new AppUser();
             user.FirstName = dto.FirstName;
@@ -56,6 +57,15 @@ namespace Endpoint.Controllers
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
         }
+        private bool IsValidPhoneNumber(string phoneNumber)
+        {
+            // +36301234567, 06201234567, +36-70-123-4567
+            string pattern = @"^(\+36|06|36)?[\s\-]?(20|30|31|70|1|[2-9][0-9])[\s\-]?[0-9]{3}[\s\-]?[0-9]{3,4}$";
 
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return false;
+
+            return Regex.IsMatch(phoneNumber, pattern, RegexOptions.IgnoreCase);
+        }
     }
 }
