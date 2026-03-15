@@ -30,7 +30,7 @@ namespace Endpoint.Controllers
 
             if (await userManager.FindByEmailAsync(dto.Email) != null) throw new ArgumentException("Az emalcím már létezik!");
 
-            
+            if (!(IsValidEmail(dto.Email))) throw new ArgumentException("Az email cím formátuma nem megfelelő!");
 
             var user = new AppUser();
             user.FirstName = dto.FirstName;
@@ -50,6 +50,12 @@ namespace Endpoint.Controllers
 
         }
 
-        
+
+        private bool IsValidEmail(string email)
+        {
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
+        }
+
     }
 }
