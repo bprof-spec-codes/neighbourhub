@@ -40,5 +40,11 @@ public class RepositoryContext : IdentityDbContext<AppUser>
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                 v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)
             );
+
+        builder.Entity<VoteEntry>()
+        .HasOne(e => e.Vote)
+        .WithMany(v => v.Entries)
+        .HasForeignKey(e => e.VoteId)
+        .OnDelete(DeleteBehavior.Restrict);
     }
 }

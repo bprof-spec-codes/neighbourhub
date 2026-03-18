@@ -28,10 +28,10 @@ namespace Entities.Models
 
         public DateTime Deadline { get; set; }
 
-        [StringLength(50)]
+        [StringLength(450)]
         public string CreatedByUserId { get; set; } = string.Empty;
 
-        //public User CreatedByUser { get; set; } = null!;
+        public AppUser CreatedByUser { get; set; } = null!;
 
         public ICollection<VoteEntry> Entries { get; set; } = new List<VoteEntry>();
 

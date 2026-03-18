@@ -25,14 +25,14 @@ namespace Entities.Models
 
         public Vote Vote { get; set; } = null!;
 
-        [StringLength(50)]
+        [StringLength(450)]
         public string UserId { get; set; } = string.Empty;
 
-        //public User User { get; set; } = null!;
+        public AppUser User { get; set; } = null!;
 
         public VoteOption Option { get; set; }
 
-        public decimal Weight { get; set; } = 1;
+        
     }
 }
 
