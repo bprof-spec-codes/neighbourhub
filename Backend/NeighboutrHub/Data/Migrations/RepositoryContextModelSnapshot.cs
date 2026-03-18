@@ -22,6 +22,7 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+<<<<<<< HEAD
             modelBuilder.Entity("Entities.Models.Test", b =>
                 {
                     b.Property<string>("Id")
@@ -94,6 +95,8 @@ namespace Data.Migrations
                     b.ToTable("VoteEntries");
                 });
 
+=======
+>>>>>>> develop
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")

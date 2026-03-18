@@ -1,1 +1,10 @@
-<app-test></app-test>
+<div class="app-layout">
+  <app-navbar
+    class="app-sidebar"
+    [collapsed]="sidebarCollapsed"
+    (collapsedChange)="sidebarCollapsed = $event"
+  ></app-navbar>
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
