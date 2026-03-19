@@ -27,4 +27,10 @@ public class AnnouncementController : ControllerBase
     {
         return _announcementLogic.GetAnnouncements();
     }
+
+    [HttpDelete("{id}")]
+    public void DeleteAnnouncementById(string id)
+    {
+        _announcementLogic.DeleteAnnouncementById(id);
+    }
 }

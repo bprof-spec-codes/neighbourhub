@@ -27,4 +27,9 @@ public class AnnouncementLogic
     {
         return _announcementRepository.GetAll();
     }
+
+    public void DeleteAnnouncementById(string id)
+    {
+        _announcementRepository.DeleteById(id);
+    }
 }
