@@ -22,4 +22,9 @@ public class AnnouncementLogic
         var announcementToAdd = _dtoProvider.Mapper.Map<Announcement>(dto);
         _announcementRepository.Add(announcementToAdd);
     }
+
+    public IEnumerable<Announcement> GetAnnouncements()
+    {
+        return _announcementRepository.GetAll();
+    }
 }
