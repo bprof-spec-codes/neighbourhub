@@ -7,11 +7,11 @@ namespace Data;
 
 public class RepositoryContext : IdentityDbContext<AppUser>
 {
-    
+    public DbSet<ErrorReport> ErrorReports { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
-        
+
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -36,5 +36,23 @@ public class RepositoryContext : IdentityDbContext<AppUser>
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                 v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)
             );
+
+        builder.Entity<ErrorReport>()
+            .HasOne(e => e.ReportedBy)
+            .WithMany()
+            .HasForeignKey(e => e.ReportedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<ErrorReport>()
+            .Property(e => e.Category)
+            .HasConversion<string>();
+
+        builder.Entity<ErrorReport>()
+            .Property(e => e.Priority)
+            .HasConversion<string>();
+
+        builder.Entity<ErrorReport>()
+            .Property(e => e.Status)
+            .HasConversion<string>();
     }
 }
