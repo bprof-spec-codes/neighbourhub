@@ -2,22 +2,24 @@ using Data;
 using Entities.Dtos.ErrorReport;
 using Entities.Enums;
 using Entities.Models;
-using Microsoft.EntityFrameworkCore;
+using Logic.Helper;
 
 namespace Logic.Logic;
 
 public class ErrorReportLogic
 {
-    private readonly Repository<ErrorReport> repository;
+    private readonly Repository<ErrorReport> _repository;
+    private readonly DtoProvider _dtoProvider;
 
-    public ErrorReportLogic(Repository<ErrorReport> repository)
+    public ErrorReportLogic(Repository<ErrorReport> repository, DtoProvider dtoProvider)
     {
-        this.repository = repository;
+        _repository = repository;
+        _dtoProvider = dtoProvider;
     }
 
     public IEnumerable<ErrorReportListDto> GetAll(string? status, string? category, string? priority)
     {
-        var query = repository.GetAll().AsQueryable();
+        var query = _repository.GetAll().AsQueryable();
 
         if (!string.IsNullOrEmpty(status) && Enum.TryParse<ErrorStatus>(status, true, out var s))
             query = query.Where(e => e.Status == s);
@@ -28,23 +30,13 @@ public class ErrorReportLogic
         if (!string.IsNullOrEmpty(priority) && Enum.TryParse<ErrorPriority>(priority, true, out var p))
             query = query.Where(e => e.Priority == p);
 
-        return query
-            .OrderByDescending(e => e.ReportedDate)
-            .Select(e => new ErrorReportListDto
-            {
-                Id = e.Id,
-                Title = e.Title,
-                Category = e.Category.ToString(),
-                Priority = e.Priority.ToString(),
-                Status = e.Status.ToString(),
-                ScheduledRepairDate = e.ScheduledRepairDate
-            })
-            .ToList();
+        var list = query.OrderByDescending(e => e.ReportedDate).ToList();
+        return _dtoProvider.Mapper.Map<List<ErrorReportListDto>>(list);
     }
 
     public object GetSummary()
     {
-        var all = repository.GetAll();
+        var all = _repository.GetAll();
         return new
         {
             Total = all.Count(),
