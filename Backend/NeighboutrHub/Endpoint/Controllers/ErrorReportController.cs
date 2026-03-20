@@ -37,4 +37,28 @@ public class ErrorReportController : ControllerBase
     {
         return _errorReportLogic.GetSummary();
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(string id)
+    {
+        var result = _errorReportLogic.GetById(id);
+        if (result == null) return NotFound();
+        return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(string id, ErrorReportUpdateDto dto)
+    {
+        var success = _errorReportLogic.Update(id, dto);
+        if (!success) return NotFound();
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(string id)
+    {
+        var success = _errorReportLogic.Delete(id);
+        if (!success) return NotFound();
+        return Ok();
+    }
 }
