@@ -41,12 +41,16 @@ namespace Logic.Logic
 
         public IEnumerable<VoteDto> GetActive()
         {
-            return voteRepository.GetAll().Where(v => v.IsActive).Select(ToDto);
+            return voteRepository.GetAll()
+                .Where(v => v.Deadline > DateTime.Now)
+                .Select(ToDto);
         }
 
         public IEnumerable<VoteDto> GetInactive() 
         {
-            return voteRepository.GetAll().Where(v => !v.IsActive).Select(ToDto);
+            return voteRepository.GetAll()
+                .Where(v => v.Deadline <= DateTime.Now)
+                .Select(ToDto);
         }
 
         public void Delete(string id)
