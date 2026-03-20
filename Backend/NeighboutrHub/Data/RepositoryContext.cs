@@ -8,6 +8,7 @@ namespace Data;
 public class RepositoryContext : IdentityDbContext<AppUser>
 {
     public DbSet<ErrorReport> ErrorReports { get; set; }
+    public DbSet<Announcement> Announcements { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
