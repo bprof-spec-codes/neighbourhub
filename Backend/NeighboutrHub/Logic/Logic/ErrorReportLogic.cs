@@ -34,6 +34,14 @@ public class ErrorReportLogic
         return _dtoProvider.Mapper.Map<List<ErrorReportListDto>>(list);
     }
 
+    public string AddErrorReport(ErrorReportCreateDto dto, string userId)
+    {
+        var errorReport = _dtoProvider.Mapper.Map<ErrorReport>(dto);
+        errorReport.ReportedById = userId;
+        _repository.Add(errorReport);
+        return errorReport.Id;
+    }
+
     public object GetSummary()
     {
         var all = _repository.GetAll();

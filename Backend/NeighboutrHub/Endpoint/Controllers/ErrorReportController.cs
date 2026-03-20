@@ -21,6 +21,17 @@ public class ErrorReportController : ControllerBase
         return _errorReportLogic.GetAll(status, category, priority);
     }
 
+    [HttpPost]
+    public IActionResult AddErrorReport(ErrorReportCreateDto dto)
+    {
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+            return Unauthorized();
+
+        var id = _errorReportLogic.AddErrorReport(dto, userId);
+        return Ok(new { id });
+    }
+
     [HttpGet("summary")]
     public object GetSummary()
     {
