@@ -1,4 +1,5 @@
 ﻿using Data;
+using Entities.Dtos.Vote;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -18,19 +19,34 @@ namespace Logic.Logic
             this.voteRepository = voteRepository;
         }
 
-        public IEnumerable<Vote> GetAll()
+        private VoteDto ToDto(Vote vote)
         {
-            return voteRepository.GetAll();
+            return new VoteDto
+            {
+                Id = vote.Id,
+                Title = vote.Title,
+                Description = vote.Description,
+                Deadline = vote.Deadline,
+                IsActive = vote.IsActive,
+                YesCount = vote.Entries.Count(e => e.Option == VoteOption.Yes),
+                NoCount = vote.Entries.Count(e => e.Option == VoteOption.No),
+                AbstainCount = vote.Entries.Count(e => e.Option == VoteOption.Abstain)
+            };
         }
 
-        public IEnumerable<Vote> GetActive()
+        public IEnumerable<VoteDto> GetAll()
         {
-            return voteRepository.GetAll().Where(v => v.IsActive);
+            return voteRepository.GetAll().Select(ToDto);
         }
 
-        public IEnumerable<Vote> GetInactive() 
+        public IEnumerable<VoteDto> GetActive()
         {
-            return voteRepository.GetAll().Where(v => !v.IsActive);
+            return voteRepository.GetAll().Where(v => v.IsActive).Select(ToDto);
+        }
+
+        public IEnumerable<VoteDto> GetInactive() 
+        {
+            return voteRepository.GetAll().Where(v => !v.IsActive).Select(ToDto);
         }
 
         public void Delete(string id)
