@@ -1,4 +1,5 @@
 using Entities.Dtos.Announcement;
+using Entities.Models;
 using Logic.Logic;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,5 +20,11 @@ public class AnnouncementController : ControllerBase
     public void AddAnnouncement(AnnouncementCreateDto dto)
     {
         _announcementLogic.AddAnnouncement(dto);
+    }
+
+    [HttpGet]
+    public IEnumerable<Announcement> GetAnnouncements()
+    {
+        return _announcementLogic.GetAnnouncements();
     }
 }
