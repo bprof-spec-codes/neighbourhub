@@ -1,6 +1,7 @@
 using Data;
 using Entities.Helpers;
 using Entities.Models;
+using Logic.Logic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,7 @@ public class Program
         });
 
         builder.Services.AddTransient(typeof(Repository<>));
+        builder.Services.AddTransient<VoteLogic>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
