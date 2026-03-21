@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-    public enum VoteOption { Yes, No, Abstain }
+   
     public class VoteEntry : IIdEntity
     {
         public VoteEntry()
