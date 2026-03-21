@@ -15,4 +15,8 @@ export class AnnouncementBackendService {
   public getAnnouncements(): Observable<Announcement[]> {
     return this.http.get<Announcement[]>(`${this.baseApiUrl}/Announcement`);
   }
+
+  public deleteAnnouncementById(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseApiUrl}/Announcement/${id}`);
+  }
 }

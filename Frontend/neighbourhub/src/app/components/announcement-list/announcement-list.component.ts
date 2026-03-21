@@ -14,6 +14,8 @@ export class AnnouncementListComponent implements OnInit {
   protected announcements$ = new Observable<Announcement[]>();
   protected isDeleteModalOpen = false;
 
+  private idToDelete: string = "";
+
   constructor(private announcementService: AnnouncementService) { }
 
   public ngOnInit(): void {
@@ -29,8 +31,9 @@ export class AnnouncementListComponent implements OnInit {
     alert('Add Announcement functionality is not implemented yet.');
   }
 
-  protected openDeleteModal(): void {
+  protected openDeleteModal(id: string): void {
     this.isDeleteModalOpen = true;
+    this.idToDelete = id;
   }
 
   protected closeDeleteModal(): void {
@@ -38,8 +41,12 @@ export class AnnouncementListComponent implements OnInit {
   }
 
   protected deleteAnnouncement(): void {
+    if (this.idToDelete === "") {
+      console.error('No announcement ID specified for deletion.');
+      return;
+    }
+    this.announcementService.deleteAnnouncement(this.idToDelete);
     this.closeDeleteModal();
-    alert('Delete Announcement functionality is not implemented yet.');
   }
 
   protected getCategoryText(category: Announcement['category']): string {
