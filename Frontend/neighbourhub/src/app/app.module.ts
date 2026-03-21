@@ -7,12 +7,14 @@ import { TestComponent } from './components/test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponent,
-    DashboardComponent
+    DashboardComponent,
+    AnnouncementListComponent
   ],
   imports: [
     BrowserModule,
