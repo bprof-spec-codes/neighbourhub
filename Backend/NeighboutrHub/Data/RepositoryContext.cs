@@ -7,6 +7,7 @@ namespace Data;
 
 public class RepositoryContext : IdentityDbContext<AppUser>
 {
+    DbSet<Announcement> Announcements { get; set; }
     
 
 
