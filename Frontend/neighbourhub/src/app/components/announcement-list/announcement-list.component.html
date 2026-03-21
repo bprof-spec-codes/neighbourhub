@@ -22,9 +22,14 @@
 					<div class="card-body p-4">
 						<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
 							<h2 class="h5 mb-0 announcement-title">{{ announcement.title }}</h2>
-							<span class="badge rounded-pill announcement-badge" [ngClass]="getCategoryBadgeClass(announcement.category)">
-								{{ getCategoryText(announcement.category) }}
-							</span>
+							<span class="badge-close">
+                                <span class="badge rounded-pill announcement-badge" [ngClass]="getCategoryBadgeClass(announcement.category)">
+                                    {{ getCategoryText(announcement.category) }}
+                                </span>
+								<button type="button" class="p-0 close-btn" (click)="openDeleteModal()">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                            </span>
 						</div>
 
 						<p class="text-muted small mb-3 announcement-date">

@@ -4,13 +4,15 @@
 	border-left: 0.3rem solid $green;
 }
 
-.announcement-title {
-	color: #212529;
+.announcement-content {
+	color: $dark-gray;
+	line-height: 1.6;
 }
 
-.announcement-content {
-	color: #495057;
-	line-height: 1.6;
+.badge-close {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
 }
 
 .announcement-badge {
@@ -36,6 +38,26 @@
 .badge-general {
 	background-color: $green;
 	color: $white;
+}
+
+.close-btn {
+	line-height: 1;
+	color: $light-gray;
+	border: 0;
+	background: transparent;
+}
+
+.close-btn.btn:focus,
+.close-btn.btn:focus-visible,
+.close-btn.btn:active,
+.close-btn.btn.show {
+	outline: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+
+.close-btn .bi-x {
+	font-size: 1.1rem;
 }
 
 .category-maintenance {

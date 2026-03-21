@@ -28,6 +28,10 @@ export class AnnouncementListComponent implements OnInit {
     alert('Add Announcement functionality is not implemented yet.');
   }
 
+  protected openDeleteModal(): void {
+    alert('Delete Announcement functionality is not implemented yet.');
+  }
+
   protected getCategoryText(category: Announcement['category']): string {
     if (typeof category === 'number') {
       return AnnouncementCategory[category] ?? 'General';
