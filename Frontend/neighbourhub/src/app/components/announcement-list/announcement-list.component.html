@@ -1,1 +1,41 @@
-<p>announcement-list works!</p>
+<section class="container-fluid py-4 announcements-page ps-5 pe-5">
+	<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+		<div>
+			<h1 class="h2 mb-1">Announcements</h1>
+			<p class="text-muted mb-0">Stay updated with building news and updates.</p>
+		</div>
+
+		<button type="button" class="btn btn-primary ps-3 pe-3" (click)="addAnnouncement()">
+			New Announcement
+		</button>
+	</div>
+
+	<ng-container *ngIf="announcements$ | async as announcements">
+		<div *ngIf="announcements.length === 0" class="alert alert-light border" role="status">
+			<i class="bi bi-info-circle-fill me-2"></i>
+			No announcements yet.
+		</div>
+
+		<div class="row g-3" *ngIf="announcements.length > 0">
+			<div class="col-12" *ngFor="let announcement of announcements">
+				<article class="card shadow-sm announcement-card" [ngClass]="getCategoryCardClass(announcement.category)">
+					<div class="card-body p-4">
+						<div class="d-flex flex-wrap align-items-start justify-content-between gap-2 mb-2">
+							<h2 class="h5 mb-0 announcement-title">{{ announcement.title }}</h2>
+							<span class="badge rounded-pill announcement-badge" [ngClass]="getCategoryBadgeClass(announcement.category)">
+								{{ getCategoryText(announcement.category) }}
+							</span>
+						</div>
+
+						<p class="text-muted small mb-3 announcement-date">
+							<i class="bi bi-calendar-event me-1"></i>
+							{{ announcement.createdDate | date: 'yyyy.MM.dd HH:mm' }}
+						</p>
+
+						<p class="mb-0 announcement-content">{{ announcement.content }}</p>
+					</div>
+				</article>
+			</div>
+		</div>
+	</ng-container>
+</section>

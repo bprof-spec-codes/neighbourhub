@@ -1,0 +1,55 @@
+@import "../../../styles/colors";
+
+.announcement-card {
+	border-left: 0.3rem solid $green;
+}
+
+.announcement-title {
+	color: #212529;
+}
+
+.announcement-content {
+	color: #495057;
+	line-height: 1.6;
+}
+
+.announcement-badge {
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+}
+
+.badge-maintenance {
+	background-color: $orange;
+	color: $white;
+}
+
+.badge-event {
+	background-color: $blue;
+	color: $white;
+}
+
+.badge-policy {
+	background-color: $red;
+	color: $white;
+}
+
+.badge-general {
+	background-color: $green;
+	color: $white;
+}
+
+.category-maintenance {
+	border-left-color: $orange;
+}
+
+.category-event {
+	border-left-color: $blue;
+}
+
+.category-policy {
+	border-left-color: $red;
+}
+
+.category-general {
+	border-left-color: $green;
+}
