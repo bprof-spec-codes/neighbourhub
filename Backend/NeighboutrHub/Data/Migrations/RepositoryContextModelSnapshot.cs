@@ -22,8 +22,7 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-<<<<<<< HEAD
-=======
+
             modelBuilder.Entity("Entities.Models.Announcement", b =>
                 {
                     b.Property<string>("Id")
@@ -51,7 +50,7 @@ namespace Data.Migrations
                     b.ToTable("Announcements");
                 });
 
->>>>>>> origin/develop
+
             modelBuilder.Entity("Entities.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -142,7 +141,7 @@ namespace Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-<<<<<<< HEAD
+
             modelBuilder.Entity("Entities.Models.Vote", b =>
                 {
                     b.Property<string>("Id")
@@ -202,8 +201,7 @@ namespace Data.Migrations
                     b.ToTable("VoteEntries");
                 });
 
-=======
->>>>>>> origin/develop
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
