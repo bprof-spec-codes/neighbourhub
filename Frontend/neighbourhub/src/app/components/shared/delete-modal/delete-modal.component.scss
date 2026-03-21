@@ -1,0 +1,45 @@
+.delete-modal-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1200;
+	display: grid;
+	place-items: center;
+	padding: 1rem;
+	background: rgba(15, 23, 42, 0.55);
+	backdrop-filter: blur(1.5px);
+}
+
+.delete-modal-card {
+	width: min(100%, 28rem);
+	border-radius: 0.85rem;
+	background: #ffffff;
+	box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+	border: 1px solid #e9ecef;
+	overflow: hidden;
+}
+
+.delete-modal-header,
+.delete-modal-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	padding: 1rem 1.2rem;
+}
+
+.delete-modal-header {
+	border-bottom: 1px solid #e9ecef;
+}
+
+.delete-modal-body {
+	min-height: 100px;
+	display: flex;
+	align-items: center;
+	padding: 1rem 1.2rem;
+	color: #495057;
+}
+
+.delete-modal-footer {
+	justify-content: flex-end;
+	border-top: 1px solid #e9ecef;
+}

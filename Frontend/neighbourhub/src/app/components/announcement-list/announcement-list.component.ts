@@ -12,6 +12,7 @@ import { AnnouncementCategory } from '../../entities/enums/announcement-category
 })
 export class AnnouncementListComponent implements OnInit {
   protected announcements$ = new Observable<Announcement[]>();
+  protected isDeleteModalOpen = false;
 
   constructor(private announcementService: AnnouncementService) { }
 
@@ -29,6 +30,15 @@ export class AnnouncementListComponent implements OnInit {
   }
 
   protected openDeleteModal(): void {
+    this.isDeleteModalOpen = true;
+  }
+
+  protected closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+  }
+
+  protected deleteAnnouncement(): void {
+    this.closeDeleteModal();
     alert('Delete Announcement functionality is not implemented yet.');
   }
 

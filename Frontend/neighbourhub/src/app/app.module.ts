@@ -7,12 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
+import { DeleteModalComponent } from './components/shared/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    AnnouncementListComponent
+    AnnouncementListComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

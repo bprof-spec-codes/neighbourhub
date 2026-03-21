@@ -44,3 +44,10 @@
 		</div>
 	</ng-container>
 </section>
+
+<app-delete-modal
+    [isOpen]="isDeleteModalOpen"
+    [content]="'Are you sure you want to delete this announcement?'"
+    (confirm)="deleteAnnouncement()"
+    (cancel)="closeDeleteModal()"
+/>
