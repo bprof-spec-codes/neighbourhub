@@ -3,6 +3,7 @@ import { AnnouncementBackendService } from '../backend/announcement-backend.serv
 import { BehaviorSubject } from 'rxjs';
 import { Announcement } from '../entities/models/announcement.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { AnnouncementAddDto } from '../entities/dtos/announcement-add-dto.model';
 
 @UntilDestroy()
 @Injectable({
@@ -29,6 +30,15 @@ export class AnnouncementService {
         this.loadAnnouncements();
       },
       error: (err) => console.error('Failed to delete announcement', err)
+    });
+  }
+
+  public addAnnouncement(announcementToAdd: AnnouncementAddDto): void {
+    this.announcementBackendService.addAnnouncement(announcementToAdd).pipe(untilDestroyed(this)).subscribe({
+      next: () => {
+        this.loadAnnouncements();
+      },
+      error: (err) => console.error('Failed to create announcement', err)
     });
   }
 }

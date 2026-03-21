@@ -3,6 +3,7 @@ import { AnnouncementService } from '../../services/announcement.service';
 import { Observable } from 'rxjs';
 import { Announcement } from '../../entities/models/announcement.model';
 import { AnnouncementCategory } from '../../entities/enums/announcement-category.model';
+import { AnnouncementAddDto } from '../../entities/dtos/announcement-add-dto.model';
 
 @Component({
   selector: 'app-announcement-list',
@@ -12,6 +13,7 @@ import { AnnouncementCategory } from '../../entities/enums/announcement-category
 })
 export class AnnouncementListComponent implements OnInit {
   protected announcements$ = new Observable<Announcement[]>();
+  protected isAddModalOpen = false;
   protected isDeleteModalOpen = false;
 
   private idToDelete: string = "";
@@ -27,8 +29,17 @@ export class AnnouncementListComponent implements OnInit {
     this.announcements$ = this.announcementService.announcements$;
   }
 
-  protected addAnnouncement(): void {
-    alert('Add Announcement functionality is not implemented yet.');
+  protected openAddModal(): void {
+    this.isAddModalOpen = true;
+  }
+
+  protected closeAddModal(): void {
+    this.isAddModalOpen = false;
+  }
+
+  protected addAnnouncement(formValue: AnnouncementAddDto): void {
+    this.announcementService.addAnnouncement(formValue);
+    this.closeAddModal();
   }
 
   protected openDeleteModal(id: string): void {

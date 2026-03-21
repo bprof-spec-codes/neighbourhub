@@ -3,6 +3,8 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Announcement } from '../entities/models/announcement.model';
+import { AnnouncementCategory } from '../entities/enums/announcement-category.model';
+import { AnnouncementAddDto } from '../entities/dtos/announcement-add-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +20,9 @@ export class AnnouncementBackendService {
 
   public deleteAnnouncementById(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseApiUrl}/Announcement/${id}`);
+  }
+
+  public addAnnouncement(announcementToAdd: AnnouncementAddDto): Observable<Announcement> {
+    return this.http.post<Announcement>(`${this.baseApiUrl}/Announcement`, announcementToAdd);
   }
 }

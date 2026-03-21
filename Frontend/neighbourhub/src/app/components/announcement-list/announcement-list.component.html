@@ -5,7 +5,7 @@
 			<p class="text-muted mb-0">Stay updated with building news and updates.</p>
 		</div>
 
-		<button type="button" class="btn btn-primary ps-3 pe-3" (click)="addAnnouncement()">
+		<button type="button" class="btn btn-primary ps-3 pe-3" (click)="openAddModal()">
 			New Announcement
 		</button>
 	</div>
@@ -44,6 +44,12 @@
 		</div>
 	</ng-container>
 </section>
+
+<app-announcement-add-modal
+	[isOpen]="isAddModalOpen"
+	(add)="addAnnouncement($event)"
+	(close)="closeAddModal()"
+/>
 
 <app-delete-modal
     [isOpen]="isDeleteModalOpen"

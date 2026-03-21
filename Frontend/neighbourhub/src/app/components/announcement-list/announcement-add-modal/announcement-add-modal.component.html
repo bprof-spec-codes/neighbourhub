@@ -1,0 +1,62 @@
+<div *ngIf="isOpen" class="announcement-add-modal-overlay" (click)="onClose()">
+	<div class="announcement-add-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+		<div class="announcement-add-modal-header">
+			<h5 class="mb-0">Add Announcement</h5>
+			<button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</div>
+
+		<form [formGroup]="form" (ngSubmit)="onSubmit()" class="announcement-add-modal-body">
+			<div class="mb-3">
+				<label class="form-label" for="announcement-title">Title</label>
+				<input
+					id="announcement-title"
+					type="text"
+					class="form-control"
+					[class.is-invalid]="isControlInvalid('title')"
+					formControlName="title"
+				/>
+				<div class="invalid-feedback d-block" *ngIf="isControlInvalid('title')">
+					{{ getErrorText('title') }}
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label" for="announcement-content">Content</label>
+				<textarea
+					id="announcement-content"
+					rows="4"
+					class="form-control"
+					[class.is-invalid]="isControlInvalid('content')"
+					formControlName="content"
+				></textarea>
+				<div class="invalid-feedback d-block" *ngIf="isControlInvalid('content')">
+					{{ getErrorText('content') }}
+				</div>
+			</div>
+
+			<div class="mb-4">
+				<label class="form-label" for="announcement-category">Category</label>
+				<select
+					id="announcement-category"
+					class="form-select"
+					[class.is-invalid]="isControlInvalid('category')"
+					formControlName="category"
+				>
+					<option *ngFor="let category of categoryOptions" [ngValue]="category">
+						{{ getCategoryText(category) }}
+					</option>
+				</select>
+				<div class="invalid-feedback d-block" *ngIf="isControlInvalid('category')">
+					{{ getErrorText('category') }}
+				</div>
+			</div>
+
+			<div class="announcement-add-modal-footer">
+				<button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+				<button type="submit" class="btn btn-primary">Save</button>
+			</div>
+		</form>
+	</div>
+</div>

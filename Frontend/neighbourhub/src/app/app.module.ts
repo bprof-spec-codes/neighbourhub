@@ -8,19 +8,23 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 import { DeleteModalComponent } from './components/shared/delete-modal/delete-modal.component';
+import { AnnouncementAddModalComponent } from './components/announcement-list/announcement-add-modal/announcement-add-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     AnnouncementListComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    AnnouncementAddModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NavbarComponent
+    NavbarComponent,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
