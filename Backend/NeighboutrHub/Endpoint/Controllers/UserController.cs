@@ -33,15 +33,27 @@ namespace Endpoint.Controllers
             if (!(IsValidEmail(dto.Email))) throw new ArgumentException("Az email cím formátuma nem megfelelő!");
             if (!(IsValidPhoneNumber(dto.PhoneNumber))) throw new ArgumentException("A telefonszám formátuma nem megfelelő!");
 
-            var user = new AppUser();
-            user.FirstName = dto.FirstName;
-            user.LastName = dto.LastName;
-            user.UserName = dto.Email.Split('@')[0];
-            user.Email = dto.Email;
+            var user = new AppUser()
+            {
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                UserName = dto.Email.Split('@')[0],
+                Email = dto.Email,
+                PhoneNumber = dto.PhoneNumber,
+                // ITT MÁSOLJUK ÁT A LISTÁKAT:
+                ApartmentNumber = dto.ApartmentNumber ?? new List<string>()
+            };
 
-            
+
+
 
             var result = await userManager.CreateAsync(user, dto.Password);
+            if (!result.Succeeded)
+            {
+                // Az Identity jelszó szabályai miatt nem sikerül (kell kisbetű/nagybetű/szám)
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                throw new ArgumentException("A jelszónak tartalmaznia kell legalább egy számot és egy nagybetűt!");
+            }
 
             if (userManager.Users.Count() == 1)
             {
