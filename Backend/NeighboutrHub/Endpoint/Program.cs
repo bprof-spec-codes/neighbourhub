@@ -1,6 +1,8 @@
 using Data;
 using Entities.Helpers;
 using Entities.Models;
+using Logic.Helper;
+using Logic.Logic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +47,9 @@ public class Program
         });
 
         builder.Services.AddTransient(typeof(Repository<>));
+        builder.Services.AddTransient<DtoProvider>();
+        builder.Services.AddTransient<AnnouncementLogic>();
+        builder.Services.AddTransient<ErrorReportLogic>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
