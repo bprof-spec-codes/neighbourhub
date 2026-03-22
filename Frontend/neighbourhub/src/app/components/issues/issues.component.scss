@@ -1,0 +1,144 @@
+@import "../../../styles/colors";
+
+// Summary cards
+.summary-card {
+  background: $white;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: $light-gray;
+}
+
+.summary-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.summary-total {
+  border-left-color: #dee2e6;
+}
+
+.summary-open {
+  border-left-color: $red;
+}
+
+.summary-in-progress {
+  border-left-color: $orange;
+}
+
+.summary-resolved {
+  border-left-color: $green;
+}
+
+.total-value {
+  color: #212529;
+}
+
+.open-value {
+  color: $red;
+}
+
+.in-progress-value {
+  color: $orange;
+}
+
+.resolved-value {
+  color: $green;
+}
+
+// Issues table
+.issues-table-wrapper {
+  background: $white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.issues-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $light-gray;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f1f3f5;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  tbody td {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    color: #212529;
+    vertical-align: middle;
+  }
+}
+
+.issue-title {
+  font-weight: 500;
+}
+
+.repair-date {
+  color: #212529;
+}
+
+// Priority colors
+.priority-high {
+  color: $red;
+  font-weight: 600;
+}
+
+.priority-medium {
+  color: $orange;
+  font-weight: 600;
+}
+
+.priority-low {
+  color: #0d9488;
+  font-weight: 600;
+}
+
+// Status colors
+.status-open {
+  color: $red;
+  font-weight: 600;
+}
+
+.status-in-progress {
+  color: $orange;
+  font-weight: 600;
+}
+
+.status-resolved {
+  color: $green;
+  font-weight: 600;
+}
+
+// View link
+.view-link {
+  color: #0d9488;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

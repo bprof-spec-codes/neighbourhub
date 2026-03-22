@@ -1,0 +1,83 @@
+<section class="container-fluid py-4 issues-page ps-5 pe-5">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="h2 mb-1">Issues</h1>
+      <p class="text-muted mb-0">Manage reported problems and repairs</p>
+    </div>
+
+    <button type="button" class="btn btn-primary ps-3 pe-3" (click)="openAddModal()">
+      + New Issue
+    </button>
+  </div>
+
+  <ng-container *ngIf="summary$ | async as summary">
+    <div class="row g-3 mb-4">
+      <div class="col-3">
+        <div class="summary-card summary-total">
+          <span class="summary-label">Total Issues</span>
+          <span class="summary-value total-value">{{ summary.total }}</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="summary-card summary-open">
+          <span class="summary-label">Open Issues</span>
+          <span class="summary-value open-value">{{ summary.open }}</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="summary-card summary-in-progress">
+          <span class="summary-label">In Progress</span>
+          <span class="summary-value in-progress-value">{{ summary.inProgress }}</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="summary-card summary-resolved">
+          <span class="summary-label">Resolved</span>
+          <span class="summary-value resolved-value">{{ summary.resolved }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="errorReports$ | async as reports">
+    <div *ngIf="reports.length === 0" class="alert alert-light border" role="status">
+      <i class="bi bi-info-circle-fill me-2"></i>
+      No issues reported yet.
+    </div>
+
+    <div *ngIf="reports.length > 0" class="issues-table-wrapper">
+      <table class="issues-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Repair Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of reports">
+            <td class="issue-title">{{ report.title }}</td>
+            <td>{{ report.category }}</td>
+            <td [ngClass]="getPriorityClass(report.priority)">{{ report.priority }}</td>
+            <td [ngClass]="getStatusClass(report.status)">{{ getStatusText(report.status) }}</td>
+            <td class="repair-date">
+              <ng-container *ngIf="report.scheduledRepairDate; else notScheduled">
+                {{ report.scheduledRepairDate | date:'MMM d, yyyy' }}
+              </ng-container>
+              <ng-template #notScheduled>
+                <span class="text-muted">Not scheduled</span>
+              </ng-template>
+            </td>
+            <td>
+              <a class="view-link" (click)="openViewModal(report.id)">View</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</section>
+

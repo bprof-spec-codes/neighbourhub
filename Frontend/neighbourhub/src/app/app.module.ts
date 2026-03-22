@@ -7,18 +7,22 @@ import { TestComponent } from './components/test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { IssuesComponent } from './components/issues/issues.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponent,
-    DashboardComponent
+    DashboardComponent,
+    IssuesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NavbarComponent
+    NavbarComponent,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
