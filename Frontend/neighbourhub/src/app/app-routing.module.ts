@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: '**', redirectTo: '/dashboard' }
+  { path: 'announcements', component: AnnouncementListComponent},
+  { path: '**', redirectTo: '/dashboard' },
 
 ];
 

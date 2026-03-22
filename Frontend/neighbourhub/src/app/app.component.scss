@@ -1,11 +1,14 @@
 :host {
 	display: block;
+	height: 100vh;
+	overflow: hidden;
 }
 
 .app-layout {
 	display: flex;
-	min-height: 100vh;
+	height: 100%;
 	width: 100%;
+	overflow: hidden;
 }
 
 .app-sidebar {
@@ -15,5 +18,7 @@
 .app-content {
 	flex: 1 1 auto;
 	min-width: 0;
-	overflow: auto;
+	min-height: 0;
+	overflow-y: auto;
+	background-color: #f8f9fa;
 }
