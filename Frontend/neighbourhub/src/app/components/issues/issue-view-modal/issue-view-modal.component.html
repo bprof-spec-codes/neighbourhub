@@ -1,0 +1,47 @@
+<div *ngIf="isOpen && report" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">{{ report.title }}</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="mb-3">
+        <span class="detail-label">Category</span>
+        <span class="detail-value">{{ report.category }}</span>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-4">
+          <span class="detail-label">Priority</span>
+          <span class="detail-value" [ngClass]="getPriorityClass(report.priority)">{{ report.priority }}</span>
+        </div>
+        <div class="col-4">
+          <span class="detail-label">Status</span>
+          <span class="detail-value" [ngClass]="getStatusClass(report.status)">{{ getStatusText(report.status) }}</span>
+        </div>
+        <div class="col-4">
+          <span class="detail-label">Reported Date</span>
+          <span class="detail-value">{{ report.reportedDate | date:'MMM d, yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <span class="detail-label">Description</span>
+        <p class="detail-value mb-0">{{ report.description }}</p>
+      </div>
+
+      <div class="mb-3">
+        <span class="detail-label">Scheduled Repair Date</span>
+        <span class="detail-value" *ngIf="report.scheduledRepairDate">{{ report.scheduledRepairDate | date:'MMM d, yyyy' }}</span>
+        <span class="detail-value text-muted" *ngIf="!report.scheduledRepairDate">Not scheduled</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary w-100" (click)="onClose()">Close</button>
+    </div>
+  </div>
+</div>

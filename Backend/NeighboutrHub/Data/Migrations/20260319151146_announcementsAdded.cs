@@ -11,46 +11,6 @@ namespace Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ApartmentNumber",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "FirstName",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastName",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "ParkingSpace",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Storage",
-                table: "AspNetUsers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.CreateTable(
                 name: "Announcements",
                 columns: table => new
@@ -72,26 +32,6 @@ namespace Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Announcements");
-
-            migrationBuilder.DropColumn(
-                name: "ApartmentNumber",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LastName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "ParkingSpace",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "Storage",
-                table: "AspNetUsers");
         }
     }
 }

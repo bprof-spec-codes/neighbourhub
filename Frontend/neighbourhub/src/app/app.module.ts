@@ -9,6 +9,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { IssueCreateModalComponent } from './components/issues/issue-create-modal/issue-create-modal.component';
+import { IssueViewModalComponent } from './components/issues/issue-view-modal/issue-view-modal.component';
+import { DeleteModalComponent } from './components/shared/delete-modal/delete-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -17,7 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     TestComponent,
     DashboardComponent,
     IssuesComponent,
-    IssueCreateModalComponent
+    IssueCreateModalComponent,
+    IssueViewModalComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
