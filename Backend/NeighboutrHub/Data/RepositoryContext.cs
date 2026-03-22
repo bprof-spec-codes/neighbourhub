@@ -19,28 +19,6 @@ public class RepositoryContext : IdentityDbContext
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(builder);
-        builder.Entity<AppUser>()
-            .Property(e => e.ApartmentNumber)
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)
-            );
-
-        builder.Entity<AppUser>()
-            .Property(e => e.Storage)
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)
-            );
-
-        builder.Entity<AppUser>()
-            .Property(e => e.ParkingSpace)
-            .HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)
-            );
-
         builder.Entity<ErrorReport>()
             .HasOne(e => e.ReportedBy)
             .WithMany()
@@ -58,5 +36,7 @@ public class RepositoryContext : IdentityDbContext
         builder.Entity<ErrorReport>()
             .Property(e => e.Status)
             .HasConversion<string>();
+
+        base.OnModelCreating(builder);
     }
 }

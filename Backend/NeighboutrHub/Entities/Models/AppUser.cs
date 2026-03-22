@@ -12,10 +12,6 @@ namespace Entities.Models
 {
     public class AppUser: IdentityUser, IIdEntity
     {
-        public AppUser()
-        {
-        }
-        
         [StringLength(50)]
         public string FirstName { get; set; } = string.Empty;
 
