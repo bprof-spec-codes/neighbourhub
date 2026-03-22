@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IssuesComponent } from './components/issues/issues.component';
+import { IssueCreateModalComponent } from './components/issues/issue-create-modal/issue-create-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     TestComponent,
     DashboardComponent,
-    IssuesComponent
+    IssuesComponent,
+    IssueCreateModalComponent
   ],
   imports: [
     BrowserModule,

@@ -81,3 +81,8 @@
   </ng-container>
 </section>
 
+<app-issue-create-modal
+  [isOpen]="isAddModalOpen"
+  (add)="addErrorReport($event)"
+  (close)="closeAddModal()"
+/>
