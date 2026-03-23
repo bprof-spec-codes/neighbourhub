@@ -13,6 +13,10 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<Announcement> Announcements { get; set; }
     public DbSet<AppUser> AppUsers { get; set; }
 
+
+    public DbSet<Vote> Votes { get; set; }
+    public DbSet<VoteEntry> VoteEntries { get; set; }
+
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
 
@@ -38,5 +42,15 @@ public class RepositoryContext : IdentityDbContext
             .HasConversion<string>();
 
         base.OnModelCreating(builder);
+
+
+        builder.Entity<VoteEntry>()
+        .HasOne(e => e.Vote)
+        .WithMany(v => v.Entries)
+        .HasForeignKey(e => e.VoteId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+
+
     }
 }

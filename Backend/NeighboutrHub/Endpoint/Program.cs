@@ -47,6 +47,9 @@ public class Program
         });
 
         builder.Services.AddTransient(typeof(Repository<>));
+
+        builder.Services.AddTransient<VoteLogic>();
+
         builder.Services.AddTransient<DtoProvider>();
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
