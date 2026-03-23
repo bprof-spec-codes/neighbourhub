@@ -22,7 +22,6 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-
             modelBuilder.Entity("Entities.Models.Announcement", b =>
                 {
                     b.Property<string>("Id")
@@ -50,12 +49,7 @@ namespace Data.Migrations
                     b.ToTable("Announcements");
                 });
 
-<<<<<<< HEAD
-
-            modelBuilder.Entity("Entities.Models.AppUser", b =>
-=======
             modelBuilder.Entity("Entities.Models.ErrorReport", b =>
->>>>>>> origin/develop
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -98,7 +92,6 @@ namespace Data.Migrations
 
                     b.ToTable("ErrorReports");
                 });
-
 
             modelBuilder.Entity("Entities.Models.Vote", b =>
                 {
@@ -158,7 +151,6 @@ namespace Data.Migrations
 
                     b.ToTable("VoteEntries");
                 });
-
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -367,36 +359,6 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Entities.Models.Vote", b =>
-                {
-                    b.HasOne("Entities.Models.AppUser", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-                });
-
-            modelBuilder.Entity("Entities.Models.VoteEntry", b =>
-                {
-                    b.HasOne("Entities.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Vote", "Vote")
-                        .WithMany("Entries")
-                        .HasForeignKey("VoteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("Vote");
-=======
             modelBuilder.Entity("Entities.Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -438,7 +400,36 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ReportedBy");
->>>>>>> origin/develop
+                });
+
+            modelBuilder.Entity("Entities.Models.Vote", b =>
+                {
+                    b.HasOne("Entities.Models.AppUser", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("Entities.Models.VoteEntry", b =>
+                {
+                    b.HasOne("Entities.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Vote", "Vote")
+                        .WithMany("Entries")
+                        .HasForeignKey("VoteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("Vote");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
