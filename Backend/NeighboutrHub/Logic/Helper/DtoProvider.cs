@@ -1,5 +1,7 @@
 using AutoMapper;
 using Entities.Dtos.Announcement;
+using Entities.Dtos.ErrorReport;
+using Entities.Enums;
 using Entities.Models;
 
 namespace Logic.Helper;
@@ -10,9 +12,23 @@ public class DtoProvider
 
     public DtoProvider()
     {
-        var config = new MapperConfiguration(cfg => 
+        var config = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<AnnouncementCreateDto, Announcement>();        
+            cfg.CreateMap<AnnouncementCreateDto, Announcement>();
+
+            cfg.CreateMap<ErrorReport, ErrorReportListDto>()
+                .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.ToString()))
+                .ForMember(d => d.Priority, o => o.MapFrom(s => s.Priority.ToString()))
+                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()));
+
+            cfg.CreateMap<ErrorReportCreateDto, ErrorReport>()
+                .ForMember(d => d.Category, o => o.MapFrom(s => Enum.Parse<ErrorCategory>(s.Category, true)));
+
+            cfg.CreateMap<ErrorReport, ErrorReportDetailDto>()
+                .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.ToString()))
+                .ForMember(d => d.Priority, o => o.MapFrom(s => s.Priority.ToString()))
+                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
+                .ForMember(d => d.ReportedByName, o => o.MapFrom(s => s.ReportedBy != null ? s.ReportedBy.FirstName + " " + s.ReportedBy.LastName : ""));
         });
         Mapper = new Mapper(config);
     }

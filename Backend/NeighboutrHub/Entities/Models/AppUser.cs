@@ -12,10 +12,6 @@ namespace Entities.Models
 {
     public class AppUser: IdentityUser, IIdEntity
     {
-        public AppUser()
-        {
-        }
-        
         [StringLength(50)]
         public string FirstName { get; set; } = string.Empty;
 
@@ -27,7 +23,5 @@ namespace Entities.Models
         public List<string> ApartmentNumber { get; set; } = new List<string>();
         [StringLength(50)]
         public List<string> ParkingSpace { get; set; } = new List<string>();
-
-
     }
 }
