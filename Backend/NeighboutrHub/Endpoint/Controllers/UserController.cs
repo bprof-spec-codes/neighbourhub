@@ -5,6 +5,10 @@ using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Endpoint.Controllers
@@ -16,11 +20,13 @@ namespace Endpoint.Controllers
         UserManager<AppUser> userManager;
         private readonly IWebHostEnvironment env;
         RoleManager<IdentityRole> roleManager;
-        public UserController(UserManager<AppUser> userManager, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager)
+        private readonly JwtSettings jwtSettings;
+        public UserController(UserManager<AppUser> userManager, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager, IOptions<JwtSettings> jwtSettings)
         {
             this.userManager = userManager;
             this.env = env;
             this.roleManager = roleManager;
+            this.jwtSettings = jwtSettings.Value;
         }
 
         [HttpPost("Register")]
@@ -63,6 +69,40 @@ namespace Endpoint.Controllers
 
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(AppUserLoginDto dto)
+        {
+            var user = await userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
+            {
+                return BadRequest(new { message = "Incorrect Email" });
+            }
+
+            var result = await userManager.CheckPasswordAsync(user, dto.Password);
+            if (!result)
+            {
+                return BadRequest(new { message = "Incorrect Password" });
+            }
+
+            var claim = new List<Claim>();
+            claim.Add(new Claim(ClaimTypes.Name, user.UserName!));
+            claim.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+
+            foreach (var role in await userManager.GetRolesAsync(user))
+            {
+                claim.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            int expiryInMinutes = 2400 * 60;
+            var token = GenerateAccessToken(claim, expiryInMinutes);
+
+            return Ok(new LoginResultDto()
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = DateTime.Now.AddMinutes(expiryInMinutes)
+            });
+        }
+
         [HttpGet("CountUsers")]
         public IActionResult CountUsers()
         {
@@ -85,5 +125,6 @@ namespace Endpoint.Controllers
 
             return Regex.IsMatch(phoneNumber, pattern, RegexOptions.IgnoreCase);
         }
+        
     }
 }

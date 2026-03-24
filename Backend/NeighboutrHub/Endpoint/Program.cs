@@ -5,6 +5,7 @@ using Logic.Helper;
 using Logic.Logic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace Endpoint;
 
