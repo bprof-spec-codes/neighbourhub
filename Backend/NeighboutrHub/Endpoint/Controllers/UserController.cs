@@ -56,7 +56,6 @@ namespace Endpoint.Controllers
             var result = await userManager.CreateAsync(user, dto.Password);
             if (!result.Succeeded)
             {
-                // Az Identity jelszó szabályai miatt nem sikerül (kell kisbetű/nagybetű/szám)
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 throw new ArgumentException("A jelszónak tartalmaznia kell legalább egy számot és egy nagybetűt!");
             }
