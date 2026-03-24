@@ -1,4 +1,5 @@
-﻿using Logic.Logic;
+﻿using Entities.Dtos.Vote;
+using Logic.Logic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Endpoint.Controllers
@@ -37,6 +38,16 @@ namespace Endpoint.Controllers
             return Ok(voteLogic.GetInactive());
         }
 
+        [HttpPost]
+        public IActionResult Create(CreateVoteDto dto)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+
+            var result = voteLogic.Create(dto, userId);
+            return Ok(result);
+        }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)

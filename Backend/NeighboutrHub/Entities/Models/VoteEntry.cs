@@ -1,4 +1,5 @@
-﻿using Entities.Helpers;
+﻿using Entities.Enums;
+using Entities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

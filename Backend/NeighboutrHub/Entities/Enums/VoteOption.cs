@@ -1,4 +1,4 @@
-﻿namespace Entities.Helpers;
+﻿namespace Entities.Enums;
 
 public enum VoteOption
 {

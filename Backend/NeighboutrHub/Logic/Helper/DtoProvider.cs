@@ -1,6 +1,7 @@
 using AutoMapper;
 using Entities.Dtos.Announcement;
 using Entities.Dtos.ErrorReport;
+using Entities.Dtos.Vote;
 using Entities.Enums;
 using Entities.Models;
 
@@ -29,6 +30,12 @@ public class DtoProvider
                 .ForMember(d => d.Priority, o => o.MapFrom(s => s.Priority.ToString()))
                 .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
                 .ForMember(d => d.ReportedByName, o => o.MapFrom(s => s.ReportedBy != null ? s.ReportedBy.FirstName + " " + s.ReportedBy.LastName : ""));
+
+            cfg.CreateMap<CreateVoteDto, Vote>()
+                .ForMember(d => d.Id, o => o.Ignore())
+                .ForMember(d => d.CreatedByUserId, o => o.Ignore())
+                .ForMember(d => d.CreatedByUser, o => o.Ignore())
+                .ForMember(d => d.Entries, o => o.Ignore());
         });
         Mapper = new Mapper(config);
     }
