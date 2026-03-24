@@ -30,7 +30,6 @@ namespace Logic.Logic
             {
                 Id = vote.Id,
                 Title = vote.Title,
-                Description = vote.Description,
                 Deadline = vote.Deadline,
                 IsActive = vote.IsActive,
                 YesCount = vote.Entries.Count(e => e.Option == VoteOption.Yes),
