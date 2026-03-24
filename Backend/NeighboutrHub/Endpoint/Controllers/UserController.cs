@@ -125,6 +125,18 @@ namespace Endpoint.Controllers
 
             return Regex.IsMatch(phoneNumber, pattern, RegexOptions.IgnoreCase);
         }
-        
+        private JwtSecurityToken GenerateAccessToken(IEnumerable<Claim>? claims, int expiryInMinutes)
+        {
+            var signinKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings.Key));
+
+            return new JwtSecurityToken(
+                issuer: jwtSettings.Issuer,
+                audience: jwtSettings.Issuer,
+                claims: claims?.ToArray(),
+                expires: DateTime.Now.AddMinutes(expiryInMinutes),
+                signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
+            );
+        }
     }
 }
