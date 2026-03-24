@@ -19,7 +19,7 @@ export class VoteAddModalComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.nonNullable.group({
-      question: ['', [Validators.required]],
+      title: ['', [Validators.required]],
       deadline: ['', [Validators.required]]
     });
   }
@@ -38,7 +38,7 @@ export class VoteAddModalComponent implements OnChanges {
     }
 
     const raw = this.form.getRawValue();
-    this.add.emit(new VoteAddDto(raw.question, new Date(raw.deadline)));
+    this.add.emit(new VoteAddDto(raw.title, new Date(raw.deadline)));
     this.resetFormToDefault();
   }
 
@@ -46,21 +46,21 @@ export class VoteAddModalComponent implements OnChanges {
     this.close.emit();
   }
 
-  protected isControlInvalid(controlName: 'question' | 'deadline'): boolean {
+  protected isControlInvalid(controlName: 'title' | 'deadline'): boolean {
     const control = this.form.controls[controlName];
     return control.touched && control.invalid;
   }
 
-  protected getErrorText(controlName: 'question' | 'deadline'): string {
+  protected getErrorText(controlName: 'title' | 'deadline'): string {
     const control = this.form.controls[controlName];
     if (control.errors?.['required']) {
-      return controlName === 'question' ? 'Question is required.' : 'Deadline is required.';
+      return controlName === 'title' ? 'Question is required.' : 'Deadline is required.';
     }
     return 'Invalid value.';
   }
 
   private resetFormToDefault(): void {
-    this.form.reset({ question: '', deadline: '' });
+    this.form.reset({ title: '', deadline: '' });
     this.form.markAsUntouched();
   }
 

@@ -1,6 +1,6 @@
 export class VoteAddDto {
     constructor(
-        public question: string,
+        public title: string,
         public deadline: Date
     ) {}
 }

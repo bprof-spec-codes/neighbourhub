@@ -22,7 +22,7 @@
           <ng-container *ngIf="isActive(vote)">
             <article class="card shadow-sm vote-card">
               <div class="card-body p-4">
-                <h3 class="h5 mb-3">{{ vote.question }}</h3>
+                <h3 class="h5 mb-3">{{ vote.title }}</h3>
 
                 <div class="progress mb-2" style="height: 1.5rem;">
                   <div class="progress-bar bg-success" [style.width.%]="getPercentage(vote.yesCount, getVoteTotal(vote))">
@@ -64,7 +64,7 @@
           <ng-container *ngIf="!isActive(vote)">
             <article class="card shadow-sm vote-card vote-card-inactive">
               <div class="card-body p-4">
-                <h3 class="h5 mb-3">{{ vote.question }}</h3>
+                <h3 class="h5 mb-3">{{ vote.title }}</h3>
 
                 <div class="progress mb-2" style="height: 1.5rem;">
                   <div class="progress-bar bg-success" [style.width.%]="getPercentage(vote.yesCount, getVoteTotal(vote))">

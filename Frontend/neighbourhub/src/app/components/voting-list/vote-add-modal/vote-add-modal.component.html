@@ -15,11 +15,11 @@
           type="text"
           class="form-control"
           placeholder="Enter the voting question"
-          [class.is-invalid]="isControlInvalid('question')"
-          formControlName="question"
+          [class.is-invalid]="isControlInvalid('title')"
+          formControlName="title"
         />
-        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('question')">
-          {{ getErrorText('question') }}
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('title')">
+          {{ getErrorText('title') }}
         </div>
       </div>
 
