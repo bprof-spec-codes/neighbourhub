@@ -10,6 +10,8 @@ import { AnnouncementListComponent } from './components/announcement-list/announ
 import { DeleteModalComponent } from './components/shared/delete-modal/delete-modal.component';
 import { AnnouncementAddModalComponent } from './components/announcement-list/announcement-add-modal/announcement-add-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { VotingListComponent } from './components/voting-list/voting-list.component';
+import { VoteAddModalComponent } from './components/voting-list/vote-add-modal/vote-add-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     AnnouncementListComponent,
     DeleteModalComponent,
-    AnnouncementAddModalComponent
+    AnnouncementAddModalComponent,
+    VotingListComponent,
+    VoteAddModalComponent
   ],
   imports: [
     BrowserModule,

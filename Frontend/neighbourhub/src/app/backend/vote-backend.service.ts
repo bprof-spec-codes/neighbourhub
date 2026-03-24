@@ -21,9 +21,11 @@ export class VoteBackendService {
     return this.http.delete<void>(`${this.baseApiUrl}/Vote/${id}`);
   }
 
+  
   public addVote(voteToAdd: VoteAddDto): Observable<Vote> {
     return this.http.post<Vote>(`${this.baseApiUrl}/Vote`, voteToAdd);
   }
+
 
   public castVote(voteId: string, option: number): Observable<void> {
     return this.http.post<void>(`${this.baseApiUrl}/Vote/${voteId}/entry`, { option });
