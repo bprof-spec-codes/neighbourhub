@@ -4,6 +4,7 @@ using Entities.Enums;
 using Entities.Helpers;
 using Entities.Models;
 using Logic.Helper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,15 @@ namespace Logic.Logic
     {
         private readonly Repository<Vote> voteRepository;
         private readonly DtoProvider dtoProvider;
-        public VoteLogic(Repository<Vote> voteRepository, DtoProvider dtoProvider)
+        private readonly Repository<VoteEntry> voteEntryRepository;
+
+
+        public VoteLogic(Repository<Vote> voteRepository, Repository<VoteEntry> voteEntryRepository, DtoProvider dtoProvider)
         {
             this.voteRepository = voteRepository;
+            this.voteEntryRepository = voteEntryRepository;
             this.dtoProvider = dtoProvider;
+
         }
         private VoteDto ToDto(Vote vote)
         {
@@ -33,22 +39,30 @@ namespace Logic.Logic
                 AbstainCount = vote.Entries.Count(e => e.Option == VoteOption.Abstain)
             };
         }
+
         public IEnumerable<VoteDto> GetAll()
         {
-            return voteRepository.GetAll().Select(ToDto);
+            return voteRepository.GetAll()
+                .Include(v => v.Entries)
+                .Select(ToDto);
         }
+
         public IEnumerable<VoteDto> GetActive()
         {
             return voteRepository.GetAll()
+                .Include(v => v.Entries)
                 .Where(v => v.Deadline > DateTime.Now)
                 .Select(ToDto);
         }
+
         public IEnumerable<VoteDto> GetInactive()
         {
             return voteRepository.GetAll()
+                .Include(v => v.Entries)
                 .Where(v => v.Deadline <= DateTime.Now)
                 .Select(ToDto);
         }
+
         public VoteDto Create(CreateVoteDto dto, string createdByUserId)
         {
             if (dto.Deadline <= DateTime.Now)
@@ -61,6 +75,24 @@ namespace Logic.Logic
         public void Delete(string id)
         {
             voteRepository.DeleteById(id);
+        }
+
+
+        public void CastVote(string voteId, string userId, VoteOption option)
+        {
+            var vote = voteRepository.GetAll().FirstOrDefault(v => v.Id == voteId);
+            if (vote == null)
+                throw new ArgumentException("A szavazat nem található.");
+            if (!vote.IsActive)
+                throw new ArgumentException("A szavazat már lezárult.");
+
+            var entry = new VoteEntry
+            {
+                VoteId = voteId,
+                UserId = userId,
+                Option = option
+            };
+            voteEntryRepository.Add(entry);
         }
     }
 }

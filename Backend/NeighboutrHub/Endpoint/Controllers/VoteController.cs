@@ -55,5 +55,15 @@ namespace Endpoint.Controllers
             voteLogic.Delete(id);
             return Ok();
         }
+
+        [HttpPost("{id}/entry")]
+        public IActionResult CastVote(string id, [FromBody] CastVoteDto dto)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+            voteLogic.CastVote(id, userId, dto.Option);
+            return Ok();
+        }
     }
 }

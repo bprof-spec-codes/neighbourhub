@@ -18,6 +18,7 @@ export class VoteModalComponent {
 
   protected onVote(option: VoteOption): void {
     this.vote.emit(option);
+    this.onClose();
   }
 
   protected onClose(): void {
