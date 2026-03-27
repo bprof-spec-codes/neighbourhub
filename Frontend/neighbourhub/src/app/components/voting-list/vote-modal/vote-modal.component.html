@@ -1,1 +1,29 @@
-<p>vote-modal works!</p>
+<div *ngIf="isOpen" class="vote-modal-overlay" (click)="onClose()">
+  <div class="vote-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="vote-modal-header">
+      <h5 class="mb-0">Cast Your Vote</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="vote-modal-body">
+      <p class="text-muted mb-4">Choose your vote option:</p>
+      <div class="d-flex gap-3 justify-content-center">
+        <button class="btn btn-success px-4" (click)="onVote(VoteOption.Yes)">
+          <i class="bi bi-hand-thumbs-up me-2"></i>Yes
+        </button>
+        <button class="btn btn-danger px-4" (click)="onVote(VoteOption.No)">
+          <i class="bi bi-hand-thumbs-down me-2"></i>No
+        </button>
+        <button class="btn btn-secondary px-4" (click)="onVote(VoteOption.Abstain)">
+          <i class="bi bi-dash-circle me-2"></i>Abstain
+        </button>
+      </div>
+    </div>
+
+    <div class="vote-modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+    </div>
+  </div>
+</div>

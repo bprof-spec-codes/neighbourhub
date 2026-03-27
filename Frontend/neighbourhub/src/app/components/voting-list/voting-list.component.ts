@@ -82,4 +82,20 @@ export class VotingListComponent implements OnInit {
     return new Date(vote.deadline) > new Date();
   }
 
+
+  protected openVoteModal(id: string): void {
+  this.isVoteModalOpen = true;
+  this.selectedVoteId = id;
+}
+
+protected closeVoteModal(): void {
+  this.isVoteModalOpen = false;
+  this.selectedVoteId = '';
+}
+
+protected onVoteCast(option: VoteOption): void {
+  this.voteService.castVote(this.selectedVoteId, option);
+  this.closeVoteModal();
+}
+
 }
