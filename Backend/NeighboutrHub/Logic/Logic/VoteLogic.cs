@@ -86,6 +86,14 @@ namespace Logic.Logic
             if (!vote.IsActive)
                 throw new ArgumentException("A szavazat már lezárult.");
 
+            
+
+            var alreadyVoted = voteEntryRepository.GetAll()
+                .Any(e => e.VoteId == voteId && e.UserId == userId);
+            if (alreadyVoted)
+                throw new ArgumentException("Már szavaztál erre a szavazásra.");
+
+            
             var entry = new VoteEntry
             {
                 VoteId = voteId,
