@@ -38,7 +38,7 @@ export class VoteAddModalComponent implements OnChanges {
     }
 
     const raw = this.form.getRawValue();
-    this.add.emit(new VoteAddDto(raw.title, new Date(raw.deadline)));
+    this.add.emit(new VoteAddDto(raw.title, raw.deadline));
     this.resetFormToDefault();
   }
 
