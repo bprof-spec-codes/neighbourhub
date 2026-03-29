@@ -113,7 +113,22 @@ namespace Endpoint.Controllers
             });
         }
 
-        
+        [Authorize(Roles = "Admin")]
+        [HttpGet("PendingUsers")]
+        public IActionResult GetPendingUsers()
+        {
+            var pendingUsers = userManager.Users
+                .Where(u => !u.IsApproved)
+                .Select(u => new PendingAppUserDto
+                {
+                    Id = u.Id,
+                    FullName = $"{u.FirstName} {u.LastName}",
+                    Email = u.Email!,
+                    ApartmentNumbers = u.ApartmentNumber
+                }).ToList();
+
+            return Ok(pendingUsers);
+        }
 
 
         private bool IsValidEmail(string email)
