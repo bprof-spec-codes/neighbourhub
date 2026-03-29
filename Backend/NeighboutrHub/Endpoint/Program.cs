@@ -3,9 +3,14 @@ using Entities.Helpers;
 using Entities.Models;
 using Logic.Helper;
 using Logic.Logic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Endpoint;
 
@@ -13,13 +18,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         var builder = WebApplication.CreateBuilder(args);
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
-        
         builder.Services.AddDbContext<RepositoryContext>(options =>
         {
             options.UseSqlServer(connectionString);
@@ -33,6 +37,31 @@ public class Program
         })
         .AddEntityFrameworkStores<RepositoryContext>()
         .AddDefaultTokenProviders();
+
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+        var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false; // Fejlesztés alatt lehet false
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidAudience = jwtSettings.Issuer,
+                ValidIssuer = jwtSettings.Issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+                // Fontos: Itt is megmondhatjuk neki, hogy hol keresse a role-t
+                RoleClaimType = "role",
+                NameClaimType = "unique_name"
+            };
+        });
 
         var frontendUrl = builder.Configuration["Cors:FrontendUrl"];
         builder.WebHost.UseUrls("http://localhost:5001");

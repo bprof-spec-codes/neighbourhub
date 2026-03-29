@@ -2,6 +2,7 @@
 using Entities.Dtos.User;
 using Entities.Helpers;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Endpoint.Controllers
 {
-    [ApiController] 
+    [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
@@ -38,7 +39,7 @@ namespace Endpoint.Controllers
 
             if (!(IsValidEmail(dto.Email))) throw new ArgumentException("Az email cím formátuma nem megfelelő!");
             if (!(IsValidPhoneNumber(dto.PhoneNumber))) throw new ArgumentException("A telefonszám formátuma nem megfelelő!");
-
+            bool isAdmin = userManager.Users.Count() == 0;
             var user = new AppUser()
             {
                 FirstName = dto.FirstName,
@@ -47,7 +48,8 @@ namespace Endpoint.Controllers
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 // ITT MÁSOLJUK ÁT A LISTÁKAT:
-                ApartmentNumber = dto.ApartmentNumber ?? new List<string>()
+                ApartmentNumber = dto.ApartmentNumber ?? new List<string>(),
+                IsApproved = isAdmin
             };
 
 
@@ -64,11 +66,12 @@ namespace Endpoint.Controllers
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
                 await userManager.AddToRoleAsync(user, "Admin");
+
             }
 
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(AppUserLoginDto dto)
         {
             var user = await userManager.FindByEmailAsync(dto.Email);
@@ -83,17 +86,25 @@ namespace Endpoint.Controllers
                 return BadRequest(new { message = "Incorrect Password" });
             }
 
-            var claim = new List<Claim>();
-            claim.Add(new Claim(ClaimTypes.Name, user.UserName!));
-            claim.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-
-            foreach (var role in await userManager.GetRolesAsync(user))
+            if (!user.IsApproved)
             {
-                claim.Add(new Claim(ClaimTypes.Role, role));
+                return Unauthorized(new { message = "Your registration is pending admin approval." });
+            }
+
+            var claims = new List<Claim>();
+            // A Program.cs-ben NameClaimType = "unique_name" van beállítva:
+            claims.Add(new Claim("unique_name", user.UserName!));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
+            // A Program.cs-ben RoleClaimType = "role" van beállítva:
+            var roles = await userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim("role", role));
             }
 
             int expiryInMinutes = 2400 * 60;
-            var token = GenerateAccessToken(claim, expiryInMinutes);
+            var token = GenerateAccessToken(claims, expiryInMinutes);
 
             return Ok(new LoginResultDto()
             {
@@ -102,12 +113,8 @@ namespace Endpoint.Controllers
             });
         }
 
-        [HttpGet("CountUsers")]
-        public IActionResult CountUsers()
-        {
-            var count = userManager.Users.Count();
-            return Ok($"A rendszer szerint ennyi user van az adatbázisban: {count}");
-        }
+        
+
 
         private bool IsValidEmail(string email)
         {
@@ -132,7 +139,7 @@ namespace Endpoint.Controllers
             return new JwtSecurityToken(
                 issuer: jwtSettings.Issuer,
                 audience: jwtSettings.Issuer,
-                claims: claims?.ToArray(),
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(expiryInMinutes),
                 signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
             );
