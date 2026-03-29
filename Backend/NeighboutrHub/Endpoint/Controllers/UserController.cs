@@ -70,6 +70,29 @@ namespace Endpoint.Controllers
             return Ok($"A rendszer szerint ennyi user van az adatbázisban: {count}");
         }
 
+        [HttpGet("Residents")]
+        public IActionResult GetResidents()
+        {
+            var residents = userManager.Users
+                .Select(u => new ResidentListItemDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email ?? string.Empty,
+                    PhoneNumber = u.PhoneNumber ?? string.Empty,
+                    ProfileImageUrl = u.ProfileImageUrl,
+                    ApartmentNumber = u.ApartmentNumber ?? new List<string>(),
+                    ParkingSpace = u.ParkingSpace ?? new List<string>(),
+                    Storage = u.Storage ?? new List<string>()
+                })
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .ToList();
+
+            return Ok(residents);
+        }
+
         private bool IsValidEmail(string email)
         {
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
