@@ -130,6 +130,29 @@ namespace Endpoint.Controllers
             return Ok(pendingUsers);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("ApproveUser")]
+        public async Task<IActionResult> ApproveUser(ApproveAppUserDto dto)
+        {
+            var user = await userManager.FindByIdAsync(dto.UserId);
+            if (user == null) return NotFound("User not found");
+
+            // 1. Státusz frissítése
+            user.IsApproved = true;
+            var updateResult = await userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded) return BadRequest("Failed to update user status");
+
+            // 2. Role hozzáadása (biztosítjuk, hogy létezik a Role)
+            if (!await roleManager.RoleExistsAsync(dto.Role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(dto.Role));
+            }
+
+            await userManager.AddToRoleAsync(user, dto.Role);
+
+            return Ok(new { message = $"User approved as {dto.Role}" });
+        }
 
         private bool IsValidEmail(string email)
         {
