@@ -5,6 +5,7 @@ export interface ErrorReportListItem {
   priority: string;
   status: string;
   scheduledRepairDate: string | null;
+  reportedById: string;
 }
 
 export interface ErrorReportDetail {

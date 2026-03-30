@@ -1,53 +1,105 @@
 <div *ngIf="isOpen && report" class="modal-overlay" (click)="onClose()">
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h5 class="mb-0">{{ report.title }}</h5>
+      <h5 class="mb-0" *ngIf="!isEditing">{{ report.title }}</h5>
+      <h5 class="mb-0" *ngIf="isEditing">Edit Issue</h5>
       <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
 
-    <div class="modal-body">
-      <div class="mb-3">
-        <span class="detail-label">Category</span>
-        <span class="detail-value">{{ report.category }}</span>
-      </div>
-
-      <div class="row mb-3">
-        <div class="col-4">
-          <span class="detail-label">Priority</span>
-          <span class="detail-value" [ngClass]="getPriorityClass(report.priority)">{{ report.priority }}</span>
+    <!-- View mode -->
+    <ng-container *ngIf="!isEditing">
+      <div class="modal-body">
+        <div class="mb-3">
+          <span class="detail-label">Category</span>
+          <span class="detail-value">{{ report.category }}</span>
         </div>
-        <div class="col-4">
-          <span class="detail-label">Status</span>
-          <span class="detail-value" [ngClass]="getStatusClass(report.status)">{{ getStatusText(report.status) }}</span>
+
+        <div class="row mb-3">
+          <div class="col-4">
+            <span class="detail-label">Priority</span>
+            <span class="detail-value" [ngClass]="getPriorityClass(report.priority)">{{ report.priority }}</span>
+          </div>
+          <div class="col-4">
+            <span class="detail-label">Status</span>
+            <span class="detail-value" [ngClass]="getStatusClass(report.status)">{{ getStatusText(report.status) }}</span>
+          </div>
+          <div class="col-4">
+            <span class="detail-label">Reported Date</span>
+            <span class="detail-value">{{ report.reportedDate | date:'MMM d, yyyy' }}</span>
+          </div>
         </div>
-        <div class="col-4">
-          <span class="detail-label">Reported Date</span>
-          <span class="detail-value">{{ report.reportedDate | date:'MMM d, yyyy' }}</span>
+
+        <div class="mb-3">
+          <span class="detail-label">Reported By</span>
+          <span class="detail-value">{{ report.reportedByName }}</span>
+        </div>
+
+        <div class="mb-3">
+          <span class="detail-label">Description</span>
+          <p class="detail-value mb-0">{{ report.description }}</p>
+        </div>
+
+        <div class="mb-3">
+          <span class="detail-label">Scheduled Repair Date</span>
+          <span class="detail-value" *ngIf="report.scheduledRepairDate">{{ report.scheduledRepairDate | date:'MMM d, yyyy' }}</span>
+          <span class="detail-value text-muted" *ngIf="!report.scheduledRepairDate">Not scheduled</span>
         </div>
       </div>
 
-      <div class="mb-3">
-        <span class="detail-label">Reported By</span>
-        <span class="detail-value">{{ report.reportedByName }}</span>
+      <div class="modal-footer">
+        <button *ngIf="canModify" type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+        <button *ngIf="canModify" type="button" class="btn btn-outline-secondary" (click)="onEdit()">Edit</button>
+        <button type="button" class="btn btn-primary flex-grow-1" (click)="onClose()">Close</button>
+      </div>
+    </ng-container>
+
+    <!-- Edit mode -->
+    <form *ngIf="isEditing" [formGroup]="form" (ngSubmit)="onSave()">
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control" formControlName="title" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea rows="4" class="form-control" formControlName="description"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <select class="form-select" formControlName="category">
+            <option *ngFor="let cat of categoryOptions" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <label class="form-label">Priority</label>
+            <select class="form-select" formControlName="priority">
+              <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Status</label>
+            <select class="form-select" formControlName="status">
+              <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Scheduled Repair Date</label>
+          <input type="date" class="form-control" formControlName="scheduledRepairDate" />
+        </div>
       </div>
 
-      <div class="mb-3">
-        <span class="detail-label">Description</span>
-        <p class="detail-value mb-0">{{ report.description }}</p>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onCancelEdit()">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-grow-1">Save</button>
       </div>
-
-      <div class="mb-3">
-        <span class="detail-label">Scheduled Repair Date</span>
-        <span class="detail-value" *ngIf="report.scheduledRepairDate">{{ report.scheduledRepairDate | date:'MMM d, yyyy' }}</span>
-        <span class="detail-value text-muted" *ngIf="!report.scheduledRepairDate">Not scheduled</span>
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button *ngIf="canModify" type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
-      <button type="button" class="btn btn-primary flex-grow-1" (click)="onClose()">Close</button>
-    </div>
+    </form>
   </div>
 </div>

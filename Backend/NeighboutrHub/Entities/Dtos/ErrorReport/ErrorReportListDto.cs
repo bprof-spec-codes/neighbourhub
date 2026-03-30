@@ -8,5 +8,6 @@ namespace Entities.Dtos.ErrorReport
         public string Priority { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public DateTime? ScheduledRepairDate { get; set; }
+        public string ReportedById { get; set; } = string.Empty;
     }
 }

@@ -4,6 +4,7 @@ import { ErrorReportService } from '../../services/error-report.service';
 import { AuthService } from '../../services/auth.service';
 import { ErrorReportListItem, ErrorReportDetail, ErrorReportSummary } from '../../entities/models/error-report.model';
 import { ErrorReportCreateDto } from '../../entities/dtos/error-report-create-dto.model';
+import { ErrorReportUpdateDto } from '../../entities/dtos/error-report-update-dto.model';
 
 @Component({
   selector: 'app-issues',
@@ -71,6 +72,11 @@ export class IssuesComponent implements OnInit {
 
   protected closeDeleteModal(): void {
     this.isDeleteModalOpen = false;
+  }
+
+  protected updateErrorReport(event: { id: string; dto: ErrorReportUpdateDto }): void {
+    this.errorReportService.update(event.id, event.dto);
+    this.closeViewModal();
   }
 
   protected deleteErrorReport(): void {

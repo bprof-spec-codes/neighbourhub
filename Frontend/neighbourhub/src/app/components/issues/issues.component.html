@@ -93,6 +93,7 @@
   [canModify]="(canModify$ | async) ?? false"
   (close)="closeViewModal()"
   (deleteReport)="openDeleteModal($event)"
+  (updateReport)="updateErrorReport($event)"
 />
 
 <app-delete-modal
