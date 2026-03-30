@@ -1,5 +1,6 @@
 ﻿using Entities.Dtos.Vote;
 using Logic.Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Endpoint.Controllers
@@ -8,7 +9,6 @@ namespace Endpoint.Controllers
     [Route("api/[controller]")]
     public class VoteController : ControllerBase
     {
-
         private readonly VoteLogic voteLogic;
 
         public VoteController(VoteLogic voteLogic)
@@ -16,9 +16,8 @@ namespace Endpoint.Controllers
             this.voteLogic = voteLogic;
         }
 
-
-
         [HttpGet]
+        [Authorize]
         public IActionResult GetAll()
         {
             return Ok(voteLogic.GetAll());
@@ -26,6 +25,7 @@ namespace Endpoint.Controllers
 
 
         [HttpGet("active")]
+        [Authorize]
         public IActionResult GetActive()
         {
             return Ok(voteLogic.GetActive());
@@ -33,12 +33,14 @@ namespace Endpoint.Controllers
 
 
         [HttpGet("inactive")]
+        [Authorize]
         public IActionResult GetInactive()
         {
             return Ok(voteLogic.GetInactive());
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(CreateVoteDto dto)
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
@@ -50,6 +52,7 @@ namespace Endpoint.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(string id)
         {
             voteLogic.Delete(id);
@@ -57,6 +60,7 @@ namespace Endpoint.Controllers
         }
 
         [HttpPost("{id}/entry")]
+        [Authorize]
         public IActionResult CastVote(string id, [FromBody] CastVoteDto dto)
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
