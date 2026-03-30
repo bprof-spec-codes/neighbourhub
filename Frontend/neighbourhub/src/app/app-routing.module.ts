@@ -14,8 +14,8 @@ const routes: Routes = [
     path: 'auth',
     component: AuthLayoutComponent,
     children: [
-      { path: 'login', component: LoginComponent },
-      {path: 'register', component: RegisterComponent }
+      
+      
     ]
   },
   {
@@ -26,6 +26,8 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
       { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] },
       { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },
+      {path: 'register', component: RegisterComponent },
+      { path: 'login', component: LoginComponent }
       
     ]
   },

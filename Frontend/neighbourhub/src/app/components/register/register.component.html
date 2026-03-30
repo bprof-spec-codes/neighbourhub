@@ -1,1 +1,121 @@
 <p>register works!</p>
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="mb-3">Registration</h5>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Last Name</label>
+                    <input type="text" id="lastname" formControlName="lastname" class="form-control"  />
+                    <div *ngIf="registerForm.get('lastname')?.dirty && registerForm.get('lastname')?.invalid" class="text-danger">
+                        Last name is required.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">First Name</label>
+                    <input type="text" id="firstname" formControlName="firstname" class="form-control"  />
+                    <div *ngIf="registerForm.get('firstname')?.dirty && registerForm.get('firstname')?.invalid" class="text-danger">
+                        First name is required.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" id="email" formControlName="email" class="form-control"  />
+                    <div *ngIf="registerForm.get('email')?.dirty && registerForm.get('email')?.invalid" class="text-danger">
+                        Email is required.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label [attr.for]="hidePass ? 'password' : 'shownpw'" class="form-label">Jelszó</label>
+                    <div *ngIf="hidePass; else shownPass1" class="row">
+                        <div class="col-8">
+                            <input  type="password" id="password" formControlName="password" class="form-control"  />
+                        </div>
+                        <div class="col-4">
+                            <button (click)="passwordVisibility(('password'))" type="button" class="btn btn-primary" >
+                            <i class="bi bi-eye"></i>
+                            </button>
+                        </div>   
+                    </div>
+                    <ng-template #shownPass1>
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="text" id="shownpw" formControlName="password" class="form-control"  />
+                            </div>
+                            <div class="col-4">
+                                <button (click)="passwordVisibility('password')" type="button" class="btn btn-primary" >
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </div>   
+                        </div>
+                    </ng-template>
+                    <div *ngIf="registerForm.get('password')?.dirty && registerForm.get('password')?.invalid"
+                        class="text-danger">
+                        Password is required.
+                    </div>
+                    <div *ngIf="registerForm.get('password')?.value?.length < 8 && registerForm.get('password')?.touched"
+                        class="text-danger">
+                        Password must be at least 8 characters long.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label [attr.for]="hidePass2 ? 'password2' : 'shownpw2'" class="form-label">Jelszó megerősítése</label>
+                    <div *ngIf="hidePass2; else shownPass2" class="row">
+                        <div class="col-8">
+                            <input  type="password" id="password2" formControlName="password2" class="form-control"  />
+                        </div>
+                        <div class="col-4">
+                            <button (click)="passwordVisibility('password2')" type="button" class="btn btn-primary" >
+                            <i class="bi bi-eye"></i>
+                            </button>
+                        </div>   
+                    </div>
+                    <ng-template #shownPass2>
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="text" id="shownpw2" formControlName="password2" class="form-control"  />
+                            </div>
+                            <div class="col-4">
+                                <button (click)="passwordVisibility('password2')" type="button" class="btn btn-primary" >
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </div>   
+                        </div>
+                    </ng-template>
+                    <div *ngIf="registerForm.get('password2')?.dirty && registerForm.get('password2')?.invalid"
+                        class="text-danger">
+                        Password confirmation is required.
+                    </div>
+                    <div *ngIf="PasswordMatch() && registerForm.get('password2')?.touched"
+                        class="text-danger">
+                        The two passwords do not match.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="apartmentNumber" class="form-label">ApartmentNumber</label>
+                    <input type="text" id="apartmentNumber" formControlName="apartmentNumber" class="form-control"  />
+                    <div *ngIf="registerForm.get('apartmentNumber')?.dirty && registerForm.get('apartmentNumber')?.invalid" class="text-danger">
+                        A keresztnév megadása kötelező.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">PhoneNumber</label>
+                    <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control"  />
+                    <div *ngIf="registerForm.get('phoneNumber')?.dirty && registerForm.get('phoneNumber')?.invalid" class="text-danger">
+                        A telefonszám megadása kötelező.
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!canSubmit()" >
+                    Register
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
