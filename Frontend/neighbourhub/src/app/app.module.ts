@@ -16,6 +16,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { VotingListComponent } from './components/voting-list/voting-list.component';
 import { VoteAddModalComponent } from './components/voting-list/vote-add-modal/vote-add-modal.component';
 import { VoteModalComponent } from './components/voting-list/vote-modal/vote-modal.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { VoteModalComponent } from './components/voting-list/vote-modal/vote-mod
     MainLayoutComponent,
     VotingListComponent,
     VoteAddModalComponent,
-    VoteModalComponent
+    VoteModalComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
