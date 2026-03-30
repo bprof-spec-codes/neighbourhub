@@ -17,6 +17,8 @@ namespace Logic.Logic
         private readonly Repository<Vote> voteRepository;
         private readonly DtoProvider dtoProvider;
         private readonly Repository<VoteEntry> voteEntryRepository;
+        
+
 
 
         public VoteLogic(Repository<Vote> voteRepository, Repository<VoteEntry> voteEntryRepository, DtoProvider dtoProvider)
@@ -24,7 +26,7 @@ namespace Logic.Logic
             this.voteRepository = voteRepository;
             this.voteEntryRepository = voteEntryRepository;
             this.dtoProvider = dtoProvider;
-
+            
         }
         private VoteDto ToDto(Vote vote)
         {
@@ -74,6 +76,11 @@ namespace Logic.Logic
         }
         public void Delete(string id)
         {
+            var entries = voteEntryRepository.GetAll()
+                .Where(e => e.VoteId == id)
+                .ToList();
+
+            voteEntryRepository.DeleteRange(entries);
             voteRepository.DeleteById(id);
         }
 
