@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
+import { VotingListComponent } from './components/voting-list/voting-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
@@ -21,7 +22,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-      { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] }
+      { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] },
+      { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },
     ]
   },
   { path: '**', redirectTo: '/dashboard' },
