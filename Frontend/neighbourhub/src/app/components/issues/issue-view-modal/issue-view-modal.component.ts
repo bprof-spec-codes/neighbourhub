@@ -10,6 +10,7 @@ import { ErrorReportDetail } from '../../../entities/models/error-report.model';
 export class IssueViewModalComponent {
   @Input() isOpen = false;
   @Input() report: ErrorReportDetail | null = null;
+  @Input() canModify = false;
 
   @Output() close = new EventEmitter<void>();
   @Output() deleteReport = new EventEmitter<string>();

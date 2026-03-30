@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ErrorReportService } from '../../services/error-report.service';
+import { AuthService } from '../../services/auth.service';
 import { ErrorReportListItem, ErrorReportDetail, ErrorReportSummary } from '../../entities/models/error-report.model';
 import { ErrorReportCreateDto } from '../../entities/dtos/error-report-create-dto.model';
 
@@ -18,10 +19,14 @@ export class IssuesComponent implements OnInit {
   protected isAddModalOpen = false;
   protected isViewModalOpen = false;
   protected isDeleteModalOpen = false;
+  protected canModify$ = new Observable<boolean>();
 
   private idToDelete = '';
 
-  constructor(private errorReportService: ErrorReportService) {}
+  constructor(
+    private errorReportService: ErrorReportService,
+    private authService: AuthService
+  ) {}
 
   public ngOnInit(): void {
     this.errorReportService.loadAll();
@@ -29,6 +34,12 @@ export class IssuesComponent implements OnInit {
     this.errorReports$ = this.errorReportService.errorReports$;
     this.summary$ = this.errorReportService.summary$;
     this.selectedReport$ = this.errorReportService.selectedReport$;
+    this.canModify$ = this.selectedReport$.pipe(
+      map(report => {
+        if (!report) return false;
+        return this.authService.isAdmin() || report.reportedById === this.authService.getUserId();
+      })
+    );
   }
 
   protected openAddModal(): void {

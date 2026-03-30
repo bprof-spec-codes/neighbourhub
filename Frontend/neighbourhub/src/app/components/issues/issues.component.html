@@ -90,6 +90,7 @@
 <app-issue-view-modal
   [isOpen]="isViewModalOpen"
   [report]="selectedReport$ | async"
+  [canModify]="(canModify$ | async) ?? false"
   (close)="closeViewModal()"
   (deleteReport)="openDeleteModal($event)"
 />
