@@ -18,13 +18,11 @@ namespace Endpoint.Controllers
     public class UserController : ControllerBase
     {
         UserManager<AppUser> userManager;
-        private readonly IWebHostEnvironment env;
         RoleManager<IdentityRole> roleManager;
         private readonly JwtSettings jwtSettings;
-        public UserController(UserManager<AppUser> userManager, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager, IOptions<JwtSettings> jwtSettings)
+        public UserController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IOptions<JwtSettings> jwtSettings)
         {
             this.userManager = userManager;
-            this.env = env;
             this.roleManager = roleManager;
             this.jwtSettings = jwtSettings.Value;
         }

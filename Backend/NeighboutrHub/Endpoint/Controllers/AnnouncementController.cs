@@ -1,6 +1,7 @@
 using Entities.Dtos.Announcement;
 using Entities.Models;
 using Logic.Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Endpoint.Controllers;
@@ -17,18 +18,21 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public void AddAnnouncement(AnnouncementCreateDto dto)
     {
         _announcementLogic.AddAnnouncement(dto);
     }
 
     [HttpGet]
+    [Authorize]
     public IEnumerable<Announcement> GetAnnouncements()
     {
         return _announcementLogic.GetAnnouncements();
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public void DeleteAnnouncementById(string id)
     {
         _announcementLogic.DeleteAnnouncementById(id);

@@ -3,12 +3,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 import { VotingListComponent } from './components/voting-list/voting-list.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { authGuard } from './services/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'announcements', component: AnnouncementListComponent},
-  { path: 'voting', component: VotingListComponent },
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    children: [
+      { path: 'login', component: LoginComponent }
+    ]
+  },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+      { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] },
+      { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },
+    ]
+  },
   { path: '**', redirectTo: '/dashboard' },
 
 ];
