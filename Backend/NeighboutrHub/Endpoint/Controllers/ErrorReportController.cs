@@ -53,7 +53,9 @@ public class ErrorReportController : ControllerBase
     [Authorize]
     public IActionResult Update(string id, ErrorReportUpdateDto dto)
     {
-        var success = _errorReportLogic.Update(id, dto);
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value;
+        var isAdmin = User.IsInRole("Admin");
+        var success = _errorReportLogic.Update(id, dto, userId, isAdmin);
         if (!success) return NotFound();
         return Ok();
     }
@@ -62,7 +64,9 @@ public class ErrorReportController : ControllerBase
     [Authorize]
     public IActionResult Delete(string id)
     {
-        var success = _errorReportLogic.Delete(id);
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value;
+        var isAdmin = User.IsInRole("Admin");
+        var success = _errorReportLogic.Delete(id, userId, isAdmin);
         if (!success) return NotFound();
         return Ok();
     }
