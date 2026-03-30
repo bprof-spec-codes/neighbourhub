@@ -71,8 +71,10 @@
                 <span class="text-muted">Not scheduled</span>
               </ng-template>
             </td>
-            <td>
+            <td class="action-cell">
               <a class="view-link" (click)="openViewModal(report.id)">View</a>
+              <a *ngIf="canModifyReport(report)" class="edit-link" (click)="openEditModal(report.id)">Edit</a>
+              <a *ngIf="canModifyReport(report)" class="delete-link" (click)="openDeleteModal(report.id)">Delete</a>
             </td>
           </tr>
         </tbody>
@@ -90,10 +92,14 @@
 <app-issue-view-modal
   [isOpen]="isViewModalOpen"
   [report]="selectedReport$ | async"
-  [canModify]="(canModify$ | async) ?? false"
   (close)="closeViewModal()"
-  (deleteReport)="openDeleteModal($event)"
-  (updateReport)="updateErrorReport($event)"
+/>
+
+<app-issue-edit-modal
+  [isOpen]="isEditModalOpen"
+  [report]="selectedReport$ | async"
+  (save)="updateErrorReport($event)"
+  (close)="closeEditModal()"
 />
 
 <app-delete-modal

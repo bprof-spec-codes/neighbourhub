@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { IssueCreateModalComponent } from './components/issues/issue-create-modal/issue-create-modal.component';
 import { IssueViewModalComponent } from './components/issues/issue-view-modal/issue-view-modal.component';
+import { IssueEditModalComponent } from './components/issues/issue-edit-modal/issue-edit-modal.component';
 import { DeleteModalComponent } from './components/shared/delete-modal/delete-modal.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 import { AnnouncementAddModalComponent } from './components/announcement-list/announcement-add-modal/announcement-add-modal.component';
@@ -27,6 +28,7 @@ import { VoteModalComponent } from './components/voting-list/vote-modal/vote-mod
     IssuesComponent,
     IssueCreateModalComponent,
     IssueViewModalComponent,
+    IssueEditModalComponent,
     DeleteModalComponent,
     AnnouncementListComponent,
     AnnouncementAddModalComponent,

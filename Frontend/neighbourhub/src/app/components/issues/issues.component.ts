@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ErrorReportService } from '../../services/error-report.service';
 import { AuthService } from '../../services/auth.service';
 import { ErrorReportListItem, ErrorReportDetail, ErrorReportSummary } from '../../entities/models/error-report.model';
@@ -19,8 +19,8 @@ export class IssuesComponent implements OnInit {
 
   protected isAddModalOpen = false;
   protected isViewModalOpen = false;
+  protected isEditModalOpen = false;
   protected isDeleteModalOpen = false;
-  protected canModify$ = new Observable<boolean>();
 
   private idToDelete = '';
 
@@ -35,12 +35,10 @@ export class IssuesComponent implements OnInit {
     this.errorReports$ = this.errorReportService.errorReports$;
     this.summary$ = this.errorReportService.summary$;
     this.selectedReport$ = this.errorReportService.selectedReport$;
-    this.canModify$ = this.selectedReport$.pipe(
-      map(report => {
-        if (!report) return false;
-        return this.authService.isAdmin() || report.reportedById === this.authService.getUserId();
-      })
-    );
+  }
+
+  protected canModifyReport(report: ErrorReportListItem): boolean {
+    return this.authService.isAdmin() || report.reportedById === this.authService.getUserId();
   }
 
   protected openAddModal(): void {
@@ -65,6 +63,20 @@ export class IssuesComponent implements OnInit {
     this.isViewModalOpen = false;
   }
 
+  protected openEditModal(id: string): void {
+    this.errorReportService.loadById(id);
+    this.isEditModalOpen = true;
+  }
+
+  protected closeEditModal(): void {
+    this.isEditModalOpen = false;
+  }
+
+  protected updateErrorReport(event: { id: string; dto: ErrorReportUpdateDto }): void {
+    this.errorReportService.update(event.id, event.dto);
+    this.closeEditModal();
+  }
+
   protected openDeleteModal(id: string): void {
     this.idToDelete = id;
     this.isDeleteModalOpen = true;
@@ -74,19 +86,10 @@ export class IssuesComponent implements OnInit {
     this.isDeleteModalOpen = false;
   }
 
-  protected updateErrorReport(event: { id: string; dto: ErrorReportUpdateDto }): void {
-    this.errorReportService.update(event.id, event.dto);
-    this.closeViewModal();
-  }
-
   protected deleteErrorReport(): void {
-    if (this.idToDelete === '') {
-      console.error('No error report ID specified for deletion.');
-      return;
-    }
+    if (this.idToDelete === '') return;
     this.errorReportService.delete(this.idToDelete);
     this.closeDeleteModal();
-    this.closeViewModal();
   }
 
   protected getPriorityClass(priority: string): string {
