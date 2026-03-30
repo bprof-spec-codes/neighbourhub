@@ -53,4 +53,10 @@ public class Repository<T> where T : class, IIdEntity
     {
         return ctx.Set<T>();
     }
+
+    public virtual void DeleteRange(IEnumerable<T> entities)
+    {
+        ctx.Set<T>().RemoveRange(entities);
+        ctx.SaveChanges();
+    }
 }
