@@ -1,19 +1,19 @@
 <div *ngIf="isOpen" class="delete-modal-overlay" (click)="onBackdropClick()">
-  <div class="delete-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
-    <div class="delete-modal-header">
-      <h5 class="mb-0">Confirm Delete</h5>
-      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onCancel()">
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
+	<div class="delete-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+		<div class="delete-modal-header">
+			<h5 class="mb-0">Confirm Delete</h5>
+			<button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onCancel()">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</div>
 
-    <div class="delete-modal-body">
-      <p class="mb-0">{{ content }}</p>
-    </div>
+		<div class="delete-modal-body">
+			<p class="mb-0">{{ content }}</p>
+		</div>
 
-    <div class="delete-modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
-      <button type="button" class="btn btn-danger" (click)="onConfirm()">Delete</button>
-    </div>
-  </div>
+		<div class="delete-modal-footer">
+			<button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+			<button type="button" class="btn btn-danger" (click)="onConfirm()">Delete</button>
+		</div>
+	</div>
 </div>

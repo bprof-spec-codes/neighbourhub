@@ -1,0 +1,37 @@
+.vote-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.vote-modal-card {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+.vote-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.vote-modal-body {
+  padding: 1.5rem;
+}
+
+.vote-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e9ecef;
+}

@@ -25,7 +25,7 @@ public class AnnouncementLogic
 
     public IEnumerable<Announcement> GetAnnouncements()
     {
-        return _announcementRepository.GetAll();
+        return _announcementRepository.GetAll().OrderByDescending(a => a.CreatedDate);
     }
 
     public void DeleteAnnouncementById(string id)
