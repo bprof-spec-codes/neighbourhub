@@ -65,8 +65,64 @@ export class AuthService {
       return null;
     }
   }
+getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const payload = this.decodePayload(token);
+    if (!payload) return null;
 
- 
+    const id = payload[AuthService.NAME_ID_CLAIM];
+    return (typeof id === 'string' && id.trim() !== '') ? id : null;
+  }
 
+  public static readonly NAME_ID_CLAIM =
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
+
+  private getPayload(token: string): JwtPayload | null {
+    try {
+      const base64url = token.split('.')[1] ?? ''
+      const json = this.base64UrlDecode(base64url)
+      return JSON.parse(json) as JwtPayload
+    } catch {
+      return null
+    }
+  }
+
+  private base64UrlDecode(input: string): string {
+    const base64 = input.replace(/-/g, '+').replace(/_/g, '/')
+    const pad = base64.length % 4 === 0 ? '' : '='.repeat(4 - (base64.length % 4))
+    const s = atob(base64 + pad)
+    return decodeURIComponent(
+      s.split('').map(c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0')).join('')
+    )
+  }
+
+  getRoles(): string[] {
+    const token = this.getToken()
+    if (!token) return []
+
+    const payload = this.getPayload(token)
+    if (!payload) return []
+
+    // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
+    const roles: string[] = []
+
+    for (const key in payload) {
+      if (key.endsWith('/role')) {
+        const value = (payload as any)[key]
+        if (Array.isArray(value)) {
+          roles.push(...value)
+        } else {
+          roles.push(value)
+        }
+      }
+    }
+    return roles
+  }
+
+
+  isAdmin(): boolean {
+    return this.getRoles().includes('Admin');
+  }
   
 }
