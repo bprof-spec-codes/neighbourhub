@@ -9,7 +9,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 import { DeleteModalComponent } from './components/shared/delete-modal/delete-modal.component';
 import { AnnouncementAddModalComponent } from './components/announcement-list/announcement-add-modal/announcement-add-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     AnnouncementListComponent,
     DeleteModalComponent,
-    AnnouncementAddModalComponent
+    AnnouncementAddModalComponent,
+    LoginComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NavbarComponent,
+    FormsModule,
     ReactiveFormsModule
   ],
   providers: [],
