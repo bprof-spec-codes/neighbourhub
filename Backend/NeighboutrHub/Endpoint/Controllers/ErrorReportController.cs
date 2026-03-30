@@ -27,8 +27,7 @@ public class ErrorReportController : ControllerBase
     [Authorize]
     public IActionResult AddErrorReport(ErrorReportCreateDto dto)
     {
-        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-            ?? "test-user";
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value;
 
         var id = _errorReportLogic.AddErrorReport(dto, userId);
         return Ok(new { id });
