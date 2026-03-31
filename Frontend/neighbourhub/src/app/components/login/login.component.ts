@@ -13,6 +13,8 @@ export class LoginComponent {
   password = '';
   error = '';
   loading = false;
+  hidePass:boolean=true
+  hidePass2:boolean=true
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -29,16 +31,25 @@ export class LoginComponent {
           return;
         }
         this.auth.saveToken(token);
-        this.router.navigate(['/homepage']); 
+        this.router.navigate(['/dashboard']); 
       },
       error: (err) => {
         this.loading = false;
-        this.error = err?.error?.message ?? err?.message ?? 'Hibás email vagy jelszó.';
+        this.error = err?.error?.message ?? err?.message ?? 'Invalid email address or password.';
       }
     });
   }
 
   goToRegister() {
     this.router.navigate(['/register']);
+  }
+  passwordVisibility(field: 'password' | 'password2'): void {
+    if (field === 'password') {
+      this.hidePass = !this.hidePass;
+    } 
+    else
+    {
+        this.hidePass2 = !this.hidePass2;
+    }
   }
 }

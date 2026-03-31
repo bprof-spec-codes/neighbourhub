@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-hidePass:boolean=true
+  hidePass:boolean=true
   hidePass2:boolean=true
   registerForm: FormGroup
-
+  serverErrorMessage: string = ''
   constructor(private fb: FormBuilder, private registService:RegisterService, private router: Router) {
     this.registerForm = this.fb.group(
       {
@@ -45,16 +45,16 @@ hidePass:boolean=true
     return this.registerForm.valid && !this.PasswordMatch();
   }
   onSubmit(){
-    
+    this.serverErrorMessage = '';
 
     const formValues = this.registerForm.value;
     const dto = {
-    lastname: formValues.lastname,
-    firstname: formValues.firstname,
-    email: formValues.email,
-    password: formValues.password,
-    apartmentNumber: [formValues.apartmentNumber],
-    phoneNumber: formValues.phoneNumber
+      lastname: formValues.lastname,
+      firstname: formValues.firstname,
+      email: formValues.email,
+      password: formValues.password,
+      apartmentNumber: [formValues.apartmentNumber],
+      phoneNumber: formValues.phoneNumber
   };
 
     this.registService.register(dto).subscribe({
@@ -66,7 +66,7 @@ hidePass:boolean=true
     },
     error: (err) => {
       console.error('Sikertelen regisztráció:', err);
-      alert('Sikertelen regisztráció.');
+      this.serverErrorMessage = err.error?.message || 'Sikertelen regisztráció. Kérjük, próbálja újra!';
     }
   });
   }
