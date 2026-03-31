@@ -58,7 +58,7 @@ public class ErrorReportLogic
     {
         var entity = _repository.GetAll().FirstOrDefault(e => e.Id == id);
         if (entity == null) return false;
-        if (entity.ReportedById != userId && !isAdmin) return false;
+        if (!isAdmin) return false;
 
         entity.Title = dto.Title;
         entity.Description = dto.Description;
@@ -82,7 +82,7 @@ public class ErrorReportLogic
     {
         var entity = _repository.GetAll().FirstOrDefault(e => e.Id == id);
         if (entity == null) return false;
-        if (entity.ReportedById != userId && !isAdmin) return false;
+        if (!isAdmin) return false;
 
         _repository.Delete(entity);
         return true;

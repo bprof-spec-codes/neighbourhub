@@ -37,8 +37,8 @@ export class IssuesComponent implements OnInit {
     this.selectedReport$ = this.errorReportService.selectedReport$;
   }
 
-  protected canModifyReport(report: ErrorReportListItem): boolean {
-    return this.authService.isAdmin() || report.reportedById === this.authService.getUserId();
+  protected canModifyReport(): boolean {
+    return this.authService.isAdmin();
   }
 
   protected openAddModal(): void {

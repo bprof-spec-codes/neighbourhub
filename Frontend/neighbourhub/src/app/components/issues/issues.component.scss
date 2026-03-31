@@ -101,33 +101,33 @@
 }
 
 // Priority colors
-.priority-high {
+.issues-table tbody td.priority-high {
   color: $red;
   font-weight: 600;
 }
 
-.priority-medium {
+.issues-table tbody td.priority-medium {
   color: $orange;
   font-weight: 600;
 }
 
-.priority-low {
+.issues-table tbody td.priority-low {
   color: #0d9488;
   font-weight: 600;
 }
 
 // Status colors
-.status-open {
+.issues-table tbody td.status-open {
   color: $red;
   font-weight: 600;
 }
 
-.status-in-progress {
+.issues-table tbody td.status-in-progress {
   color: $orange;
   font-weight: 600;
 }
 
-.status-resolved {
+.issues-table tbody td.status-resolved {
   color: $green;
   font-weight: 600;
 }
