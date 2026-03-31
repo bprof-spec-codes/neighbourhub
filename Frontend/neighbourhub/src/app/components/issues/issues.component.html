@@ -72,9 +72,15 @@
               </ng-template>
             </td>
             <td class="action-cell">
-              <a class="view-link" (click)="openViewModal(report.id)">View</a>
-              <a *ngIf="canModifyReport(report)" class="edit-link" (click)="openEditModal(report.id)">Edit</a>
-              <a *ngIf="canModifyReport(report)" class="delete-link" (click)="openDeleteModal(report.id)">Delete</a>
+              <button class="action-btn view-btn" title="View" (click)="openViewModal(report.id)">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button *ngIf="canModifyReport(report)" class="action-btn edit-btn" title="Edit" (click)="openEditModal(report.id)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button *ngIf="canModifyReport(report)" class="action-btn delete-btn" title="Delete" (click)="openDeleteModal(report.id)">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
         </tbody>
