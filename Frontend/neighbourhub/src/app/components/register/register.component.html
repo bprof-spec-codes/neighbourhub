@@ -9,7 +9,8 @@
                     <input type="text" id="lastname" formControlName="lastname" class="form-control" placeholder="Last Name" />
                 </div>
                 <div *ngIf="registerForm.get('lastname')?.dirty && registerForm.get('lastname')?.invalid" class="text-danger mb-2 small">
-                    Last name is required.
+                    <span *ngIf="registerForm.get('lastname')?.errors?.['required']">Last name is required.</span>
+                    <span *ngIf="registerForm.get('lastname')?.errors?.['minlength']">Last name must be at least 3 characters.</span>
                 </div>
 
                 <div class="mb-3 input-group">
@@ -17,7 +18,8 @@
                     <input type="text" id="firstname" formControlName="firstname" class="form-control" placeholder="First Name" />
                 </div>
                 <div *ngIf="registerForm.get('firstname')?.dirty && registerForm.get('firstname')?.invalid" class="text-danger mb-2 small">
-                    First name is required.
+                    <span *ngIf="registerForm.get('firstname')?.errors?.['required']">First name is required.</span>
+                    <span *ngIf="registerForm.get('firstname')?.errors?.['minlength']">First name must be at least 3 characters.</span>
                 </div>
 
                 <div class="mb-3 input-group">
@@ -25,7 +27,8 @@
                     <input type="text" id="email" formControlName="email" class="form-control" placeholder="Email" />
                 </div>
                 <div *ngIf="registerForm.get('email')?.dirty && registerForm.get('email')?.invalid" class="text-danger mb-2 small">
-                    Email is required.
+                    <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="registerForm.get('email')?.errors?.['pattern']">Invalid email format </span>
                 </div>
 
                 <div class="mb-3">
@@ -38,10 +41,9 @@
                         </button>
                     </div>
                     <div *ngIf="registerForm.get('password')?.dirty && registerForm.get('password')?.invalid" class="text-danger small mt-1">
-                        Password is required.
-                    </div>
-                    <div *ngIf="registerForm.get('password')?.value?.length < 8 && registerForm.get('password')?.touched" class="text-danger small mt-1">
-                        Password must be at least 8 characters long.
+                        <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
+                        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</div>
+                        <div *ngIf="registerForm.get('password')?.errors?.['pattern']">Password must contain at least one number and one uppercase letter.</div>
                     </div>
                 </div>
 
@@ -67,7 +69,8 @@
                     <input type="text" id="apartmentNumber" formControlName="apartmentNumber" class="form-control" placeholder="Apartment Number" />
                 </div>
                 <div *ngIf="registerForm.get('apartmentNumber')?.dirty && registerForm.get('apartmentNumber')?.invalid" class="text-danger mb-2 small">
-                    A keresztnév megadása kötelező.
+                    <span *ngIf="registerForm.get('apartmentNumber')?.errors?.['required']">Apartment number is required.</span>
+                    <span *ngIf="registerForm.get('apartmentNumber')?.errors?.['pattern']">Invalid format (e.g., 12/A).</span>
                 </div>
 
                 <div class="mb-3 input-group">
@@ -75,7 +78,8 @@
                     <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" placeholder="Phone Number" />
                 </div>
                 <div *ngIf="registerForm.get('phoneNumber')?.dirty && registerForm.get('phoneNumber')?.invalid" class="text-danger mb-2 small">
-                    A telefonszám megadása kötelező.
+                    <span *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</span>
+                    <span *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone number format.</span>
                 </div>
                 
                 <div *ngIf="serverErrorMessage" class="alert alert-danger mt-3">

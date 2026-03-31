@@ -19,9 +19,9 @@ export class RegisterComponent {
       {
         lastname: ['', [Validators.required, Validators.minLength(3)]],
         firstname: ['', [Validators.required, Validators.minLength(3)]],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        password2: ['', [Validators.required, Validators.minLength(8)]],
+        email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[0-9])(?=.*[A-Z]).*$/)]],
+        password2: ['', [Validators.required]],
         apartmentNumber: ['', [Validators.required, Validators.pattern('^[0-9]+/[A-Za-z](,\\s?[0-9]+/[A-Za-z])*$')]], 
         phoneNumber: ['', [Validators.required, Validators.pattern('^(\\+36|06|36)?[\\s\\-]?(20|30|31|70|1|[2-9][0-9])[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{3,4}$')]],
       }
@@ -59,14 +59,14 @@ export class RegisterComponent {
 
     this.registService.register(dto).subscribe({
     next: (response) => {
-      console.log('Sikeres regisztráció:', response);
-      alert('Sikeres regisztráció!');
+      console.log('Registration successful:', response);
+      alert('Registration successful!');
       this.registerForm.reset();
       this.router.navigate(['/login']);
     },
     error: (err) => {
-      console.error('Sikertelen regisztráció:', err);
-      this.serverErrorMessage = err.error?.message || 'Sikertelen regisztráció. Kérjük, próbálja újra!';
+      console.error('Registration failed:', err);
+      this.serverErrorMessage = err.error?.message || 'Registration failed. Please try again.';
     }
   });
   }

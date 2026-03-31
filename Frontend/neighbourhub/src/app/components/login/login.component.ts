@@ -26,7 +26,7 @@ export class LoginComponent {
       next: (res: any) => {
         const token = res?.token ?? res?.Token;
         if (!token) {
-          this.error = 'Hibás válasz a szervertől.';
+          this.error = 'An error occurred while receiving a response from the server.';
           this.loading = false;
           return;
         }
