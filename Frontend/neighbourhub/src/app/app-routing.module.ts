@@ -15,14 +15,14 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       {path: 'register', component: RegisterComponent },
-      { path: 'login', component: LoginComponent }
+      {path: 'login', component: LoginComponent }
     ]
   },
   {
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
       { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] },
       { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },
