@@ -23,7 +23,7 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
       { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] },
       { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },

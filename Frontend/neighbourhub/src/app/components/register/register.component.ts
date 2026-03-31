@@ -22,7 +22,7 @@ export class RegisterComponent {
         email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
         password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[0-9])(?=.*[A-Z]).*$/)]],
         password2: ['', [Validators.required]],
-        apartmentNumber: ['', [Validators.required, Validators.pattern('^[0-9]+/[A-Za-z](,\\s?[0-9]+/[A-Za-z])*$')]], 
+        apartmentNumber: ['', [Validators.required]], 
         phoneNumber: ['', [Validators.required, Validators.pattern('^(\\+36|06|36)?[\\s\\-]?(20|30|31|70|1|[2-9][0-9])[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{3,4}$')]],
       }
     )
