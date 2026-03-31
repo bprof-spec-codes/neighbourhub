@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Announcement } from '../../entities/models/announcement.model';
 import { AnnouncementCategory } from '../../entities/enums/announcement-category.model';
 import { AnnouncementAddDto } from '../../entities/dtos/announcement-add-dto.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-announcement-list',
@@ -18,7 +19,7 @@ export class AnnouncementListComponent implements OnInit {
 
   private idToDelete: string = "";
 
-  constructor(private announcementService: AnnouncementService) { }
+  constructor(private announcementService: AnnouncementService, protected authService: AuthService) { }
 
   public ngOnInit(): void {
     this.loadAnnouncements();
