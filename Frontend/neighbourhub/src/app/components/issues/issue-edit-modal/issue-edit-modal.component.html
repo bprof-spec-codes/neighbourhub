@@ -1,0 +1,63 @@
+<div *ngIf="isOpen && report" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">Edit Issue</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" formControlName="title" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea rows="4" class="form-control" formControlName="description"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" formControlName="category">
+          <option *ngFor="let cat of categoryOptions" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label">Priority</label>
+          <select class="form-select" formControlName="priority">
+            <option *ngFor="let p of priorityOptions" [value]="p">{{ p }}</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label class="form-label">Status</label>
+          <select class="form-select" formControlName="status">
+            <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Scheduled Repair Date</label>
+        <input
+          type="date"
+          class="form-control"
+          [class.is-invalid]="isScheduledRepairDateInvalid()"
+          [min]="minScheduledDate"
+          formControlName="scheduledRepairDate"
+        />
+        <div class="invalid-feedback d-block" *ngIf="isScheduledRepairDateInvalid()">
+          Scheduled Repair Date cannot be earlier than today.
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
