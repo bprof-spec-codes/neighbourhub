@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorReportDetail } from '../../../entities/models/error-report.model';
 import { ErrorReportUpdateDto } from '../../../entities/dtos/error-report-update-dto.model';
 
@@ -21,6 +21,7 @@ export class IssueEditModalComponent implements OnChanges {
   protected categoryOptions = ['Plumbing', 'Electrical', 'HVAC', 'Maintenance', 'Structural', 'Other'];
   protected priorityOptions = ['Low', 'Medium', 'High'];
   protected statusOptions = ['Open', 'InProgress', 'Resolved'];
+  protected minScheduledDate = this.getTodayDateString();
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -29,7 +30,7 @@ export class IssueEditModalComponent implements OnChanges {
       category: ['', Validators.required],
       priority: ['', Validators.required],
       status: ['', Validators.required],
-      scheduledRepairDate: ['']
+      scheduledRepairDate: ['', [this.notPastDateValidator()]]
     });
   }
 
@@ -49,7 +50,10 @@ export class IssueEditModalComponent implements OnChanges {
   }
 
   protected onSubmit(): void {
-    if (!this.report || this.form.invalid) return;
+    if (!this.report || this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     const v = this.form.value;
     const dto = new ErrorReportUpdateDto(
       v.title,
@@ -64,5 +68,31 @@ export class IssueEditModalComponent implements OnChanges {
 
   protected onClose(): void {
     this.close.emit();
+  }
+
+  protected isScheduledRepairDateInvalid(): boolean {
+    const control = this.form.get('scheduledRepairDate');
+    return !!control && control.touched && control.hasError('pastDate');
+  }
+
+  private notPastDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value as string | null;
+      if (!value) {
+        return null;
+      }
+
+      const selected = new Date(value);
+      selected.setHours(0, 0, 0, 0);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return selected < today ? { pastDate: true } : null;
+    };
+  }
+
+  private getTodayDateString(): string {
+    return new Date().toISOString().split('T')[0];
   }
 }

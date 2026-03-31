@@ -42,7 +42,16 @@
 
       <div class="mb-3">
         <label class="form-label">Scheduled Repair Date</label>
-        <input type="date" class="form-control" formControlName="scheduledRepairDate" />
+        <input
+          type="date"
+          class="form-control"
+          [class.is-invalid]="isScheduledRepairDateInvalid()"
+          [min]="minScheduledDate"
+          formControlName="scheduledRepairDate"
+        />
+        <div class="invalid-feedback d-block" *ngIf="isScheduledRepairDateInvalid()">
+          Scheduled Repair Date cannot be earlier than today.
+        </div>
       </div>
 
       <div class="modal-footer">
