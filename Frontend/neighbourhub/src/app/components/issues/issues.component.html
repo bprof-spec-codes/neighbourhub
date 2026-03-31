@@ -12,25 +12,25 @@
 
   <ng-container *ngIf="summary$ | async as summary">
     <div class="row g-3 mb-4">
-      <div class="col-3">
+      <div class="col-6 col-md-3">
         <div class="summary-card summary-total">
           <span class="summary-label">Total Issues</span>
           <span class="summary-value total-value">{{ summary.total }}</span>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6 col-md-3">
         <div class="summary-card summary-open">
           <span class="summary-label">Open Issues</span>
           <span class="summary-value open-value">{{ summary.open }}</span>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6 col-md-3">
         <div class="summary-card summary-in-progress">
           <span class="summary-label">In Progress</span>
           <span class="summary-value in-progress-value">{{ summary.inProgress }}</span>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6 col-md-3">
         <div class="summary-card summary-resolved">
           <span class="summary-label">Resolved</span>
           <span class="summary-value resolved-value">{{ summary.resolved }}</span>
@@ -45,7 +45,7 @@
       No issues reported yet.
     </div>
 
-    <div *ngIf="reports.length > 0" class="issues-table-wrapper">
+    <div *ngIf="reports.length > 0" class="issues-table-wrapper table-responsive">
       <table class="issues-table">
         <thead>
           <tr>

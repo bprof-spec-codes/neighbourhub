@@ -1,5 +1,15 @@
 @import "../../../styles/colors";
 
+.issues-page {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+
+  @media (min-width: 768px) {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+}
+
 // Summary cards
 .summary-card {
   background: $white;
@@ -10,6 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  height: 100%;
 }
 
 .summary-label {
@@ -59,7 +70,7 @@
   background: $white;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .issues-table {
