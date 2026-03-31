@@ -1,7 +1,7 @@
 <div *ngIf="isOpen && report" class="modal-overlay" (click)="onClose()">
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h5 class="mb-0">{{ report.title }}</h5>
+      <h5 class="mb-0 modal-title">{{ report.title }}</h5>
       <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
@@ -35,7 +35,7 @@
 
       <div class="mb-3">
         <span class="detail-label">Description</span>
-        <p class="detail-value mb-0">{{ report.description }}</p>
+        <p class="detail-value detail-description mb-0">{{ report.description }}</p>
       </div>
 
       <div class="mb-3">
