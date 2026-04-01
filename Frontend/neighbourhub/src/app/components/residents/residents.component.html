@@ -1,0 +1,110 @@
+<section class="container-fluid py-4 residents-page ps-5 pe-5">
+	<div class="mb-4">
+		<h1 class="h2 mb-1">Residents</h1>
+		<p class="text-muted mb-0">View all units in the building.</p>
+	</div>
+
+	<ng-container *ngIf="residents$ | async as residents">
+		<div class="residents-table-wrap" *ngIf="residents.length > 0; else emptyState">
+			<div class="table-responsive">
+				<table class="table align-middle mb-0 residents-table" aria-label="Residents list">
+					<thead>
+						<tr>
+							<th scope="col">Resident</th>
+							<th scope="col">Flat</th>
+							<th scope="col">Mobile Number</th>
+							<th scope="col">Parking Space</th>
+							<th scope="col">Storage Number</th>
+							<th scope="col" *ngIf="isAdmin" class="actions-head">
+								<span class="visually-hidden">Actions</span>
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr class="resident-row" *ngFor="let resident of residents">
+							<td>
+								<div class="resident-cell">
+									<span class="resident-avatar">{{ getResidentInitial(resident.firstName, resident.lastName) }}</span>
+									<span class="resident-name">{{ getResidentName(resident) }}</span>
+								</div>
+							</td>
+							<td class="resident-value">{{ resident.apartmentNumber }}</td>
+							<td class="resident-value">{{ resident.phoneNumber }}</td>
+							<td class="resident-value">{{ resident.parkingSpace }}</td>
+							<td class="resident-value">{{ resident.storage }}</td>
+							<td *ngIf="isAdmin" class="actions-cell">
+								<button
+									type="button"
+									class="edit-button"
+									(click)="openEditModal(resident)"
+									aria-label="Edit resident"
+									title="Edit resident"
+								>
+									<i class="bi bi-pencil"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</ng-container>
+
+	<ng-template #emptyState>
+		<div class="alert alert-light border" role="status">
+			<i class="bi bi-info-circle-fill me-2"></i>
+			No residents found.
+		</div>
+	</ng-template>
+</section>
+
+<div class="modal-backdrop-custom" *ngIf="isEditModalOpen">
+	<section class="edit-modal" *ngIf="editDraft as draft" role="dialog" aria-modal="true" aria-label="Edit resident">
+		<div class="edit-modal-header">
+			<h2 class="h5 mb-0">Edit Resident</h2>
+			<button type="button" class="icon-close" (click)="closeEditModal()" aria-label="Close">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</div>
+
+		<div class="edit-modal-body">
+			<div class="row g-2 mb-3">
+				<div class="col-12 col-md-6">
+					<label class="form-label" for="resident-first-name">First Name</label>
+					<input id="resident-first-name" type="text" class="form-control" [(ngModel)]="draft.firstName" />
+				</div>
+				<div class="col-12 col-md-6">
+					<label class="form-label" for="resident-last-name">Last Name</label>
+					<input id="resident-last-name" type="text" class="form-control" [(ngModel)]="draft.lastName" />
+				</div>
+			</div>
+
+			<label class="form-label" for="resident-email">Email</label>
+			<input id="resident-email" type="email" class="form-control mb-3" [(ngModel)]="draft.email" />
+
+			<label class="form-label" for="resident-mobile">Mobile Number</label>
+			<input id="resident-mobile" type="text" class="form-control mb-3" [(ngModel)]="draft.phoneNumber" />
+
+			<label class="form-label" for="resident-flat">Flat</label>
+			<input id="resident-flat" type="text" class="form-control mb-3" [(ngModel)]="draft.apartmentNumber" />
+
+			<label class="form-label" for="resident-parking">Parking Space</label>
+			<input id="resident-parking" type="text" class="form-control mb-3" [(ngModel)]="draft.parkingSpace" />
+
+			<label class="form-label" for="resident-storage">Storage Number</label>
+			<input id="resident-storage" type="text" class="form-control" [(ngModel)]="draft.storage" />
+
+			<div class="alert alert-danger mt-3 mb-0" *ngIf="saveErrorMessage">
+				{{ saveErrorMessage }}
+			</div>
+		</div>
+
+		<div class="edit-modal-footer">
+			<button type="button" class="btn btn-light" (click)="closeEditModal()">Cancel</button>
+			<button type="button" class="btn btn-primary" (click)="saveResidentChanges()" [disabled]="isDraftInvalid(draft)">
+				Save Changes
+			</button>
+		</div>
+	</section>
+</div>

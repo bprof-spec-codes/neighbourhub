@@ -1,0 +1,161 @@
+.residents-page {
+	color: #243244;
+}
+
+.residents-table-wrap {
+	background: #ffffff;
+	border: 1px solid #e8edf3;
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow: 0 3px 10px rgba(22, 44, 70, 0.04);
+}
+
+.residents-table {
+	min-width: 860px;
+
+	thead th {
+		border-bottom: 1px solid #edf1f6;
+		color: #2d3f53;
+		font-size: 0.92rem;
+		font-weight: 700;
+		padding: 1rem 1.15rem;
+		background-color: #ffffff;
+	}
+
+	tbody td {
+		border-top: 1px solid #edf1f6;
+		padding: 0.95rem 1.15rem;
+		vertical-align: middle;
+		color: #506176;
+	}
+}
+
+.resident-row {
+	transition: background-color 0.18s ease;
+
+	&:hover {
+		background: #f9fbff;
+	}
+
+	&:hover .edit-button,
+	&:focus-within .edit-button {
+		opacity: 1;
+		transform: translateX(0);
+		pointer-events: auto;
+	}
+}
+
+.resident-cell {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+.resident-avatar {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background: #dcecff;
+	color: #2b75d6;
+	display: inline-grid;
+	place-items: center;
+	font-size: 0.84rem;
+	font-weight: 700;
+}
+
+.resident-name {
+	font-weight: 600;
+	color: #243244;
+}
+
+.resident-value {
+	color: #6a7a8f;
+	font-weight: 500;
+}
+
+.actions-head,
+.actions-cell {
+	width: 3.25rem;
+	text-align: right;
+}
+
+.edit-button {
+	border: 0;
+	background: #eff5ff;
+	color: #256fd6;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 8px;
+	display: inline-grid;
+	place-items: center;
+	opacity: 0;
+	transform: translateX(6px);
+	pointer-events: none;
+	transition: opacity 0.16s ease, transform 0.16s ease, background-color 0.16s ease;
+
+	&:hover {
+		background-color: #dbe9ff;
+	}
+}
+
+.modal-backdrop-custom {
+	position: fixed;
+	inset: 0;
+	background: rgba(18, 36, 59, 0.42);
+	display: grid;
+	place-items: center;
+	z-index: 1050;
+	padding: 1.25rem;
+}
+
+.edit-modal {
+	width: min(100%, 520px);
+	background: #ffffff;
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow: 0 18px 52px rgba(13, 28, 48, 0.22);
+}
+
+.edit-modal-header,
+.edit-modal-footer {
+	padding: 1rem 1.2rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.8rem;
+}
+
+.edit-modal-header {
+	border-bottom: 1px solid #edf1f6;
+}
+
+.edit-modal-body {
+	padding: 1rem 1.2rem;
+}
+
+.edit-modal-footer {
+	border-top: 1px solid #edf1f6;
+	justify-content: flex-end;
+}
+
+.icon-close {
+	border: 0;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 8px;
+	color: #6c7d91;
+	background: transparent;
+	display: grid;
+	place-items: center;
+
+	&:hover {
+		background: #f0f4fa;
+	}
+}
+
+@media (max-width: 992px) {
+	.residents-page {
+		padding-left: 1.1rem !important;
+		padding-right: 1.1rem !important;
+	}
+}
