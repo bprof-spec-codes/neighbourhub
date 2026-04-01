@@ -19,6 +19,6 @@ export class AuthBackendService {
   }
 
   login(LoginDto: LoginDto): Observable<LoginResult> {
-      return this.http.post<LoginResult>(`${this.baseApiUrl}/User/Login`, {LoginDto});
+      return this.http.post<LoginResult>(`${this.baseApiUrl}/User/Login`, LoginDto);
   }
 }

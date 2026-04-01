@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LoginResult } from '../../entities/dtos/login-result';
 import { AuthService } from '../../services/auth.service';
+import { RegisterDto } from '../../entities/dtos/register-dto';
 
 @Component({
   selector: 'app-register',
@@ -51,14 +52,14 @@ export class RegisterComponent {
     this.serverErrorMessage = '';
 
     const formValues = this.registerForm.value;
-    const dto = {
+    const dto:RegisterDto = {
       lastname: formValues.lastname,
       firstname: formValues.firstname,
       email: formValues.email,
       password: formValues.password,
       apartmentNumber: [formValues.apartmentNumber],
       phoneNumber: formValues.phoneNumber
-  };
+    };
 
     this.auth.register(dto).pipe(untilDestroyed(this)).subscribe({ 
     next: () => {

@@ -123,16 +123,8 @@ export class AuthService {
     return this.getRoles().includes('Admin');
   }
   /*regisztráció*/
-  register(formValues: any): Observable<any> {
-    const dto: RegisterDto = {
-      lastname: formValues.lastname,
-      firstname: formValues.firstname,
-      email: formValues.email,
-      password: formValues.password,
-      // Itt történik az apartmentNumber tömbbé alakítása
-      apartmentNumber: [formValues.apartmentNumber],
-      phoneNumber: formValues.phoneNumber
-    };
+  register(dto: RegisterDto): Observable<any> {
+    
     return this.authBackendService.register(dto);
   }
 }

@@ -40,7 +40,7 @@ export class LoginComponent {
           return;
         }
         this.auth.saveToken(token);
-        this.router.navigate(['/auth/login']); 
+        this.router.navigate(['/auth/dashboard']); 
     },
     error: (err) => {
       console.error('Registration failed:', err);
