@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { JwtPayload } from '../entities/models/jwt-payload';
+import { RegisterDto } from '../entities/dtos/register-dto';
+import { AuthBackendService } from '../backend/auth-backend.service';
+import { LoginDto } from '../entities/dtos/login-dto';
+import { Router } from '@angular/router';
+import { LoginResult } from '../entities/dtos/login-result';
 
-interface LoginResult {
-  Token?: string;
-  token?: string;
-  Expiration?: string;
-  expiration?: string;
-}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // environment.apiUrl already includes /api, so avoid duplicate /api/api
-  private apiUrl = environment.apiUrl + '/User/Login';
-  private storageKey = 'neigh_token';
+  private storageKey = environment.storageKey;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) {}
+  constructor(private authBackendService: AuthBackendService, private router: Router) {}
 
-  login(email: string, password: string): Observable<LoginResult> {
-    return this.http.post<LoginResult>(`${this.apiUrl}`, { email, password });
+  public login(dto: LoginDto): Observable<LoginResult> {
+    return this.authBackendService.login(dto);
   }
 
   saveToken(token: string) {
@@ -36,10 +28,10 @@ export class AuthService {
     return localStorage.getItem(this.storageKey);
   }
 
-  logout() {
-    localStorage.removeItem(this.storageKey);
-    this.router.navigate(['/login']);
-  }
+   logout() {
+     localStorage.removeItem(this.storageKey);
+     this.router.navigate(['/login']);
+   }
 
   isLoggedIn(): boolean {
     const token = this.getToken();
@@ -129,5 +121,10 @@ export class AuthService {
 
   isAdmin(): boolean {
     return this.getRoles().includes('Admin');
+  }
+  /*regisztráció*/
+  register(dto: RegisterDto): Observable<any> {
+    
+    return this.authBackendService.register(dto);
   }
 }

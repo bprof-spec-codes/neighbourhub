@@ -18,7 +18,7 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public void AddAnnouncement(AnnouncementCreateDto dto)
     {
         _announcementLogic.AddAnnouncement(dto);
@@ -32,7 +32,7 @@ public class AnnouncementController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public void DeleteAnnouncementById(string id)
     {
         _announcementLogic.DeleteAnnouncementById(id);
