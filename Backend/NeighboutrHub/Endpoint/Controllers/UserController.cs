@@ -1,4 +1,4 @@
-﻿using Data;
+using Data;
 using Entities.Dtos.User;
 using Entities.Helpers;
 using Entities.Models;
@@ -19,27 +19,30 @@ namespace Endpoint.Controllers
     public class UserController : ControllerBase
     {
         UserManager<AppUser> userManager;
-        private readonly IWebHostEnvironment env;
         RoleManager<IdentityRole> roleManager;
         private readonly JwtSettings jwtSettings;
-        public UserController(UserManager<AppUser> userManager, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager, IOptions<JwtSettings> jwtSettings)
+        public UserController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IOptions<JwtSettings> jwtSettings)
         {
             this.userManager = userManager;
-            this.env = env;
             this.roleManager = roleManager;
             this.jwtSettings = jwtSettings.Value;
         }
 
         [HttpPost("Register")]
-        public async Task RegisterUser(AppUserRegisterDto dto)
+        public async Task<IActionResult> RegisterUser(AppUserRegisterDto dto)
         {
-            if (dto.Password.Length < 8) throw new ArgumentException("A jelszónak legalább 8 karakter hosszúnak kell lennie!");
+            if (dto.Password.Length < 8)
+                return BadRequest(new { message = "Your password must be at least 8 characters long!" });
 
-            if (await userManager.FindByEmailAsync(dto.Email) != null) throw new ArgumentException("Az emalcím már létezik!");
+            if (await userManager.FindByEmailAsync(dto.Email) != null)
+                return BadRequest(new { message = "That email address already exists!" });
 
-            if (!(IsValidEmail(dto.Email))) throw new ArgumentException("Az email cím formátuma nem megfelelő!");
-            if (!(IsValidPhoneNumber(dto.PhoneNumber))) throw new ArgumentException("A telefonszám formátuma nem megfelelő!");
-            bool isAdmin = userManager.Users.Count() == 0;
+            if (!(IsValidEmail(dto.Email)))
+                return BadRequest(new { message = "The email address format is incorrect!" });
+
+            if (!(IsValidPhoneNumber(dto.PhoneNumber)))
+                return BadRequest(new { message = "The phone number format is incorrect!" });
+
             var user = new AppUser()
             {
                 FirstName = dto.FirstName,
@@ -52,14 +55,11 @@ namespace Endpoint.Controllers
                 IsApproved = isAdmin
             };
 
-
-
-
             var result = await userManager.CreateAsync(user, dto.Password);
             if (!result.Succeeded)
             {
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                throw new ArgumentException("A jelszónak tartalmaznia kell legalább egy számot és egy nagybetűt!");
+                return BadRequest(new { message = "Your password must contain at least one number and one uppercase letter!" });
             }
 
             if (userManager.Users.Count() == 1)
@@ -69,6 +69,7 @@ namespace Endpoint.Controllers
 
             }
 
+            return Ok();
         }
 
         [HttpPost("Login")]

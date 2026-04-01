@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Endpoint;
 
@@ -24,19 +26,47 @@ public class Program
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
+        // JWT Authentication setup
+        var jwtSection = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+        var jwtIssuer = jwtSection!.Issuer;
+        var jwtKey = jwtSection!.Key;
+        
+        builder.Services.AddIdentity<AppUser, IdentityRole>(
+                option =>
+                {
+                    option.Password.RequireDigit = false;
+                    option.Password.RequiredLength = 8;
+                    option.Password.RequireNonAlphanumeric = false;
+                    option.Password.RequireUppercase = false;
+                    option.Password.RequireLowercase = false;
+                })
+            .AddEntityFrameworkStores<RepositoryContext>()   
+            .AddDefaultTokenProviders();
+
+        builder.Services.AddAuthentication(option =>
+        {
+            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = true;
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidAudience = jwtIssuer,
+                ValidIssuer = jwtIssuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+            };
+        });
+        
         builder.Services.AddDbContext<RepositoryContext>(options =>
         {
             options.UseSqlServer(connectionString);
         });
-
         
-        builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
-            options.Password.RequiredLength = 8;
-            options.Password.RequireNonAlphanumeric = false; 
-            options.User.RequireUniqueEmail = true;
-        })
-        .AddEntityFrameworkStores<RepositoryContext>()
-        .AddDefaultTokenProviders();
 
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
         var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
@@ -49,7 +79,7 @@ public class Program
         .AddJwtBearer(options =>
         {
             options.SaveToken = true;
-            options.RequireHttpsMetadata = false; // Fejlesztés alatt lehet false
+            options.RequireHttpsMetadata = false; // Fejlesztï¿½s alatt lehet false
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
