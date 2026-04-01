@@ -11,8 +11,6 @@ using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Endpoint;
 
@@ -43,25 +41,6 @@ public class Program
             .AddEntityFrameworkStores<RepositoryContext>()   
             .AddDefaultTokenProviders();
 
-        builder.Services.AddAuthentication(option =>
-        {
-            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.SaveToken = true;
-            options.RequireHttpsMetadata = true;
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidAudience = jwtIssuer,
-                ValidIssuer = jwtIssuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-            };
-        });
-        
         builder.Services.AddDbContext<RepositoryContext>(options =>
         {
             options.UseSqlServer(connectionString);

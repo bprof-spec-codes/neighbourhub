@@ -43,6 +43,8 @@ namespace Endpoint.Controllers
             if (!(IsValidPhoneNumber(dto.PhoneNumber)))
                 return BadRequest(new { message = "The phone number format is incorrect!" });
 
+            bool isAdmin = userManager.Users.Any();
+            
             var user = new AppUser()
             {
                 FirstName = dto.FirstName,
