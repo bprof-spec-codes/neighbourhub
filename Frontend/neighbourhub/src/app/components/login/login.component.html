@@ -12,11 +12,17 @@
           <input [(ngModel)]="email" name="email" type="email" class="form-control" placeholder="Email" required/>
         </div>
 
-        <div class="input-group mb-3">
-          <span class="input-group-text">
-            <i class="bi bi-lock"></i>
-          </span>
-          <input [(ngModel)]="password" name="password" type="password" class="form-control" placeholder="Password" required />
+        <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          
+          <input *ngIf="hidePass" type="password" id="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password" />
+          <input *ngIf="!hidePass" type="text" id="shownpw" [(ngModel)]="password" name="password_visible" class="form-control" placeholder="Password" />
+          
+          <button (click)="passwordVisibility('password')" type="button" class="btn btn-primary" style="border-radius: 0 8px 8px 0; width: auto; padding: 0 15px; margin: 0;">
+            <i [class]="hidePass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+          </button>
+        </div>
         </div>
 
         <button class="btn btn-primary w-100 mb-2" type="submit" [disabled]="loading"> 
@@ -30,7 +36,7 @@
 
         <p class="text-center md-3">
           New to NeighbourHub?
-          <a class="register-link" routerLink="/register"><strong>Register</strong></a>
+          <a class="register-link" routerLink="/auth/register"><strong>Register</strong></a>
         </p>
       </form>
     </div>
