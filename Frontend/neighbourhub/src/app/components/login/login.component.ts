@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { LoginDto } from '../../entities/dtos/login-dto';
+import { LoginResult } from '../../entities/dtos/login-result';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+@UntilDestroy()
 export class LoginComponent {
   email = '';
   password = '';
@@ -22,21 +26,26 @@ export class LoginComponent {
     this.error = '';
     this.loading = true;
 
-    this.auth.login(this.email, this.password).subscribe({
-      next: (res: any) => {
-        const token = res?.token ?? res?.Token;
+    const dto: LoginDto = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.auth.login(dto).pipe(untilDestroyed(this)).subscribe({
+      next: (res: LoginResult) => {
+      const token = res?.token;
         if (!token) {
-          this.error = 'An error occurred while receiving a response from the server.';
-          this.loading = false;
+           this.error = 'Invalid response from server.';
+           this.loading = false;
           return;
         }
         this.auth.saveToken(token);
-        this.router.navigate(['/dashboard']); 
-      },
-      error: (err) => {
-        this.loading = false;
-        this.error = err?.error?.message ?? err?.message ?? 'Invalid email address or password.';
-      }
+        this.router.navigate(['/auth/login']); 
+    },
+    error: (err) => {
+      console.error('Registration failed:', err);
+      this.error = err.error?.message || 'Registration failed. Please try again.';
+    }
     });
   }
 

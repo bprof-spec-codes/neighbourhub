@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterService } from '../../services/register.service';
 import { Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { LoginResult } from '../../entities/dtos/login-result';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,12 +11,13 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
+@UntilDestroy()
 export class RegisterComponent {
   hidePass:boolean=true
   hidePass2:boolean=true
   registerForm: FormGroup
   serverErrorMessage: string = ''
-  constructor(private fb: FormBuilder, private registService:RegisterService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth:AuthService, private router: Router) {
     this.registerForm = this.fb.group(
       {
         lastname: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,12 +60,9 @@ export class RegisterComponent {
       phoneNumber: formValues.phoneNumber
   };
 
-    this.registService.register(dto).subscribe({
-    next: (response) => {
-      console.log('Registration successful:', response);
-      alert('Registration successful!');
-      this.registerForm.reset();
-      this.router.navigate(['/login']);
+    this.auth.register(dto).pipe(untilDestroyed(this)).subscribe({ 
+    next: () => {
+        this.router.navigate(['/auth/login']); 
     },
     error: (err) => {
       console.error('Registration failed:', err);
