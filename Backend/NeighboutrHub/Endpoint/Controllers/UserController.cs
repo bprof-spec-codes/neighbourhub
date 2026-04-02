@@ -43,8 +43,8 @@ namespace Endpoint.Controllers
             if (!(IsValidPhoneNumber(dto.PhoneNumber)))
                 return BadRequest(new { message = "The phone number format is incorrect!" });
 
-            bool isAdmin = userManager.Users.Any();
             
+
             var user = new AppUser()
             {
                 FirstName = dto.FirstName,
@@ -54,7 +54,7 @@ namespace Endpoint.Controllers
                 PhoneNumber = dto.PhoneNumber,
                 // ITT MÁSOLJUK ÁT A LISTÁKAT:
                 ApartmentNumber = dto.ApartmentNumber ?? new List<string>(),
-                IsApproved = isAdmin
+                IsApproved = false
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);
@@ -68,6 +68,7 @@ namespace Endpoint.Controllers
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
                 await userManager.AddToRoleAsync(user, "Admin");
+                user.IsApproved = true;
 
             }
 
@@ -115,13 +116,12 @@ namespace Endpoint.Controllers
                 Expiration = DateTime.Now.AddMinutes(expiryInMinutes)
             });
         }
-
         [Authorize(Roles = "Admin")]
         [HttpGet("PendingUsers")]
         public IActionResult GetPendingUsers()
         {
             var pendingUsers = userManager.Users
-                .Where(u => !u.IsApproved)
+                .Where(u => u.IsApproved!=true)
                 .Select(u => new PendingAppUserDto
                 {
                     Id = u.Id,

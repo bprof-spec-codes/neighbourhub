@@ -67,7 +67,7 @@ public class Program
                 ValidIssuer = jwtSettings.Issuer,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
                 // Fontos: Itt is megmondhatjuk neki, hogy hol keresse a role-t
-                RoleClaimType = "role",
+                RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
                 NameClaimType = "unique_name"
             };
         });
