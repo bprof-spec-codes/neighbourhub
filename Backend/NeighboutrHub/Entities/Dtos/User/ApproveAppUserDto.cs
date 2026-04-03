@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace Entities.Dtos.User
     public class ApproveAppUserDto
     {
         public required string UserId { get; set; }
-        public required string Role { get; set; } // Pl: "OwnerResiding", "Tenant", "Owner"
+        public required UserRole Role { get; set; } // Pl: "OwnerResiding", "Tenant", "Owner"
     }
 }

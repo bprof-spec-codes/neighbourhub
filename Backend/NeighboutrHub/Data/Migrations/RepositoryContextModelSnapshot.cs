@@ -381,6 +381,9 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("RequestedRole")
+                        .HasColumnType("int");
+
                     b.PrimitiveCollection<string>("Storage")
                         .IsRequired()
                         .HasMaxLength(50)

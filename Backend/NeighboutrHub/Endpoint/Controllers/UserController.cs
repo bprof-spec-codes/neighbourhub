@@ -1,5 +1,6 @@
 using Data;
 using Entities.Dtos.User;
+using Entities.Enums;
 using Entities.Helpers;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -47,6 +48,7 @@ namespace Endpoint.Controllers
 
             var user = new AppUser()
             {
+                
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 UserName = dto.Email.Split('@')[0],
@@ -58,21 +60,35 @@ namespace Endpoint.Controllers
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                return BadRequest(new { message = "Your password must contain at least one number and one uppercase letter!" });
+                // 1. Megnézzük, hogy az adott Role létezik-e az adatbázisban, ha nem, létrehozzuk
+                string roleName = dto.Role.ToString();
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                // 2. Hozzárendeljük a felhasználóhoz a kiválasztott szerepkört
+                await userManager.AddToRoleAsync(user, roleName);
+
+                // Speciális logika az első regisztrálóhoz (Admin)
+                if (userManager.Users.Count() == 1)
+                {
+                    if (!await roleManager.RoleExistsAsync("Admin"))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
+                    await userManager.AddToRoleAsync(user, "Admin");
+
+                    user.IsApproved = true;
+                    await userManager.UpdateAsync(user);
+                }
+
+                return Ok();
             }
 
-            if (userManager.Users.Count() == 1)
-            {
-                await roleManager.CreateAsync(new IdentityRole("Admin"));
-                await userManager.AddToRoleAsync(user, "Admin");
-                user.IsApproved = true;
-
-            }
-
-            return Ok();
+            return BadRequest(result.Errors);
         }
 
         [HttpPost("Login")]
@@ -127,11 +143,13 @@ namespace Endpoint.Controllers
                     Id = u.Id,
                     FullName = $"{u.FirstName} {u.LastName}",
                     Email = u.Email!,
-                    ApartmentNumbers = u.ApartmentNumber
+                    ApartmentNumbers = u.ApartmentNumber,
+                    Role = u.RequestedRole
                 }).ToList();
 
             return Ok(pendingUsers);
         }
+
 
         [Authorize(Roles = "Admin")]
         [HttpPost("ApproveUser")]
@@ -140,23 +158,39 @@ namespace Endpoint.Controllers
             var user = await userManager.FindByIdAsync(dto.UserId);
             if (user == null) return NotFound("User not found");
 
-            // 1. Státusz frissítése
+            string finalRole = !string.IsNullOrEmpty(dto.Role.ToString())
+                               ? dto.Role.ToString()
+                               : user.RequestedRole.ToString();
+
+
             user.IsApproved = true;
-            var updateResult = await userManager.UpdateAsync(user);
 
-            if (!updateResult.Succeeded) return BadRequest("Failed to update user status");
 
-            // 2. Role hozzáadása (biztosítjuk, hogy létezik a Role)
-            if (!await roleManager.RoleExistsAsync(dto.Role))
+            if (Enum.TryParse<UserRole>(finalRole, out var parsedRole))
             {
-                await roleManager.CreateAsync(new IdentityRole(dto.Role));
+                user.RequestedRole = parsedRole;
             }
 
-            await userManager.AddToRoleAsync(user, dto.Role);
+            var updateResult = await userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded) return BadRequest("Failed to update user status");
 
-            return Ok(new { message = $"User approved as {dto.Role}" });
+
+            if (!await roleManager.RoleExistsAsync(finalRole))
+            {
+                await roleManager.CreateAsync(new IdentityRole(finalRole));
+            }
+
+            // Biztonság kedvéért töröljük az esetleges régi szerepköreit, 
+            // hogy ne legyen egyszerre Tenant és Owner is véletlenül
+            var currentRoles = await userManager.GetRolesAsync(user);
+            await userManager.RemoveFromRolesAsync(user, currentRoles);
+
+            // Hozzáadjuk az újat
+            var roleResult = await userManager.AddToRoleAsync(user, finalRole);
+            if (!roleResult.Succeeded) return BadRequest("Failed to add user to role");
+
+            return Ok(new { message = $"User approved as {finalRole}" });
         }
-
         private bool IsValidEmail(string email)
         {
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";

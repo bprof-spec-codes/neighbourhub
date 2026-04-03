@@ -1,4 +1,5 @@
-﻿using Entities.Helpers;
+﻿using Entities.Enums;
+using Entities.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Entities.Models
 {
     public class AppUser: IdentityUser, IIdEntity
     {
+        public UserRole RequestedRole { get; set; }
         [StringLength(50)]
         public string FirstName { get; set; } = string.Empty;
 

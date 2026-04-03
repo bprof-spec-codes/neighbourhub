@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Endpoint;
 
@@ -93,7 +94,11 @@ public class Program
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(option =>
         {

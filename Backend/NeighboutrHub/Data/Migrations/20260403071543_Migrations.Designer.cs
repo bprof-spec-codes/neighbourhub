@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20260401080718_Initial")]
-    partial class Initial
+    [Migration("20260403071543_Migrations")]
+    partial class Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -383,6 +383,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("RequestedRole")
+                        .HasColumnType("int");
 
                     b.PrimitiveCollection<string>("Storage")
                         .IsRequired()
