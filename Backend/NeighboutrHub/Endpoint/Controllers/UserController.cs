@@ -56,7 +56,8 @@ namespace Endpoint.Controllers
                 PhoneNumber = dto.PhoneNumber,
                 // ITT MÁSOLJUK ÁT A LISTÁKAT:
                 ApartmentNumber = dto.ApartmentNumber ?? new List<string>(),
-                IsApproved = false
+                IsApproved = false,
+                RequestedRole = dto.Role
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);

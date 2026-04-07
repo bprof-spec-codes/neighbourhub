@@ -8,7 +8,7 @@ namespace Entities.Enums
 {
     public enum UserRole
     {
-        OwnerResiding,
+        Occupant,
         Tenant,
         Owner,
         Admin
