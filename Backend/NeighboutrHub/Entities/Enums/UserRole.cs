@@ -10,7 +10,6 @@ namespace Entities.Enums
     {
         Occupant,
         Tenant,
-        Owner,
-        Admin
+        Owner
     }
 }
