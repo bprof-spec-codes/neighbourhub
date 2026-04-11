@@ -1,3 +1,4 @@
+using AutoMapper;
 using Data;
 using Entities.Helpers;
 using Entities.Models;
@@ -40,5 +41,20 @@ public class DocumentLogic
         _docuementRepository.Update(document);
 
         return document.Path;
+    }
+    
+    public DocumentDownloadResultDto GetDocument(string id)
+    {
+        var document = _docuementRepository.GetAll().FirstOrDefault(d => d.Id == id);
+        if (document == null)
+            throw new FileNotFoundException("Document not found");
+        
+        var path = Path.Combine(_fileStorageSettings.StoragePath, document.Path);
+        if (!File.Exists(path))
+            throw new FileNotFoundException("File not found on disk");
+        
+        var fileName = string.IsNullOrWhiteSpace(document.Title) ? $"{document.Id}.pdf" : document.Title;
+
+        return new DocumentDownloadResultDto(File.ReadAllBytes(path), fileName);
     }
 }

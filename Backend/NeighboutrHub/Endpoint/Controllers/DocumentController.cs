@@ -6,7 +6,7 @@ using Endpoint.Dtos;
 namespace Endpoint.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class DocumentController : ControllerBase
 {
     private readonly DocumentLogic _documentLogic;
@@ -40,6 +40,26 @@ public class DocumentController : ControllerBase
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("{id}/download")]
+    public IActionResult DownloadDocument([FromRoute] string id)
+    {
+        try
+        {
+            var document = _documentLogic.GetDocument(id);
+
+            return File(
+                fileContents: document.Content,
+                contentType: "application/pdf",
+                fileDownloadName: document.FileName,
+                enableRangeProcessing: true
+            );
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(ex.Message);
         }
     }
 }
