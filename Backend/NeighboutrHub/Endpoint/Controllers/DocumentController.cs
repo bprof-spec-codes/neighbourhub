@@ -18,6 +18,7 @@ public class DocumentController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [Consumes("multipart/form-data")]
     //[Authorize]
     public async Task<IActionResult> UploadDocument([FromForm] DocumentUploadRequestDto request)
@@ -71,6 +72,7 @@ public class DocumentController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public void DeleteDocument([FromRoute] string id)
     {
         _documentLogic.DeleteDocument(id);
