@@ -1,0 +1,44 @@
+using Data;
+using Entities.Helpers;
+using Entities.Models;
+using Microsoft.Extensions.Options;
+
+namespace Logic.Logic;
+
+public class DocumentLogic
+{
+    private readonly Repository<Document> _docuementRepository;
+    private readonly FileStorageSettings _fileStorageSettings;
+
+    public DocumentLogic(Repository<Document> docuementRepository, IOptions<FileStorageSettings> fileStorageSettings)
+    {
+        _docuementRepository = docuementRepository;
+        _fileStorageSettings = fileStorageSettings.Value;
+    }
+    
+    
+    public async Task<string> UploadDocumentAsync((Stream fileStream, string fileName) file)
+    {
+        var fileName = file.fileName;
+        var path = Path.Combine(_fileStorageSettings.StoragePath, "uploads", "documents", file.fileName);
+
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        await using (var output = new FileStream(path, FileMode.Create))
+        {
+            await file.fileStream.CopyToAsync(output);
+        }
+        
+        var relativePath = $"uploads/documents/{fileName}";
+        
+        Document document = new Document()
+        {
+            Title = fileName,
+            Path = relativePath
+        };
+        
+        _docuementRepository.Add(document);
+        _docuementRepository.Update(document);
+
+        return document.Path;
+    }
+}
