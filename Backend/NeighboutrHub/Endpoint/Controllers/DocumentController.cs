@@ -69,4 +69,10 @@ public class DocumentController : ControllerBase
     {
         return _documentLogic.GetAllDocuments();
     }
+
+    [HttpDelete("{id}")]
+    public void DeleteDocument([FromRoute] string id)
+    {
+        _documentLogic.DeleteDocument(id);
+    }
 }

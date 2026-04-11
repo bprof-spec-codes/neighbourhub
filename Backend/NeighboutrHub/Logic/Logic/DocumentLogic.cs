@@ -67,4 +67,16 @@ public class DocumentLogic
         
         return mappedDocuments;
     }
+    public void DeleteDocument(string id)
+    {
+        var document = _docuementRepository.GetAll().FirstOrDefault(d => d.Id == id);
+        if (document == null)
+            throw new FileNotFoundException("Document not found");
+        
+        var path = Path.Combine(_fileStorageSettings.StoragePath, document.Path);
+        if (File.Exists(path))
+            File.Delete(path);
+        
+        _docuementRepository.Delete(document);
+    }
 }
