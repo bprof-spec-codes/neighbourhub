@@ -2,6 +2,7 @@ using Logic.Logic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Endpoint.Dtos;
+using Entities.Models;
 
 namespace Endpoint.Controllers;
 
@@ -61,5 +62,11 @@ public class DocumentController : ControllerBase
         {
             return NotFound(ex.Message);
         }
+    }
+
+    [HttpGet]
+    public List<DocumentShortViewDto> GetAllDocuments()
+    {
+        return _documentLogic.GetAllDocuments();
     }
 }

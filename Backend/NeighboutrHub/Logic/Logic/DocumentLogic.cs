@@ -1,7 +1,7 @@
-using AutoMapper;
 using Data;
 using Entities.Helpers;
 using Entities.Models;
+using Logic.Helper;
 using Microsoft.Extensions.Options;
 
 namespace Logic.Logic;
@@ -10,11 +10,13 @@ public class DocumentLogic
 {
     private readonly Repository<Document> _docuementRepository;
     private readonly FileStorageSettings _fileStorageSettings;
+    private readonly DtoProvider _dtoProvider;
 
-    public DocumentLogic(Repository<Document> docuementRepository, IOptions<FileStorageSettings> fileStorageSettings)
+    public DocumentLogic(Repository<Document> docuementRepository, IOptions<FileStorageSettings> fileStorageSettings, DtoProvider dtoProvider)
     {
         _docuementRepository = docuementRepository;
         _fileStorageSettings = fileStorageSettings.Value;
+        _dtoProvider = dtoProvider;
     }
     
     
@@ -56,5 +58,13 @@ public class DocumentLogic
         var fileName = string.IsNullOrWhiteSpace(document.Title) ? $"{document.Id}.pdf" : document.Title;
 
         return new DocumentDownloadResultDto(File.ReadAllBytes(path), fileName);
+    }
+
+    public List<DocumentShortViewDto> GetAllDocuments()
+    {
+        var documents = _docuementRepository.GetAll().ToList();
+        var mappedDocuments = _dtoProvider.Mapper.Map<List<DocumentShortViewDto>>(documents);
+        
+        return mappedDocuments;
     }
 }
