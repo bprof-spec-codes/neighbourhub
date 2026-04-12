@@ -85,7 +85,8 @@ public class Program
             {
                 policy.WithOrigins(frontendUrl!)
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("Content-Disposition");
             });
         });
 

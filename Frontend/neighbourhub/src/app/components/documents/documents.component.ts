@@ -35,4 +35,8 @@ export class DocumentsComponent implements OnInit {
       document.title.toLowerCase().includes(normalizedSearchTerm)
     );
   }
+
+  protected onDownloadDocument(documentId: string): void {
+    this.documentService.downloadDocument(documentId);
+  }
 }

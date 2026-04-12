@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentShortViewDto } from '../entities/dtos/document-short-view-dto.model';
@@ -15,5 +15,12 @@ export class DocumentsBackendService {
 
   public getDocuments(): Observable<DocumentShortViewDto[]> {
     return this.http.get<DocumentShortViewDto[]>(this.baseApiUrl + '/document');
+  }
+
+  public downloadDocument(documentId: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(this.baseApiUrl + `/document/${documentId}/download`, { 
+      responseType: 'blob',
+      observe: 'response'
+    });
   }
 }
