@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentShortViewDto } from '../entities/dtos/document-short-view-dto.model';
 import { environment } from '../../environments/environment.development';
+import { DocumentAddDto } from '../entities/dtos/document-add-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,13 @@ export class DocumentsBackendService {
       responseType: 'blob',
       observe: 'response'
     });
+  }
+
+  public addDocument(dto: DocumentAddDto): Observable<void> {
+    const formData = new FormData();
+    formData.append('title', dto.title);
+    formData.append('file', dto.file);
+
+    return this.http.post<void>(this.baseApiUrl + '/document', formData);
   }
 }

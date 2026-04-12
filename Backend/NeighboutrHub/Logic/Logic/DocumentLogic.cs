@@ -20,7 +20,7 @@ public class DocumentLogic
     }
     
     
-    public async Task<string> UploadDocumentAsync((Stream fileStream, string fileName, string title) file)
+    public async Task UploadDocumentAsync((Stream fileStream, string fileName, string title) file)
     {
         var fileName = file.fileName;
         var path = Path.Combine(_fileStorageSettings.StoragePath, "uploads", "documents", file.fileName);
@@ -41,8 +41,6 @@ public class DocumentLogic
         
         _docuementRepository.Add(document);
         _docuementRepository.Update(document);
-
-        return document.Path;
     }
     
     public DocumentDownloadResultDto GetDocument(string id)

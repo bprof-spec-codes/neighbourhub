@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentShortViewDto } from '../../entities/dtos/document-short-view-dto.model';
 import { DocumentService } from '../../services/document.service';
+import { DocumentAddDto } from '../../entities/dtos/document-add-dto.model';
 
 @Component({
   selector: 'app-documents',
@@ -49,7 +50,8 @@ export class DocumentsComponent implements OnInit {
     this.isAddModalOpen = false;
   }
 
-  protected addDocument(_: { title: string; file: File }): void {
+  protected addDocument(documentAddDto: DocumentAddDto): void {
+    this.documentService.addDocument(documentAddDto);
     this.closeAddModal();
   }
 }

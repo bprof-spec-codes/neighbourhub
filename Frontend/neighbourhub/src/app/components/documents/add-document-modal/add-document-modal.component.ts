@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DocumentAddDto } from '../../../entities/dtos/document-add-dto.model';
 
 @Component({
   selector: 'app-add-document-modal',
@@ -10,7 +11,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class AddDocumentModalComponent implements OnChanges {
   @Input() isOpen = false;
 
-  @Output() add = new EventEmitter<{ title: string; file: File }>();
+  @Output() add = new EventEmitter<DocumentAddDto>();
   @Output() close = new EventEmitter<void>();
 
   @ViewChild('fileInput') private fileInput?: ElementRef<HTMLInputElement>;
@@ -47,7 +48,7 @@ export class AddDocumentModalComponent implements OnChanges {
       return;
     }
 
-    this.add.emit({ title: rawValue.title, file: selectedFile });
+    this.add.emit(new DocumentAddDto(rawValue.title, selectedFile));
     this.resetFormToDefault();
   }
 

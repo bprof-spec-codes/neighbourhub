@@ -40,8 +40,8 @@ public class DocumentController : ControllerBase
 
         try
         {
-            var uploadedDocument = await _documentLogic.UploadDocumentAsync(fileData);
-            return Ok(uploadedDocument);
+            await _documentLogic.UploadDocumentAsync(fileData);
+            return Ok();
         }
         catch (Exception ex)
         {

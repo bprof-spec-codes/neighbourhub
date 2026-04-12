@@ -3,6 +3,7 @@ import { DocumentsBackendService } from '../backend/documents-backend.service';
 import { BehaviorSubject } from 'rxjs';
 import { DocumentShortViewDto } from '../entities/dtos/document-short-view-dto.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DocumentAddDto } from '../entities/dtos/document-add-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,17 @@ export class DocumentService {
       },
       error: (err) => {
         console.error('Failed to download document', err);
+      }
+    });
+  }
+
+  public addDocument(documentAddDto: DocumentAddDto): void {
+    this.documentBackendService.addDocument(documentAddDto).pipe(untilDestroyed(this)).subscribe({
+      next: () => {
+        this.fetchDocuments();
+      },
+      error: (err) => {
+        console.error('Failed to add document', err);
       }
     });
   }
