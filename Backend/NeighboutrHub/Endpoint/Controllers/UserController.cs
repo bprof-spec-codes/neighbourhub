@@ -181,16 +181,37 @@ namespace Endpoint.Controllers
                 await roleManager.CreateAsync(new IdentityRole(finalRole));
             }
 
-            // Biztonság kedvéért töröljük az esetleges régi szerepköreit, 
-            // hogy ne legyen egyszerre Tenant és Owner is véletlenül
+            // Biztonság kedvéért töröljük az esetleges régi szerepköreit, hogy ne legyen egyszerre Tenant és Owner is véletlenül
             var currentRoles = await userManager.GetRolesAsync(user);
             await userManager.RemoveFromRolesAsync(user, currentRoles);
 
-            // Hozzáadjuk az újat
             var roleResult = await userManager.AddToRoleAsync(user, finalRole);
             if (!roleResult.Succeeded) return BadRequest("Failed to add user to role");
 
             return Ok(new { message = $"User approved as {finalRole}" });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("RejectUser/{userId}")]
+        public async Task<IActionResult> RejectUser(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return NotFound("User not found");
+
+            // Ha már jóvá van hagyva, ne lehessen véletlenül törölni ezen a felületen
+            if (user.IsApproved)
+                return BadRequest("Cannot reject an already approved user.");
+
+            var result = await userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "Registration rejected and user deleted successfully." });
+            }
+
+            return BadRequest("Failed to delete user during rejection.");
         }
         private bool IsValidEmail(string email)
         {
