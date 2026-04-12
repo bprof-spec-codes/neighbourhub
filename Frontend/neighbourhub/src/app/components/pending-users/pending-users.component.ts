@@ -15,12 +15,11 @@ constructor(public profileService: ProfileService) {}
     this.profileService.loadAllPendingUsers();
   }
 
-  onApprove(userId: string | undefined) {
-    if (!userId) return;
-    console.log('User approved:', userId);
-    // Itt hívd meg a backend szervizet az elfogadáshoz
-    // Példa: this.profileBackendService.approveUser(userId).subscribe(() => this.profileService.loadAllPendingUsers());
+  onApprove(userId: string | undefined, role: string | undefined) {
+    if (!userId || !role) return;
+    this.profileService.onApprove(userId, role);
   }
+  
 
   onReject(userId: string | undefined) {
     if (!userId) return;

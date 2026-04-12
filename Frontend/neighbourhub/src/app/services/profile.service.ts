@@ -3,6 +3,7 @@ import { ProfilListViewDto } from '../entities/dtos/profil-list-view-dto';
 import { ProfilebackendService } from '../backend/profile-backend.service';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { RegisterApproveDto } from '../entities/dtos/register-approve-dto';
 
 @UntilDestroy()
 @Injectable({
@@ -25,4 +26,17 @@ export class ProfileService {
         error: (err) => console.error('Failed to load pending users', err)
       });
     }
+
+  onApprove(userId: string, role: string) {
+    this.profileBackendService.approveUser(userId, role).subscribe({
+      next: (res: RegisterApproveDto) => { // Típus megadva (res: any helyett)
+        console.log('Approval granted:', res);
+        this.loadAllPendingUsers(); // Saját metódus hívása a frissítéshez
+      },
+      error: (err: any) => { // Típus megadva
+        console.error('Error occurred:', err);
+        alert('Error occurred during approval!');
+      }
+    });
+}
 }
