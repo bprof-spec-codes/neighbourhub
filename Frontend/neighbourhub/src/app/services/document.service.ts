@@ -69,6 +69,17 @@ export class DocumentService {
     });
   }
 
+  public deleteDocument(documentId: string): void {
+    this.documentBackendService.deleteDocument(documentId).pipe(untilDestroyed(this)).subscribe({
+      next: () => {
+        this.fetchDocuments();
+      },
+      error: (err) => {
+        console.error('Failed to delete document', err);
+      }
+    });
+  }
+
   private extractFileName(contentDisposition: string | null): string | null {
     if (!contentDisposition) {
       return null;

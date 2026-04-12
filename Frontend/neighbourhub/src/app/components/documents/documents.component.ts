@@ -42,6 +42,10 @@ export class DocumentsComponent implements OnInit {
     this.documentService.downloadDocument(documentId);
   }
 
+  protected onDeleteDocument(documentId: string): void {
+    this.documentService.deleteDocument(documentId);
+  }
+
   protected openAddModal(): void {
     this.isAddModalOpen = true;
   }

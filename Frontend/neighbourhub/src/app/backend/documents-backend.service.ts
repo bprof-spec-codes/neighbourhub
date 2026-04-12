@@ -32,4 +32,8 @@ export class DocumentsBackendService {
 
     return this.http.post<void>(this.baseApiUrl + '/document', formData);
   }
+
+  public deleteDocument(documentId: string): Observable<void> {
+    return this.http.delete<void>(this.baseApiUrl + `/document/${documentId}`);
+  }
 }

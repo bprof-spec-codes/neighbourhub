@@ -38,14 +38,24 @@
 
 						<div class="min-w-0">
 							<h3 class="h6 mb-1 text-truncate">{{ doc.title }}</h3>
-							<p class="text-muted small mb-0">PDF document</p>
+							<p class="text-muted small mb-0">{{ doc.uploadDate | date:'yyyy.MM.dd. HH:mm' }}</p>
 						</div>
 					</div>
 
-					<button type="button" class="btn btn-sm flex-shrink-0 doc-download-btn" (click)="onDownloadDocument(doc.id)">
-						<i class="bi bi-download me-1"></i>
-						<span class="d-none d-sm-inline">Download</span>
-					</button>
+					<div class="d-flex align-items-center gap-2 flex-shrink-0">
+						<button type="button" class="btn btn-sm doc-download-btn" (click)="onDownloadDocument(doc.id)">
+							<i class="bi bi-download me-1"></i>
+							<span class="d-none d-sm-inline">Download</span>
+						</button>
+						<button
+							type="button"
+							class="btn p-0 close-btn"
+							aria-label="Delete document"
+							(click)="onDeleteDocument(doc.id)"
+						>
+							<i class="bi bi-x"></i>
+						</button>
+					</div>
 				</div>
 			</div>
 

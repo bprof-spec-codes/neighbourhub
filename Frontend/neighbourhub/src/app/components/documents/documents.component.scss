@@ -37,3 +37,23 @@
 	background: #e7f1ff;
     transition: 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
+
+.close-btn {
+	line-height: 1;
+	color: #adb5bd;
+	border: 0;
+	background: transparent;
+}
+
+.close-btn.btn:focus,
+.close-btn.btn:focus-visible,
+.close-btn.btn:active,
+.close-btn.btn.show {
+	outline: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+
+.close-btn .bi-x {
+	font-size: 1.1rem;
+}

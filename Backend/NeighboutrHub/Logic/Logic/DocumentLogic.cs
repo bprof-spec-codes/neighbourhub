@@ -60,7 +60,7 @@ public class DocumentLogic
 
     public List<DocumentShortViewDto> GetAllDocuments()
     {
-        var documents = _docuementRepository.GetAll().ToList();
+        var documents = _docuementRepository.GetAll().ToList().OrderByDescending(d => d.UploadDate).ToList();
         var mappedDocuments = _dtoProvider.Mapper.Map<List<DocumentShortViewDto>>(documents);
         
         return mappedDocuments;
