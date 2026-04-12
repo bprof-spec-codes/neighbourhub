@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { DocumentShortViewDto } from '../../entities/dtos/document-short-view-dto.model';
 import { DocumentService } from '../../services/document.service';
 import { DocumentAddDto } from '../../entities/dtos/document-add-dto.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-documents',
@@ -18,7 +19,7 @@ export class DocumentsComponent implements OnInit {
 
   private idToDelete = '';
 
-  constructor(private documentService: DocumentService) { }
+  constructor(private documentService: DocumentService, protected authService: AuthService) { }
 
   ngOnInit(): void {
     this.documentService.loadDocuments();
