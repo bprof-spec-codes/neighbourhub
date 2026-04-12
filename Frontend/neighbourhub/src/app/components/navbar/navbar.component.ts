@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 type NavItem = {
   label: string;
@@ -27,9 +28,10 @@ export class NavbarComponent {
     { label: 'Announcements', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
     { label: 'Bookings', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
     { label: 'Properties', route: '/properties', iconClass: 'bi bi-house-door-fill' },
-    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' }
+    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' },
+    { label: 'PendingUsers', route: '/pendingUsers', iconClass: 'bi bi-person-check-fill'} //csak admin lássa
   ];
-
+  
   toggleSidebar(): void {
     this.collapsed = !this.collapsed;
     this.collapsedChange.emit(this.collapsed);

@@ -122,7 +122,7 @@ export class AuthService {
   isAdmin(): boolean {
     return this.getRoles().includes('Admin');
   }
-  /*regisztráció*/
+  
   register(dto: RegisterDto): Observable<any> {
     
     return this.authBackendService.register(dto);

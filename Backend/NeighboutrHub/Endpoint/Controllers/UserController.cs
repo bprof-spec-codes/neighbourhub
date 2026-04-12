@@ -144,7 +144,7 @@ namespace Endpoint.Controllers
                     Id = u.Id,
                     FullName = $"{u.FirstName} {u.LastName}",
                     Email = u.Email!,
-                    ApartmentNumbers = u.ApartmentNumber,
+                    ApartmentNumber = u.ApartmentNumber,
                     Role = u.RequestedRole
                 }).ToList();
 

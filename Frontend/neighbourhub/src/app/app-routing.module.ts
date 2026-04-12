@@ -9,6 +9,7 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { authGuard } from './services/guards/auth.guard';
 import { IssuesComponent } from './components/issues/issues.component';
 import { RegisterComponent } from './components/register/register.component';
+import { PendingUsersComponent } from './components/pending-users/pending-users.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'announcements', component: AnnouncementListComponent, canActivate: [authGuard] },
       { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },
       { path: 'issues', component: IssuesComponent, canActivate: [authGuard] },
+      { path: 'pendingUsers', component: PendingUsersComponent, canActivate: [authGuard] },
     ]
   },
   { path: '**', redirectTo: '/dashboard' },
