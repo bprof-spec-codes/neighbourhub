@@ -14,6 +14,9 @@ export class DocumentsComponent implements OnInit {
   protected documents$ = new Observable<DocumentShortViewDto[]>();
   protected searchTerm = '';
   protected isAddModalOpen = false;
+  protected isDeleteModalOpen = false;
+
+  private idToDelete = '';
 
   constructor(private documentService: DocumentService) { }
 
@@ -42,8 +45,24 @@ export class DocumentsComponent implements OnInit {
     this.documentService.downloadDocument(documentId);
   }
 
-  protected onDeleteDocument(documentId: string): void {
-    this.documentService.deleteDocument(documentId);
+  protected openDeleteModal(documentId: string): void {
+    this.isDeleteModalOpen = true;
+    this.idToDelete = documentId;
+  }
+
+  protected closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+    this.idToDelete = '';
+  }
+
+  protected deleteDocument(): void {
+    if (!this.idToDelete) {
+      console.error('No document ID specified for deletion.');
+      return;
+    }
+
+    this.documentService.deleteDocument(this.idToDelete);
+    this.closeDeleteModal();
   }
 
   protected openAddModal(): void {
