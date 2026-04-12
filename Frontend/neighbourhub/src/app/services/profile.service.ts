@@ -37,6 +37,22 @@ export class ProfileService {
         console.error('Error occurred:', err);
         alert('Error occurred during approval!');
       }
-    });
-}
+    }); 
+  }
+  onReject(userId: string | undefined) {
+  if (!userId) return;
+
+  if (confirm('Are you sure you want to reject and delete this registration?')) {
+      this.profileBackendService.rejectUser(userId).subscribe({
+        next: (res) => {
+          console.log('User rejected:', res);
+          this.loadAllPendingUsers();
+        },
+        error: (err) => {
+          console.error('Error during rejection:', err);
+          alert('Could not reject user.');
+        }
+      });
+    }
+  }
 }

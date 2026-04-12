@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-pending-users',
@@ -21,11 +22,7 @@ constructor(public profileService: ProfileService) {}
   }
   
 
-  onReject(userId: string | undefined) {
-    if (!userId) return;
-    if (confirm('You are definitely declining the registration?')) {
-      console.log('User rejected:', userId);
-      // Itt hívd meg a backend szervizet az elutasításhoz
-    }
+  onReject(userId: string | undefined){
+    return this.profileService.onReject(userId);
   }
 }

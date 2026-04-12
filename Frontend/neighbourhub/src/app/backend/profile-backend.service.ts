@@ -18,5 +18,8 @@ export class ProfilebackendService {
     }
   approveUser(userId: string, role: string): Observable<RegisterApproveDto> {
     return this.http.post<RegisterApproveDto>(`${this.baseApiUrl}/User/ApproveUser`, { userId, role });
+  }
+  rejectUser(userId: string): Observable<any> {
+  return this.http.delete(`${this.baseApiUrl}/User/RejectUser/${userId}`);
 }
 }
