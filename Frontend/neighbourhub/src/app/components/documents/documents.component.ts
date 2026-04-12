@@ -12,6 +12,7 @@ import { DocumentService } from '../../services/document.service';
 export class DocumentsComponent implements OnInit {
   protected documents$ = new Observable<DocumentShortViewDto[]>();
   protected searchTerm = '';
+  protected isAddModalOpen = false;
 
   constructor(private documentService: DocumentService) { }
 
@@ -38,5 +39,17 @@ export class DocumentsComponent implements OnInit {
 
   protected onDownloadDocument(documentId: string): void {
     this.documentService.downloadDocument(documentId);
+  }
+
+  protected openAddModal(): void {
+    this.isAddModalOpen = true;
+  }
+
+  protected closeAddModal(): void {
+    this.isAddModalOpen = false;
+  }
+
+  protected addDocument(_: { title: string; file: File }): void {
+    this.closeAddModal();
   }
 }
