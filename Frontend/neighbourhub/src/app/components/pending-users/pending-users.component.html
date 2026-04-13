@@ -17,27 +17,29 @@
       </thead>
       <tbody>
         <tr *ngFor="let profile of profileService.profilessShort$ | async">
-          <td>{{ profile.fullName }}</td>
-          <td>{{ profile.email }}</td>
-          <td><span class="badge-apartment">{{ profile.apartmentNumber }}</span></td>
-          <td>
+          <td class="align-middle">{{ profile.fullName }}</td>
+          <td class="align-middle">{{ profile.email }}</td>
+          <td class="align-middle text-center">
+            <span class="badge-apartment">{{ profile.apartmentNumber }}</span>
+          </td>
+          <td class="align-middle">
             <div class="role-tags">
-              <span class="role-tag">{{ profile.role }}</span>
+              <select [(ngModel)]="profile.role" class="form-select form-select-sm role-select">
+                <option value="Occupant">Occupant</option>
+                <option value="Owner">Owner</option>
+                <option value="Tenant">Tenant</option>
+              </select>
             </div>
           </td>
-          <td class="actions">
-            <button class="btn btn-outline-success" (click)="onApprove(profile.id, profile.role)" title="Approval">
-              <i class="bi bi-check-lg"></i>
-            </button>
-            <button class="btn btn-outline-danger" (click)="onReject(profile.id)" title="Rejection">
-              <i class="bi bi-x-lg"></i>
-            </button>
-          </td>
-        </tr>
-        
-        <tr *ngIf="(profileService.profilessShort$ | async)?.length === 0">
-          <td colspan="5" class="empty-state">
-            There are no profiles awaiting approval.
+          <td class="actions align-middle">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <button class="btn btn-outline-success" (click)="onApprove(profile.id, profile.role)" title="Approval">
+                <i class="bi bi-check-lg"></i>
+              </button>
+              <button class="btn btn-outline-danger" (click)="onReject(profile.id)" title="Rejection">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
