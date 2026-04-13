@@ -96,31 +96,47 @@ export class AuthService {
     );
   }
 
+  // getRoles(): string[] {
+  //   const token = this.getToken();
+  //   if (!token) return [];
+
+  //   const payload = this.getPayload(token);
+  //   if (!payload) return [];
+
+  //   // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
+  //   const roles: string[] = [];
+
+  //   for (const key in payload) {
+  //     if (key.endsWith('/role')) {
+  //       const value = (payload as any)[key];
+  //       if (Array.isArray(value)) {
+  //         roles.push(...value);
+  //       } else {
+  //         roles.push(value);
+  //       }
+  //     }
+  //   }
+  //   return roles;
+  // }
+
   getRoles(): string[] {
-    const token = this.getToken();
-    if (!token) return [];
+  const token = this.getToken();
+  if (!token) return [];
 
-    const payload = this.getPayload(token);
-    if (!payload) return [];
+  const payload = this.decodePayload(token);
+  if (!payload) return [];
 
-    // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
-    const roles: string[] = [];
+  const microsoftRoleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+  const roleData = payload[microsoftRoleClaim] || payload['role'];
 
-    for (const key in payload) {
-      if (key.endsWith('/role')) {
-        const value = (payload as any)[key];
-        if (Array.isArray(value)) {
-          roles.push(...value);
-        } else {
-          roles.push(value);
-        }
-      }
-    }
-    return roles;
-  }
+  if (!roleData) return [];
+
+  return Array.isArray(roleData) ? roleData : [roleData];
+}
 
   isAdmin(): boolean {
     return this.getRoles().includes('Admin');
+    console.log(this.getRoles());
   }
   
   register(dto: RegisterDto): Observable<any> {

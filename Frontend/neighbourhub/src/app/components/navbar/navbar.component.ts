@@ -21,6 +21,8 @@ export class NavbarComponent {
   @Input() collapsed = false;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
+  constructor(private authService: AuthService) {}
+
   readonly navItems: NavItem[] = [
     { label: 'Dashboard', route: '/dashboard', iconClass: 'bi bi-grid-1x2-fill', exact: true },
     { label: 'Voting', route: '/voting', iconClass: 'bi bi-check2-square' },
@@ -28,12 +30,15 @@ export class NavbarComponent {
     { label: 'Announcements', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
     { label: 'Bookings', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
     { label: 'Properties', route: '/properties', iconClass: 'bi bi-house-door-fill' },
-    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' },
-    { label: 'PendingUsers', route: '/pendingUsers', iconClass: 'bi bi-person-check-fill'} //csak admin lássa
+    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' }
   ];
   
   toggleSidebar(): void {
     this.collapsed = !this.collapsed;
     this.collapsedChange.emit(this.collapsed);
+  }
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+    console.log(this.authService.isAdmin()); 
   }
 }
