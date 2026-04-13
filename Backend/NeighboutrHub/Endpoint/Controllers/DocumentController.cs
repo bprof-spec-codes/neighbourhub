@@ -23,7 +23,11 @@ public class DocumentController : ControllerBase
     //[Authorize]
     public async Task<IActionResult> UploadDocument([FromForm] DocumentUploadRequestDto request)
     {
+        var title = request.Title?.Trim();
         var file = request.File;
+
+        if (string.IsNullOrWhiteSpace(title))
+            return BadRequest("Title is required");
 
         if (file == null)
             return BadRequest("No file uploaded");
@@ -32,12 +36,12 @@ public class DocumentController : ControllerBase
         if (ext != ".pdf")
             return BadRequest("Invalid file type");
         
-        var fileStream = (stream: file.OpenReadStream(), fileName: file.FileName);
+        var fileData = (stream: file.OpenReadStream(), fileName: file.FileName, title: title);
 
         try
         {
-            var uploadedDocument = await _documentLogic.UploadDocumentAsync(fileStream);
-            return Ok(uploadedDocument);
+            await _documentLogic.UploadDocumentAsync(fileData);
+            return Ok();
         }
         catch (Exception ex)
         {

@@ -20,7 +20,7 @@ public class DocumentLogic
     }
     
     
-    public async Task<string> UploadDocumentAsync((Stream fileStream, string fileName) file)
+    public async Task UploadDocumentAsync((Stream fileStream, string fileName, string title) file)
     {
         var fileName = file.fileName;
         var path = Path.Combine(_fileStorageSettings.StoragePath, "uploads", "documents", file.fileName);
@@ -35,14 +35,12 @@ public class DocumentLogic
         
         Document document = new Document()
         {
-            Title = fileName,
+            Title = file.title,
             Path = relativePath
         };
         
         _docuementRepository.Add(document);
         _docuementRepository.Update(document);
-
-        return document.Path;
     }
     
     public DocumentDownloadResultDto GetDocument(string id)
@@ -62,7 +60,7 @@ public class DocumentLogic
 
     public List<DocumentShortViewDto> GetAllDocuments()
     {
-        var documents = _docuementRepository.GetAll().ToList();
+        var documents = _docuementRepository.GetAll().ToList().OrderByDescending(d => d.UploadDate).ToList();
         var mappedDocuments = _dtoProvider.Mapper.Map<List<DocumentShortViewDto>>(documents);
         
         return mappedDocuments;
