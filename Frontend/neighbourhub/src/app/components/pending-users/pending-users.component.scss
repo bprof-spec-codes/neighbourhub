@@ -13,12 +13,14 @@
     margin-bottom: 0; // Bootstrap fix
 
     th {
+      text-align: center;
       background: #f8f9fa;
       padding: 1rem;
       border-bottom: 2px solid #edf2f7;
     }
 
     td {
+      text-align: center;
       padding: 0.75rem 1rem;
       vertical-align: middle; // Ez rakja középre a szöveget a select mellett
       border-bottom: 1px solid #edf2f7;
