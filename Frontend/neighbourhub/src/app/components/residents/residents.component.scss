@@ -138,6 +138,24 @@
 
 .edit-modal-body {
 	padding: 1rem 1.2rem;
+
+	.form-control,
+	.input-group-text {
+		border-color: #dbe5f0;
+	}
+
+	.form-control {
+		background: #fbfdff;
+		color: #243244;
+		font-weight: 500;
+		transition: border-color 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+
+		&:focus {
+			background: #ffffff;
+			border-color: #86ace4;
+			box-shadow: 0 0 0 0.2rem rgba(37, 111, 214, 0.14);
+		}
+	}
 }
 
 .edit-modal-footer {
@@ -164,6 +182,32 @@
 	display: flex;
 	align-items: center;
 	gap: 0.75rem;
+}
+
+.form-item {
+	position: relative;
+}
+
+.form-label-icon {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: #40536a;
+	letter-spacing: 0.01em;
+
+	i {
+		font-size: 0.82rem;
+		color: #5a7fae;
+	}
+}
+
+.form-control-icon {
+	.input-group-text {
+		background: #f3f8ff;
+		color: #5b7ea8;
+	}
 }
 
 .profile-image-preview {

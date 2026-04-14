@@ -74,15 +74,21 @@
 		</div>
 
 		<div class="edit-modal-body">
-			<div class="mb-3">
-				<label class="form-label" for="resident-profile-image-url">Profile Picture URL</label>
-				<input
-					id="resident-profile-image-url"
-					type="url"
-					class="form-control"
-					placeholder="https://example.com/avatar.jpg"
-					[(ngModel)]="draft.profileImageUrl"
-				/>
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-profile-image-url">
+					<i class="bi bi-image"></i>
+					<span>Profile Picture URL</span>
+				</label>
+				<div class="input-group form-control-icon">
+					<span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+					<input
+						id="resident-profile-image-url"
+						type="url"
+						class="form-control"
+						placeholder="https://example.com/avatar.jpg"
+						[(ngModel)]="draft.profileImageUrl"
+					/>
+				</div>
 
 				<div class="profile-image-preview-wrap mt-2" *ngIf="getResidentProfileImageUrl(draft.profileImageUrl) as draftImageUrl">
 					<img
@@ -94,30 +100,61 @@
 			</div>
 
 			<div class="row g-2 mb-3">
-				<div class="col-12 col-md-6">
-					<label class="form-label" for="resident-first-name">First Name</label>
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-first-name">
+						<i class="bi bi-person"></i>
+						<span>First Name</span>
+					</label>
 					<input id="resident-first-name" type="text" class="form-control" [(ngModel)]="draft.firstName" />
 				</div>
-				<div class="col-12 col-md-6">
-					<label class="form-label" for="resident-last-name">Last Name</label>
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-last-name">
+						<i class="bi bi-person-badge"></i>
+						<span>Last Name</span>
+					</label>
 					<input id="resident-last-name" type="text" class="form-control" [(ngModel)]="draft.lastName" />
 				</div>
 			</div>
 
-			<label class="form-label" for="resident-email">Email</label>
-			<input id="resident-email" type="email" class="form-control mb-3" [(ngModel)]="draft.email" />
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-email">
+					<i class="bi bi-envelope"></i>
+					<span>Email</span>
+				</label>
+				<input id="resident-email" type="email" class="form-control" [(ngModel)]="draft.email" />
+			</div>
 
-			<label class="form-label" for="resident-mobile">Mobile Number</label>
-			<input id="resident-mobile" type="text" class="form-control mb-3" [(ngModel)]="draft.phoneNumber" />
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-mobile">
+					<i class="bi bi-telephone"></i>
+					<span>Mobile Number</span>
+				</label>
+				<input id="resident-mobile" type="text" class="form-control" [(ngModel)]="draft.phoneNumber" />
+			</div>
 
-			<label class="form-label" for="resident-flat">Flat</label>
-			<input id="resident-flat" type="text" class="form-control mb-3" [(ngModel)]="draft.apartmentNumber" />
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-flat">
+					<i class="bi bi-building"></i>
+					<span>Flat</span>
+				</label>
+				<input id="resident-flat" type="text" class="form-control" [(ngModel)]="draft.apartmentNumber" />
+			</div>
 
-			<label class="form-label" for="resident-parking">Parking Space</label>
-			<input id="resident-parking" type="text" class="form-control mb-3" [(ngModel)]="draft.parkingSpace" />
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-parking">
+					<i class="bi bi-p-square"></i>
+					<span>Parking Space</span>
+				</label>
+				<input id="resident-parking" type="text" class="form-control" [(ngModel)]="draft.parkingSpace" />
+			</div>
 
-			<label class="form-label" for="resident-storage">Storage Number</label>
-			<input id="resident-storage" type="text" class="form-control" [(ngModel)]="draft.storage" />
+			<div class="form-item">
+				<label class="form-label form-label-icon" for="resident-storage">
+					<i class="bi bi-box-seam"></i>
+					<span>Storage Number</span>
+				</label>
+				<input id="resident-storage" type="text" class="form-control" [(ngModel)]="draft.storage" />
+			</div>
 
 			<div class="alert alert-danger mt-3 mb-0" *ngIf="saveErrorMessage">
 				{{ saveErrorMessage }}
