@@ -14,11 +14,11 @@ export class AuthBackendService {
 
   constructor(private http: HttpClient) {}
 
-  register(dto: RegisterDto): Observable<void> {
-      return this.http.post<void>(`${this.baseApiUrl}/User/Register`, dto);
+  public register(dto: RegisterDto): Observable<void> {
+    return this.http.post<void>(`${this.baseApiUrl}/User/Register`, dto);
   }
 
-  login(LoginDto: LoginDto): Observable<LoginResult> {
-      return this.http.post<LoginResult>(`${this.baseApiUrl}/User/Login`, LoginDto);
+  public login(LoginDto: LoginDto): Observable<LoginResult> {
+    return this.http.post<LoginResult>(`${this.baseApiUrl}/User/Login`, LoginDto);
   }
 }
