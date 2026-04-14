@@ -29,7 +29,7 @@ export class NavbarComponent {
     { label: 'Issues', route: '/issues', iconClass: 'bi bi-exclamation-triangle-fill' },
     { label: 'Announcements', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
     { label: 'Bookings', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
-    { label: 'Properties', route: '/properties', iconClass: 'bi bi-house-door-fill' },
+    { label: 'Residents', route: '/residents', iconClass: 'bi bi-people-fill' },
     { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' }
   ];
   

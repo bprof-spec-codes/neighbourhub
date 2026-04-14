@@ -20,6 +20,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { VotingListComponent } from './components/voting-list/voting-list.component';
 import { VoteAddModalComponent } from './components/voting-list/vote-add-modal/vote-add-modal.component';
 import { VoteModalComponent } from './components/voting-list/vote-modal/vote-modal.component';
+import { ResidentsComponent } from './components/residents/residents.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { AddDocumentModalComponent } from './components/documents/add-document-modal/add-document-modal.component';
@@ -41,6 +42,7 @@ import { PendingUsersComponent } from './components/pending-users/pending-users.
     MainLayoutComponent,
     VotingListComponent,
     VoteAddModalComponent,
+    ResidentsComponent,
     VoteModalComponent,
     RegisterComponent,
     DocumentsComponent,

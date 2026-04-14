@@ -19,6 +19,10 @@ namespace Entities.Models
 
         [StringLength(50)]
         public string LastName { get; set; } = string.Empty;
+
+        [StringLength(2048)]
+        public string? ProfileImageUrl { get; set; }
+
         [StringLength(50)]
         public List<string> Storage { get; set; } = new List<string>();
         [StringLength(50)]

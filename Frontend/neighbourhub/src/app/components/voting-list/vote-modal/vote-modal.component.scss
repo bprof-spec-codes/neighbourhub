@@ -1,7 +1,9 @@
+@use "../../../../styles/colors" as *;
+
 .vote-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: $overlay-backdrop;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,12 +11,12 @@
 }
 
 .vote-modal-card {
-  background: white;
+  background: $white;
   border-radius: 12px;
   width: 100%;
   max-width: 420px;
   padding: 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 32px $shadow-modal;
 }
 
 .vote-modal-header {
@@ -22,7 +24,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid $border-muted;
 }
 
 .vote-modal-body {
@@ -33,5 +35,5 @@
   display: flex;
   justify-content: flex-end;
   padding: 1rem 1.5rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid $border-muted;
 }

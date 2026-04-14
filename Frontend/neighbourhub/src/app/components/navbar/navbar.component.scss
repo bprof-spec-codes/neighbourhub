@@ -1,3 +1,5 @@
+@use "../../../styles/colors" as *;
+
 .sidebar {
 	width: 280px;
     max-width: 280px;
@@ -5,8 +7,8 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	background: linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
-	border-right: 1px solid #e5eaf0;
+	background: linear-gradient(180deg, $white 0%, $card-background-grey 100%);
+	border-right: 1px solid $border-muted;
 	transition: width 0.25s ease;
 	overflow: hidden;
 }
@@ -17,7 +19,7 @@
 
 .sidebar-header {
 	padding: 1rem;
-	border-bottom: 1px solid #e5eaf0;
+	border-bottom: 1px solid $border-muted;
 }
 
 .sidebar-toggle {
@@ -25,10 +27,10 @@
 	flex-shrink: 0;
 	width: 28px;
 	height: 28px;
-	border: 1px solid #d4deea;
+	border: 1px solid $border-muted;
 	border-radius: 8px;
-	background: #ffffff;
-	color: #4c5e76;
+	background: $white;
+	color: $dark-gray;
 	display: grid;
 	place-items: center;
 	padding: 0;
@@ -36,9 +38,9 @@
 }
 
 .sidebar-toggle:hover {
-	background-color: #eef4ff;
-	color: #1d6fd8;
-	border-color: #b9d3f5;
+	background-color: $surface-primary-soft;
+	color: $blue;
+	border-color: $border-primary-soft;
 }
 
 .brand {
@@ -54,10 +56,10 @@
 	border-radius: 12px;
 	display: grid;
 	place-items: center;
-	background: #1d6fd8;
-	color: #ffffff;
+	background: $blue;
+	color: $white;
 	font-size: 1.2rem;
-	box-shadow: 0 8px 18px rgba(29, 111, 216, 0.2);
+	box-shadow: 0 8px 18px $shadow-primary;
 }
 
 .brand-icon-clickable {
@@ -71,14 +73,14 @@
 .brand-text h5 {
 	margin: 0;
 	font-size: 1rem;
-	color: #1f2a37;
+	color: $text-base;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .brand-text small {
-	color: #6b7a90;
+	color: $light-gray;
 	display: block;
 	white-space: nowrap;
 	overflow: hidden;
@@ -105,20 +107,20 @@
 	min-height: 44px;
 	padding: 0.6rem 0.85rem;
 	border-radius: 10px;
-	color: #3a4a5e;
+	color: $text-base;
 	text-decoration: none;
 	font-weight: 500;
 	transition: background-color 0.18s ease, color 0.18s ease;
 }
 
 .nav-link-item:hover {
-	background-color: #eef4ff;
-	color: #1d6fd8;
+	background-color: $surface-primary-soft;
+	color: $blue;
 }
 
 .nav-link-item.active {
-	background-color: #eaf2ff;
-	color: #1d6fd8;
+	background-color: $surface-primary-soft;
+	color: $blue;
 }
 
 .nav-icon {
@@ -129,7 +131,7 @@
 }
 
 .sidebar-footer {
-	border-top: 1px solid #e5eaf0;
+	border-top: 1px solid $border-muted;
 	padding: 1rem 0.75rem;
 }
 
@@ -146,7 +148,7 @@
 }
 
 .profile-button:hover {
-	background-color: #eef4ff;
+	background-color: $surface-primary-soft;
 }
 
 .profile-avatar {
@@ -155,8 +157,8 @@
 	border-radius: 50%;
 	display: grid;
 	place-items: center;
-	background: #d8e7ff;
-	color: #1d6fd8;
+	background: $surface-primary-soft;
+	color: $blue;
 	font-weight: 700;
 	font-size: 0.8rem;
 }
@@ -168,16 +170,16 @@
 .profile-name {
 	font-size: 0.9rem;
 	font-weight: 600;
-	color: #1f2a37;
+	color: $text-base;
 }
 
 .profile-details small {
-	color: #6b7a90;
+	color: $light-gray;
 }
 
 .version-text {
 	margin: 0.6rem 0 0;
 	text-align: center;
-	color: #8795a8;
+	color: $light-gray;
 	font-size: 0.77rem;
 }
