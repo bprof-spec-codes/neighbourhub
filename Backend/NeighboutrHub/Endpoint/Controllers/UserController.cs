@@ -70,10 +70,6 @@ namespace Endpoint.Controllers
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
 
-                // 2. Hozzárendeljük a felhasználóhoz a kiválasztott szerepkört
-                await userManager.AddToRoleAsync(user, roleName);
-
-                // Speciális logika az első regisztrálóhoz (Admin)
                 if (userManager.Users.Count() == 1)
                 {
                     if (!await roleManager.RoleExistsAsync("Admin"))
@@ -84,6 +80,10 @@ namespace Endpoint.Controllers
 
                     user.IsApproved = true;
                     await userManager.UpdateAsync(user);
+                }
+                else
+                {
+                    await userManager.AddToRoleAsync(user, roleName);
                 }
 
                 return Ok();

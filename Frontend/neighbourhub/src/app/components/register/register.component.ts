@@ -28,6 +28,7 @@ export class RegisterComponent {
         password2: ['', [Validators.required]],
         apartmentNumber: ['', [Validators.required]], 
         phoneNumber: ['', [Validators.required, Validators.pattern('^(\\+36|06|36)?[\\s\\-]?(20|30|31|70|1|[2-9][0-9])[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{3,4}$')]],
+        requestedRole: ['Occupant', [Validators.required]]
       }
     )
   }
@@ -58,7 +59,8 @@ export class RegisterComponent {
       email: formValues.email,
       password: formValues.password,
       apartmentNumber: [formValues.apartmentNumber],
-      phoneNumber: formValues.phoneNumber
+      phoneNumber: formValues.phoneNumber,
+      role: formValues.requestedRole
     };
 
     this.auth.register(dto).pipe(untilDestroyed(this)).subscribe({ 

@@ -82,6 +82,18 @@
                     <span *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</span>
                     <span *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone number format.</span>
                 </div>
+                <div class="role-selection-group">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                        <i class="bi bi-person-badge"></i>
+                        </span>
+                        <select class="form-select" formControlName="requestedRole">
+                        <option value="Occupant">Occupant</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Tenant">Tenant</option>
+                        </select>
+                    </div>
+                </div>
                 
                 <div *ngIf="serverErrorMessage" class="alert alert-danger mt-3">
                     {{ serverErrorMessage }}
