@@ -126,13 +126,21 @@ export class AuthService {
   const payload = this.decodePayload(token);
   if (!payload) return [];
 
-  const microsoftRoleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
-  const roleData = payload[microsoftRoleClaim] || payload['role'];
+    // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
+    const roles: string[] = [];
 
-  if (!roleData) return [];
-
-  return Array.isArray(roleData) ? roleData : [roleData];
-}
+    for (const key in payload) {
+      if (key.endsWith('/role') || key === 'role') {
+        const value = (payload as any)[key];
+        if (Array.isArray(value)) {
+          roles.push(...value);
+        } else {
+          roles.push(value);
+        }
+      }
+    }
+    return roles;
+  }
 
   isAdmin(): boolean {
     return this.getRoles().includes('Admin');

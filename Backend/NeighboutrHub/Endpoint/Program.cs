@@ -24,6 +24,9 @@ public class Program
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+        builder.Services.Configure<FileStorageSettings>(
+            builder.Configuration.GetSection("FileStorageSettings")
+        );
 
         // JWT Authentication setup
         var jwtSection = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
@@ -82,17 +85,17 @@ public class Program
             {
                 policy.WithOrigins(frontendUrl!)
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("Content-Disposition");
             });
         });
 
         builder.Services.AddTransient(typeof(Repository<>));
-
         builder.Services.AddTransient<VoteLogic>();
-
         builder.Services.AddTransient<DtoProvider>();
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
+        builder.Services.AddTransient<DocumentLogic>();
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
