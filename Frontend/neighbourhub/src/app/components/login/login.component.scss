@@ -2,7 +2,7 @@
 @use '../../../styles/colors' as *;
 
 .login-page {
-  background: radial-gradient(circle at top left, color.adjust($neigh-blue, $lightness: 40%) 0%, #f9f9ff 70%, #f9f9ff 100%);
+  background: radial-gradient(circle at top left, color.adjust($blue, $lightness: 40%) 0%, $surface-auth 70%, $surface-auth 100%);
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -13,16 +13,16 @@
   .logo {
     font-family: 'calibri', sans-serif;
     font-size: 3.2rem;
-    color: $neigh-blue;
+    color: $blue;
     margin-bottom: 2.5rem;
     cursor: pointer;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 4px 10px $shadow-sm;
     transition: transform 280ms cubic-bezier(.22, .61, .36, 1);
     will-change: transform;
 
     &:hover {
       transform: scale(1.05);
-      text-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      text-shadow: 0 6px 14px $shadow-md;
     }
   }
 }
@@ -33,16 +33,16 @@
   min-height: auto;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px $shadow-sm;
   position: relative;
-  background: white;
+  background: $white;
   transition: box-shadow 280ms ease;
 }
 
 .login-left {
   flex: none;
   width: 100%;
-  background: white;
+  background: $white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,7 +63,7 @@
     h4 {
       font-size: 1.7rem;
       font-weight: 700;
-      color: $neigh-blue;
+      color: $blue;
       margin-bottom: 2.5rem;
       text-shadow: none;
     }
@@ -74,7 +74,7 @@
 
       .input-group-text {
         background: $card-background-grey;
-        color: color.scale($neigh-blue, $lightness: -20%);
+        color: color.scale($blue, $lightness: -20%);
         border-right: none;
         border-radius: 8px 0 0 8px;
         border: 1px solid color.adjust($card-background-grey, $lightness: 5%);
@@ -84,52 +84,52 @@
         background: $card-background-grey;
         border-left: none;
         border-radius: 0 8px 8px 0;
-        color: #333;
+        color: $text-base;
         font-weight: 500;
         padding: 0.75rem 1rem;
         border: 1px solid color.adjust($card-background-grey, $lightness: 5%);
 
         &:focus {
           outline: none;
-          border-color: $neigh-blue;
-          box-shadow: 0 0 0 2px color.scale($neigh-blue, $alpha: -70%);
+          border-color: $blue;
+          box-shadow: 0 0 0 2px color.scale($blue, $alpha: -70%);
         }
 
         &::placeholder {
-          color: #777;
+          color: $light-gray;
         }
       }
     }
 
     .btn-primary {
-      background: $neigh-blue;
+      background: $blue;
       border: none;
       border-radius: 12px;
       font-weight: 700;
       width: 100%;
       padding: 0.8rem 0;
       margin-top: 1rem;
-      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
-      color: white;
+      box-shadow: 0 10px 30px $shadow-brand-soft;
+      color: $white;
       cursor: pointer;
 
       &:hover {
         background: $blue;
         transform: translateY(-1px);
-        box-shadow: 0 12px 35px rgba(79, 70, 229, 0.3);
+        box-shadow: 0 12px 35px $shadow-brand-strong;
       }
     }
 
     p {
       margin-top: 2rem;
       font-size: 0.9rem;
-      color: #777;
+      color: $light-gray;
       text-align: center;
     }
 
     .register-link,
     .login-link {
-      color: $neigh-blue;
+      color: $blue;
       font-weight: 700;
       text-decoration: none;
 

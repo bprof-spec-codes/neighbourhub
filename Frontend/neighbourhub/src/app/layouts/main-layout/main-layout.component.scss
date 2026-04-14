@@ -1,3 +1,5 @@
+@use "../../../styles/colors" as *;
+
 :host {
 	display: block;
 	height: 100vh;
@@ -20,5 +22,5 @@
 	min-width: 0;
 	min-height: 0;
 	overflow-y: auto;
-	background-color: #f8f9fa;
+	background-color: $card-background-grey;
 }
