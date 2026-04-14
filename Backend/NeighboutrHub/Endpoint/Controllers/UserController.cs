@@ -193,6 +193,7 @@ namespace Endpoint.Controllers
             return Ok(new { message = $"User approved as {finalRole}" });
         }
 
+        [Authorize]
         [HttpGet("Residents")]
         public IActionResult GetResidents()
         {
@@ -216,6 +217,7 @@ namespace Endpoint.Controllers
             return Ok(residents);
         }
 
+        [Authorize]
         [HttpGet("Residents/{id}")]
         public async Task<IActionResult> GetResidentById(string id)
         {
@@ -238,6 +240,7 @@ namespace Endpoint.Controllers
             return Ok(resident);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("Residents/{id}")]
         public async Task<IActionResult> UpdateResident(string id, AdminUpdateResidentDto dto)
         {

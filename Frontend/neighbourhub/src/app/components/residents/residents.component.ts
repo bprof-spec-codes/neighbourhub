@@ -126,6 +126,10 @@ export class ResidentsComponent implements OnInit {
   }
 
   protected saveResidentChanges(): void {
+    if (!this.isAdmin) {
+      return;
+    }
+
     if (!this.editDraft || this.selectedResidentId === null || this.isDraftInvalid(this.editDraft)) {
       return;
     }
