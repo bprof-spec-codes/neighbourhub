@@ -61,6 +61,13 @@
 	place-items: center;
 	font-size: 0.84rem;
 	font-weight: 700;
+	overflow: hidden;
+}
+
+.resident-avatar-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .resident-name {
@@ -151,6 +158,20 @@
 	&:hover {
 		background: #f0f4fa;
 	}
+}
+
+.profile-image-preview-wrap {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.profile-image-preview {
+	width: 3.25rem;
+	height: 3.25rem;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 1px solid #d8e1ec;
 }
 
 @media (max-width: 992px) {

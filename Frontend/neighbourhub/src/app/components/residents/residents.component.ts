@@ -23,7 +23,7 @@ type ResidentDraft = {
   lastName: string;
   email: string;
   phoneNumber: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   apartmentNumber: string;
   parkingSpace: string;
   storage: string;
@@ -98,6 +98,18 @@ export class ResidentsComponent implements OnInit {
     return `${resident.firstName} ${resident.lastName}`.trim();
   }
 
+  protected getResidentProfileImageUrl(profileImageUrl: string | null): string | null {
+    if (!profileImageUrl || profileImageUrl.trim().length === 0) {
+      return null;
+    }
+
+    if (profileImageUrl.startsWith('http://') || profileImageUrl.startsWith('https://')) {
+      return profileImageUrl;
+    }
+
+    return this.residentService.resolveApiUrl(profileImageUrl);
+  }
+
   protected openEditModal(resident: ResidentViewModel): void {
     if (!this.isAdmin) {
       return;
@@ -110,7 +122,7 @@ export class ResidentsComponent implements OnInit {
       lastName: resident.lastName,
       email: resident.email,
       phoneNumber: resident.phoneNumber,
-      profileImageUrl: resident.profileImageUrl ?? '',
+      profileImageUrl: resident.profileImageUrl,
       apartmentNumber: resident.apartmentNumber === '-' ? '' : resident.apartmentNumber,
       parkingSpace: resident.parkingSpace === '-' ? '' : resident.parkingSpace,
       storage: resident.storage === '-' ? '' : resident.storage
@@ -139,7 +151,7 @@ export class ResidentsComponent implements OnInit {
       this.editDraft.lastName.trim(),
       this.editDraft.email.trim(),
       this.editDraft.phoneNumber.trim(),
-      this.editDraft.profileImageUrl.trim() || null,
+      this.editDraft.profileImageUrl?.trim() || null,
       this.splitCodes(this.editDraft.apartmentNumber),
       this.splitCodes(this.editDraft.parkingSpace),
       this.splitCodes(this.editDraft.storage)
@@ -177,9 +189,7 @@ export class ResidentsComponent implements OnInit {
       draft.lastName.trim().length === 0 ||
       draft.email.trim().length === 0 ||
       draft.phoneNumber.trim().length === 0 ||
-      draft.apartmentNumber.trim().length === 0 ||
-      draft.parkingSpace.trim().length === 0 ||
-      draft.storage.trim().length === 0
+      draft.apartmentNumber.trim().length === 0
     );
   }
 
