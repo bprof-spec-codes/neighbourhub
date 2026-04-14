@@ -1,7 +1,9 @@
-﻿using Data;
+using Data;
 using Entities.Dtos.User;
+using Entities.Enums;
 using Entities.Helpers;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -13,7 +15,7 @@ using System.Text.RegularExpressions;
 
 namespace Endpoint.Controllers
 {
-    [ApiController] 
+    [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
@@ -42,34 +44,55 @@ namespace Endpoint.Controllers
             if (!(IsValidPhoneNumber(dto.PhoneNumber)))
                 return BadRequest(new { message = "The phone number format is incorrect!" });
 
+            
+
             var user = new AppUser()
             {
+                
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 UserName = dto.Email.Split('@')[0],
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 // ITT MÁSOLJUK ÁT A LISTÁKAT:
-                ApartmentNumber = dto.ApartmentNumber ?? new List<string>()
+                ApartmentNumber = dto.ApartmentNumber ?? new List<string>(),
+                IsApproved = false,
+                RequestedRole = dto.Role
             };
 
             var result = await userManager.CreateAsync(user, dto.Password);
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                return BadRequest(new { message = "Your password must contain at least one number and one uppercase letter!" });
+                // 1. Megnézzük, hogy az adott Role létezik-e az adatbázisban, ha nem, létrehozzuk
+                string roleName = dto.Role.ToString();
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                // 2. Hozzárendeljük a felhasználóhoz a kiválasztott szerepkört
+                await userManager.AddToRoleAsync(user, roleName);
+
+                // Speciális logika az első regisztrálóhoz (Admin)
+                if (userManager.Users.Count() == 1)
+                {
+                    if (!await roleManager.RoleExistsAsync("Admin"))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
+                    await userManager.AddToRoleAsync(user, "Admin");
+
+                    user.IsApproved = true;
+                    await userManager.UpdateAsync(user);
+                }
+
+                return Ok();
             }
 
-            if (userManager.Users.Count() == 1)
-            {
-                await roleManager.CreateAsync(new IdentityRole("Admin"));
-                await userManager.AddToRoleAsync(user, "Admin");
-            }
-
-            return Ok();
+            return BadRequest(result.Errors);
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(AppUserLoginDto dto)
         {
             var user = await userManager.FindByEmailAsync(dto.Email);
@@ -84,17 +107,25 @@ namespace Endpoint.Controllers
                 return BadRequest(new { message = "Incorrect Password" });
             }
 
-            var claim = new List<Claim>();
-            claim.Add(new Claim(ClaimTypes.Name, user.UserName!));
-            claim.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-
-            foreach (var role in await userManager.GetRolesAsync(user))
+            if (!user.IsApproved)
             {
-                claim.Add(new Claim(ClaimTypes.Role, role));
+                return Unauthorized(new { message = "Your registration is pending admin approval." });
+            }
+
+            var claims = new List<Claim>();
+            // A Program.cs-ben NameClaimType = "unique_name" van beállítva:
+            claims.Add(new Claim("unique_name", user.UserName!));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
+            // A Program.cs-ben RoleClaimType = "role" van beállítva:
+            var roles = await userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim("role", role));
             }
 
             int expiryInMinutes = 2400 * 60;
-            var token = GenerateAccessToken(claim, expiryInMinutes);
+            var token = GenerateAccessToken(claims, expiryInMinutes);
 
             return Ok(new LoginResultDto()
             {
@@ -102,12 +133,64 @@ namespace Endpoint.Controllers
                 Expiration = DateTime.Now.AddMinutes(expiryInMinutes)
             });
         }
-
-        [HttpGet("CountUsers")]
-        public IActionResult CountUsers()
+        [Authorize(Roles = "Admin")]
+        [HttpGet("PendingUsers")]
+        public IActionResult GetPendingUsers()
         {
-            var count = userManager.Users.Count();
-            return Ok($"A rendszer szerint ennyi user van az adatbázisban: {count}");
+            var pendingUsers = userManager.Users
+                .Where(u => u.IsApproved!=true)
+                .Select(u => new PendingAppUserDto
+                {
+                    Id = u.Id,
+                    FullName = $"{u.FirstName} {u.LastName}",
+                    Email = u.Email!,
+                    ApartmentNumbers = u.ApartmentNumber,
+                    Role = u.RequestedRole
+                }).ToList();
+
+            return Ok(pendingUsers);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("ApproveUser")]
+        public async Task<IActionResult> ApproveUser(ApproveAppUserDto dto)
+        {
+            var user = await userManager.FindByIdAsync(dto.UserId);
+            if (user == null) return NotFound("User not found");
+
+            string finalRole = !string.IsNullOrEmpty(dto.Role.ToString())
+                               ? dto.Role.ToString()
+                               : user.RequestedRole.ToString();
+
+
+            user.IsApproved = true;
+
+
+            if (Enum.TryParse<UserRole>(finalRole, out var parsedRole))
+            {
+                user.RequestedRole = parsedRole;
+            }
+
+            var updateResult = await userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded) return BadRequest("Failed to update user status");
+
+
+            if (!await roleManager.RoleExistsAsync(finalRole))
+            {
+                await roleManager.CreateAsync(new IdentityRole(finalRole));
+            }
+
+            // Biztonság kedvéért töröljük az esetleges régi szerepköreit, 
+            // hogy ne legyen egyszerre Tenant és Owner is véletlenül
+            var currentRoles = await userManager.GetRolesAsync(user);
+            await userManager.RemoveFromRolesAsync(user, currentRoles);
+
+            // Hozzáadjuk az újat
+            var roleResult = await userManager.AddToRoleAsync(user, finalRole);
+            if (!roleResult.Succeeded) return BadRequest("Failed to add user to role");
+
+            return Ok(new { message = $"User approved as {finalRole}" });
         }
 
         [HttpGet("Residents")]
@@ -264,7 +347,7 @@ namespace Endpoint.Controllers
             return new JwtSecurityToken(
                 issuer: jwtSettings.Issuer,
                 audience: jwtSettings.Issuer,
-                claims: claims?.ToArray(),
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(expiryInMinutes),
                 signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
             );

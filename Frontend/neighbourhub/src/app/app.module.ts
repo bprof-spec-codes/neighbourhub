@@ -22,6 +22,8 @@ import { VoteAddModalComponent } from './components/voting-list/vote-add-modal/v
 import { VoteModalComponent } from './components/voting-list/vote-modal/vote-modal.component';
 import { ResidentsComponent } from './components/residents/residents.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+import { AddDocumentModalComponent } from './components/documents/add-document-modal/add-document-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +41,11 @@ import { RegisterComponent } from './components/register/register.component';
     MainLayoutComponent,
     VotingListComponent,
     VoteAddModalComponent,
+    ResidentsComponent,
     VoteModalComponent,
-    ResidentsComponent
-    VoteModalComponent,
-    RegisterComponent
+    RegisterComponent,
+    DocumentsComponent,
+    AddDocumentModalComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { authGuard } from './services/guards/auth.guard';
 import { ResidentsComponent } from './components/residents/residents.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DocumentsComponent } from './components/documents/documents.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'voting', component: VotingListComponent, canActivate: [authGuard] },
       { path: 'residents', component: ResidentsComponent, canActivate: [authGuard] },
       { path: 'issues', component: IssuesComponent, canActivate: [authGuard] },
+      { path: 'documents', component: DocumentsComponent, canActivate: [authGuard] },
     ]
   },
   { path: '**', redirectTo: '/dashboard' },

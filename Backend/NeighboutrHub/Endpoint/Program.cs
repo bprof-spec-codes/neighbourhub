@@ -3,12 +3,15 @@ using Entities.Helpers;
 using Entities.Models;
 using Logic.Helper;
 using Logic.Logic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Endpoint;
 
@@ -16,11 +19,14 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         var builder = WebApplication.CreateBuilder(args);
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+        builder.Services.Configure<FileStorageSettings>(
+            builder.Configuration.GetSection("FileStorageSettings")
+        );
 
         // JWT Authentication setup
         var jwtSection = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
@@ -39,30 +45,36 @@ public class Program
             .AddEntityFrameworkStores<RepositoryContext>()   
             .AddDefaultTokenProviders();
 
-        builder.Services.AddAuthentication(option =>
-        {
-            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.SaveToken = true;
-            options.RequireHttpsMetadata = true;
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidAudience = jwtIssuer,
-                ValidIssuer = jwtIssuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-            };
-        });
-        
         builder.Services.AddDbContext<RepositoryContext>(options =>
         {
             options.UseSqlServer(connectionString);
         });
         
+
+        builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+        var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false; // Fejleszt�s alatt lehet false
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidAudience = jwtSettings.Issuer,
+                ValidIssuer = jwtSettings.Issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+                // Fontos: Itt is megmondhatjuk neki, hogy hol keresse a role-t
+                RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                NameClaimType = "unique_name"
+            };
+        });
 
         var frontendUrl = builder.Configuration["Cors:FrontendUrl"];
         builder.WebHost.UseUrls("http://localhost:5001");
@@ -73,19 +85,23 @@ public class Program
             {
                 policy.WithOrigins(frontendUrl!)
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("Content-Disposition");
             });
         });
 
         builder.Services.AddTransient(typeof(Repository<>));
-
         builder.Services.AddTransient<VoteLogic>();
-
         builder.Services.AddTransient<DtoProvider>();
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
+        builder.Services.AddTransient<DocumentLogic>();
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(option =>
         {
