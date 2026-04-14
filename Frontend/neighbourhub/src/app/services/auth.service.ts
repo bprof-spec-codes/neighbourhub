@@ -107,7 +107,7 @@ export class AuthService {
     const roles: string[] = [];
 
     for (const key in payload) {
-      if (key.endsWith('/role')) {
+      if (key.endsWith('/role') || key === 'role') {
         const value = (payload as any)[key];
         if (Array.isArray(value)) {
           roles.push(...value);
