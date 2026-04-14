@@ -80,6 +80,25 @@
 	font-weight: 500;
 }
 
+.resident-tag-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.resident-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.2rem 0.5rem;
+	border-radius: 999px;
+	background: #eef4ff;
+	border: 1px solid #d8e6ff;
+	color: #2b5fa8;
+	font-size: 0.74rem;
+	font-weight: 700;
+	line-height: 1.15;
+}
+
 .actions-head,
 .actions-cell {
 	width: 3.25rem;
@@ -208,6 +227,12 @@
 		background: #f3f8ff;
 		color: #5b7ea8;
 	}
+}
+
+.field-help-text {
+	margin-top: 0.35rem;
+	font-size: 0.76rem;
+	color: #6a7a8f;
 }
 
 .profile-image-preview {

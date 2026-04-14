@@ -315,10 +315,24 @@ namespace Endpoint.Controllers
         private static List<string> NormalizeCodes(List<string>? codes)
         {
             return (codes ?? new List<string>())
+                .SelectMany(SplitCodes)
                 .Select(NormalizeCode)
                 .Where(code => !string.IsNullOrWhiteSpace(code))
                 .Distinct()
                 .ToList();
+        }
+
+        private static IEnumerable<string> SplitCodes(string? rawCodes)
+        {
+            if (string.IsNullOrWhiteSpace(rawCodes))
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            return rawCodes
+                .Split(new[] { '|', ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(code => code.Trim())
+                .Where(code => code.Length > 0);
         }
 
         private static string NormalizeCode(string? code)

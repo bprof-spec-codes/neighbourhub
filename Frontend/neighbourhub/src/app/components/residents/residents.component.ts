@@ -80,9 +80,13 @@ export class ResidentsComponent implements OnInit {
 
   private splitCodes(text: string): string[] {
     return text
-      .split(',')
+      .split(/[|,]/)
       .map((code) => code.trim())
       .filter((code) => code.length > 0);
+  }
+
+  protected getCodeTags(text: string): string[] {
+    return this.splitCodes(text);
   }
 
   protected get isAdmin(): boolean {
@@ -123,9 +127,9 @@ export class ResidentsComponent implements OnInit {
       email: resident.email,
       phoneNumber: resident.phoneNumber,
       profileImageUrl: resident.profileImageUrl,
-      apartmentNumber: resident.apartmentNumber === '-' ? '' : resident.apartmentNumber,
-      parkingSpace: resident.parkingSpace === '-' ? '' : resident.parkingSpace,
-      storage: resident.storage === '-' ? '' : resident.storage
+      apartmentNumber: resident.apartmentNumber === '-' ? '' : resident.apartmentNumber.replace(/,\s*/g, ' | '),
+      parkingSpace: resident.parkingSpace === '-' ? '' : resident.parkingSpace.replace(/,\s*/g, ' | '),
+      storage: resident.storage === '-' ? '' : resident.storage.replace(/,\s*/g, ' | ')
     };
     this.isEditModalOpen = true;
   }
