@@ -1,12 +1,14 @@
+@use "../../../styles/colors" as *;
+
 .documents-page .form-control:focus {
 	box-shadow: none;
-	border-color: #dee2e6;
+	border-color: $border-muted;
 }
 
 .doc-icon {
 	width: 44px;
 	height: 44px;
-	background: #e7f1ff;
+	background: $border-primary-soft;
 }
 
 .list-group-item {
@@ -14,7 +16,7 @@
 }
 
 .list-group-item:hover {
-	background-color: #f8f9fa;
+	background-color: $card-background-grey;
 }
 
 .min-w-0 {
@@ -24,7 +26,7 @@
 .doc-download-btn {
 	border: 0;
 	background: transparent;
-	color: #0d6efd;
+	color: $blue;
 	font-weight: 600;
 	padding: 0.45rem 0.9rem;
 	border-radius: 0.75rem;
@@ -33,14 +35,14 @@
 }
 
 .doc-download-btn:hover {
-	color: #0a58ca;
-	background: #e7f1ff;
+	color: $blue;
+	background: $border-primary-soft;
     transition: 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .close-btn {
 	line-height: 1;
-	color: #adb5bd;
+	color: $light-gray;
 	border: 0;
 	background: transparent;
 }

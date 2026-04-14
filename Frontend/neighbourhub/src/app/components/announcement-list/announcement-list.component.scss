@@ -1,4 +1,4 @@
-@import "../../../styles/colors";
+@use "../../../styles/colors" as *;
 
 .announcement-card {
 	border-left: 0.3rem solid $green;
