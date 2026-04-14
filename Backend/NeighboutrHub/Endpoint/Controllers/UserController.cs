@@ -121,7 +121,7 @@ namespace Endpoint.Controllers
             var roles = await userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {
-                claims.Add(new Claim("role", role));
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
             int expiryInMinutes = 2400 * 60;
