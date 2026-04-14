@@ -139,39 +139,43 @@
 				<input id="resident-email" type="email" class="form-control" [(ngModel)]="draft.email" />
 			</div>
 
-			<div class="form-item mb-3">
-				<label class="form-label form-label-icon" for="resident-mobile">
-					<i class="bi bi-telephone"></i>
-					<span>Mobile Number</span>
-				</label>
-				<input id="resident-mobile" type="text" class="form-control" [(ngModel)]="draft.phoneNumber" />
+			<div class="row g-2 mb-3">
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-mobile">
+						<i class="bi bi-telephone"></i>
+						<span>Mobile Number</span>
+					</label>
+					<input id="resident-mobile" type="text" class="form-control" [(ngModel)]="draft.phoneNumber" />
+				</div>
+
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-flat">
+						<i class="bi bi-building"></i>
+						<span>Flat(s)</span>
+					</label>
+					<input id="resident-flat" type="text" class="form-control" placeholder="A12 | B04" [(ngModel)]="draft.apartmentNumber" />
+					<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>A12 | B04</strong> or <strong>A12, B04</strong>).</div>
+				</div>
 			</div>
 
-			<div class="form-item mb-3">
-				<label class="form-label form-label-icon" for="resident-flat">
-					<i class="bi bi-building"></i>
-					<span>Flat(s)</span>
-				</label>
-				<input id="resident-flat" type="text" class="form-control" placeholder="A12 | B04" [(ngModel)]="draft.apartmentNumber" />
-				<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>A12 | B04</strong> or <strong>A12, B04</strong>).</div>
-			</div>
+			<div class="row g-2 mb-3">
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-parking">
+						<i class="bi bi-p-square"></i>
+						<span>Parking Space(s)</span>
+					</label>
+					<input id="resident-parking" type="text" class="form-control" placeholder="P-01 | P-02" [(ngModel)]="draft.parkingSpace" />
+					<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>P-01 | P-02</strong> or <strong>P-01, P-02</strong>).</div>
+				</div>
 
-			<div class="form-item mb-3">
-				<label class="form-label form-label-icon" for="resident-parking">
-					<i class="bi bi-p-square"></i>
-					<span>Parking Space(s)</span>
-				</label>
-				<input id="resident-parking" type="text" class="form-control" placeholder="P-01 | P-02" [(ngModel)]="draft.parkingSpace" />
-				<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>P-01 | P-02</strong> or <strong>P-01, P-02</strong>).</div>
-			</div>
-
-			<div class="form-item">
-				<label class="form-label form-label-icon" for="resident-storage">
-					<i class="bi bi-box-seam"></i>
-					<span>Storage Number(s)</span>
-				</label>
-				<input id="resident-storage" type="text" class="form-control" placeholder="S-01 | S-07" [(ngModel)]="draft.storage" />
-				<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>S-01 | S-07</strong> or <strong>S-01, S-07</strong>).</div>
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-storage">
+						<i class="bi bi-box-seam"></i>
+						<span>Storage Number(s)</span>
+					</label>
+					<input id="resident-storage" type="text" class="form-control" placeholder="S-01 | S-07" [(ngModel)]="draft.storage" />
+					<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>S-01 | S-07</strong> or <strong>S-01, S-07</strong>).</div>
+				</div>
 			</div>
 
 			<div class="alert alert-danger mt-3 mb-0" *ngIf="saveErrorMessage">

@@ -1,0 +1,11 @@
+:host {
+	display: block;
+	height: 100vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+
+.auth-wrapper {
+	min-height: 100%;
+}
