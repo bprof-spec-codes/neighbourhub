@@ -5,4 +5,5 @@ export interface RegisterDto {
     password:string
     apartmentNumber: string[]
     phoneNumber: string
+    role?: string
 }

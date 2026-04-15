@@ -96,12 +96,35 @@ export class AuthService {
     );
   }
 
-  getRoles(): string[] {
-    const token = this.getToken();
-    if (!token) return [];
+  // getRoles(): string[] {
+  //   const token = this.getToken();
+  //   if (!token) return [];
 
-    const payload = this.getPayload(token);
-    if (!payload) return [];
+  //   const payload = this.getPayload(token);
+  //   if (!payload) return [];
+
+  //   // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
+  //   const roles: string[] = [];
+
+  //   for (const key in payload) {
+  //     if (key.endsWith('/role')) {
+  //       const value = (payload as any)[key];
+  //       if (Array.isArray(value)) {
+  //         roles.push(...value);
+  //       } else {
+  //         roles.push(value);
+  //       }
+  //     }
+  //   }
+  //   return roles;
+  // }
+
+  getRoles(): string[] {
+  const token = this.getToken();
+  if (!token) return [];
+
+  const payload = this.decodePayload(token);
+  if (!payload) return [];
 
     // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
     const roles: string[] = [];
@@ -121,8 +144,9 @@ export class AuthService {
 
   isAdmin(): boolean {
     return this.getRoles().includes('Admin');
+    console.log(this.getRoles());
   }
-  /*regisztráció*/
+  
   register(dto: RegisterDto): Observable<any> {
     
     return this.authBackendService.register(dto);

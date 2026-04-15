@@ -43,6 +43,14 @@
     </a>
   </nav>
 
+  <a *ngIf="isAdmin()" 
+     routerLink="/pendingUsers" 
+     class="nav-link-item" 
+     title="Pending Users">
+    <i class="bi bi-person-check-fill nav-icon"></i>
+    <span *ngIf="!collapsed">Pending Users</span>
+  </a>
+
   <footer class="sidebar-footer">
     <button class="profile-button" [class.justify-content-center]="collapsed">
       <div class="profile-avatar">

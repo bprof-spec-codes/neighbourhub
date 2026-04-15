@@ -1,0 +1,63 @@
+.approval-container {
+  padding: 2rem;
+
+  .table-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+
+  .approval-table {
+    width: 100%;
+    margin-bottom: 0; // Bootstrap fix
+
+    th {
+      text-align: center;
+      background: #f8f9fa;
+      padding: 1rem;
+      border-bottom: 2px solid #edf2f7;
+    }
+
+    td {
+      text-align: center;
+      padding: 0.75rem 1rem;
+      vertical-align: middle; // Ez rakja középre a szöveget a select mellett
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    // A választómező (select) méretének igazítása
+    .role-select {
+      display: inline-block;
+      width: auto;
+      min-width: 130px;
+      // Itt a Bootstrap .form-select osztályát használjuk majd a HTML-ben
+    }
+
+    .actions {
+      // Itt tüntetjük el a felesleges vonalakat
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      border: none !important; 
+
+      // Bootstrap gombok finomhangolása
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 8px;
+        box-shadow: none !important; // Eltünteti a kattintáskori kék vonalat
+
+        i {
+          font-size: 1.1rem;
+          line-height: 1;
+        }
+      }
+    }
+  }
+}

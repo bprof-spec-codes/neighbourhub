@@ -12,7 +12,7 @@ namespace Entities.Dtos.User
         public required string Id { get; set; }
         public required string FullName { get; set; }
         public required string Email { get; set; }
-        public required List<string> ApartmentNumbers { get; set; }
+        public required List<string> ApartmentNumber { get; set; }
         public required UserRole Role { get; set; }
     }
 }

@@ -1,0 +1,57 @@
+<div class="approval-container">
+  <div class="header-section">
+    <h2><i class="bi bi-person-check"></i> Pending Registrations</h2>
+    <p>Here you can approve the access of new residents to the system.</p>
+  </div>
+
+  <div class="table-card">
+    <table class="approval-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Apartment Number</th>
+          <th>Roles</th>
+          <th class="text-center">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="(profileService.profilessShort$ | async)?.length; else noData">
+          <tr *ngFor="let profile of profileService.profilessShort$ | async">
+            <td class="align-middle">{{ profile.fullName }}</td>
+            <td class="align-middle">{{ profile.email }}</td>
+            <td class="align-middle">
+              <span class="badge-apartment">{{ profile.apartmentNumber }}</span>
+            </td>
+            <td class="align-middle">
+              <select [(ngModel)]="profile.role" class="form-select form-select-sm">
+                <option value="Occupant">Occupant</option>
+                <option value="Owner">Owner</option>
+                <option value="Tenant">Tenant</option>
+              </select>
+            </td>
+            <td class="actions align-middle text-center">
+              <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-outline-success btn-sm" (click)="onApprove(profile.id, profile.role)">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="onReject(profile.id)">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-template #noData>
+          <tr>
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="bi bi-info-circle me-2"></i>
+              There are no pending registrations at the moment.
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>

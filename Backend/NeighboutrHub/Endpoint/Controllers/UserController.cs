@@ -70,10 +70,6 @@ namespace Endpoint.Controllers
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
 
-                // 2. Hozzárendeljük a felhasználóhoz a kiválasztott szerepkört
-                await userManager.AddToRoleAsync(user, roleName);
-
-                // Speciális logika az első regisztrálóhoz (Admin)
                 if (userManager.Users.Count() == 1)
                 {
                     if (!await roleManager.RoleExistsAsync("Admin"))
@@ -84,6 +80,10 @@ namespace Endpoint.Controllers
 
                     user.IsApproved = true;
                     await userManager.UpdateAsync(user);
+                }
+                else
+                {
+                    await userManager.AddToRoleAsync(user, roleName);
                 }
 
                 return Ok();
@@ -144,7 +144,7 @@ namespace Endpoint.Controllers
                     Id = u.Id,
                     FullName = $"{u.FirstName} {u.LastName}",
                     Email = u.Email!,
-                    ApartmentNumbers = u.ApartmentNumber,
+                    ApartmentNumber = u.ApartmentNumber,
                     Role = u.RequestedRole
                 }).ToList();
 
@@ -181,12 +181,10 @@ namespace Endpoint.Controllers
                 await roleManager.CreateAsync(new IdentityRole(finalRole));
             }
 
-            // Biztonság kedvéért töröljük az esetleges régi szerepköreit, 
-            // hogy ne legyen egyszerre Tenant és Owner is véletlenül
+            // Biztonság kedvéért töröljük az esetleges régi szerepköreit, hogy ne legyen egyszerre Tenant és Owner is véletlenül
             var currentRoles = await userManager.GetRolesAsync(user);
             await userManager.RemoveFromRolesAsync(user, currentRoles);
 
-            // Hozzáadjuk az újat
             var roleResult = await userManager.AddToRoleAsync(user, finalRole);
             if (!roleResult.Succeeded) return BadRequest("Failed to add user to role");
 
@@ -340,6 +338,29 @@ namespace Endpoint.Controllers
             return (code ?? string.Empty).Trim().ToUpperInvariant();
         }
 
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("RejectUser/{userId}")]
+        public async Task<IActionResult> RejectUser(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return NotFound("User not found");
+
+            // Ha már jóvá van hagyva, ne lehessen véletlenül törölni ezen a felületen
+            if (user.IsApproved)
+                return BadRequest("Cannot reject an already approved user.");
+
+            var result = await userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "Registration rejected and user deleted successfully." });
+            }
+
+            return BadRequest("Failed to delete user during rejection.");
+        }
         private bool IsValidEmail(string email)
         {
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";

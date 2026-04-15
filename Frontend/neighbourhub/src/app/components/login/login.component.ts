@@ -45,6 +45,7 @@ export class LoginComponent {
     error: (err) => {
       console.error('Registration failed:', err);
       this.error = err.error?.message || 'Registration failed. Please try again.';
+      this.loading = false;
     }
     });
   }

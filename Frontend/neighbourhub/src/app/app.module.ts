@@ -24,6 +24,7 @@ import { ResidentsComponent } from './components/residents/residents.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { AddDocumentModalComponent } from './components/documents/add-document-modal/add-document-modal.component';
+import { PendingUsersComponent } from './components/pending-users/pending-users.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AddDocumentModalComponent } from './components/documents/add-document-m
     VoteModalComponent,
     RegisterComponent,
     DocumentsComponent,
-    AddDocumentModalComponent
+    AddDocumentModalComponent,
+    PendingUsersComponent
   ],
   imports: [
     BrowserModule,

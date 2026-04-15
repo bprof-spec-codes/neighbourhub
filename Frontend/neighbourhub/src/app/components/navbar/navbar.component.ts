@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 type NavItem = {
   label: string;
@@ -20,6 +21,8 @@ export class NavbarComponent {
   @Input() collapsed = false;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
+  constructor(private authService: AuthService) {}
+
   readonly navItems: NavItem[] = [
     { label: 'Dashboard', route: '/dashboard', iconClass: 'bi bi-grid-1x2-fill', exact: true },
     { label: 'Voting', route: '/voting', iconClass: 'bi bi-check2-square' },
@@ -29,9 +32,13 @@ export class NavbarComponent {
     { label: 'Residents', route: '/residents', iconClass: 'bi bi-people-fill' },
     { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' }
   ];
-
+  
   toggleSidebar(): void {
     this.collapsed = !this.collapsed;
     this.collapsedChange.emit(this.collapsed);
+  }
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+    console.log(this.authService.isAdmin()); 
   }
 }
