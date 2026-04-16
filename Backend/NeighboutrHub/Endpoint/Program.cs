@@ -96,6 +96,7 @@ public class Program
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
         builder.Services.AddTransient<DocumentLogic>();
+        builder.Services.AddTransient<MessageLogic>();
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
