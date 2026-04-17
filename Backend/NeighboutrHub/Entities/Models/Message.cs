@@ -32,5 +32,8 @@ namespace Entities.Models
 
         public bool IsRead { get; set; } = false;
 
+        public string? ReplyToId { get; set; }
+        public Message? ReplyTo { get; set; }
+
     }
 }

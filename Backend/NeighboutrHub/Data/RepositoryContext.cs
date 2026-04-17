@@ -64,6 +64,12 @@ public class RepositoryContext : IdentityDbContext
             .HasForeignKey(m => m.ReceiverId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Entity<Message>()
+            .HasOne(m => m.ReplyTo)
+            .WithMany()
+            .HasForeignKey(m => m.ReplyToId)
+            .OnDelete(DeleteBehavior.Restrict);
+
 
 
     }
