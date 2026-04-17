@@ -11,5 +11,6 @@ namespace Entities.Dtos.Message
         public string ReceiverId { get; set; } = string.Empty;
         public string Subject { get; set; } = string.Empty;
         public string Body { get; set; } = string.Empty;
+        public string? ReplyToId { get; set; }
     }
 }

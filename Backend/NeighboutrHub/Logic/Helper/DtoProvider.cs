@@ -52,6 +52,7 @@ public class DtoProvider
                 .ForMember(d => d.SenderId, o => o.Ignore())
                 .ForMember(d => d.Sender, o => o.Ignore())
                 .ForMember(d => d.Receiver, o => o.Ignore())
+                .ForMember(d => d.ReplyTo, o => o.Ignore())
                 .ForMember(d => d.SentAt, o => o.Ignore())
                 .ForMember(d => d.IsRead, o => o.Ignore());
         });
