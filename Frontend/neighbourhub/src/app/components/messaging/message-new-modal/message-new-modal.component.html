@@ -9,32 +9,33 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
       <div class="mb-3">
-        <label class="form-label" for="message-receiver">To</label>
-        <input
-          type="text"
-          class="form-control mb-2"
-          placeholder="Search by name or apartment..."
-          [(ngModel)]="searchTerm"
-          [ngModelOptions]="{standalone: true}"
-        />
-        <select
-          id="message-receiver"
-          class="form-select"
-          [class.is-invalid]="isControlInvalid('receiverId')"
-          formControlName="receiverId"
-        >
-          <option value="" disabled>Select a resident</option>
-          <option *ngFor="let resident of filteredResidents" [value]="resident.id">
-            {{ resident.firstName }} {{ resident.lastName }}
-            <ng-container *ngIf="resident.apartmentNumber?.length">
-              ({{ resident.apartmentNumber.join(', ') }})
-            </ng-container>
-          </option>
-        </select>
-        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">
-          Recipient is required.
+        <label class="form-label">To</label>
+        <ng-container *ngIf="replyTo; else selectResident">
+            <div class="form-control-plaintext fw-semibold">{{ replyTo.senderName }}</div>
+        </ng-container>
+          <ng-template #selectResident>
+            <input
+              type="text"
+              class="form-control mb-2"
+              placeholder="Search by name or apartment..."
+              (input)="searchTerm = $any($event.target).value"
+            />
+            <select
+              id="message-receiver"
+              class="form-select"
+              [class.is-invalid]="isControlInvalid('receiverId')"
+              formControlName="receiverId"
+            >
+              <option value="" disabled>Select a resident</option>
+              <option *ngFor="let resident of filteredResidents" [value]="resident.id">
+                {{ resident.firstName }} {{ resident.lastName }} {{ resident.apartmentNumber.length ? '(' + resident.apartmentNumber.join(', ') + ')' : '' }}
+              </option>
+            </select>
+            <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">
+              Recipient is required.
+            </div>
+          </ng-template>
         </div>
-      </div>
 
       <div class="mb-3">
         <label class="form-label" for="message-subject">Subject</label>

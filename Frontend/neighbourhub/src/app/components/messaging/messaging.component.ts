@@ -37,7 +37,9 @@ export class MessagingComponent implements OnInit {
 
   protected openComposeModal(replyTo?: IncomingMessageDto): void {
     this.selectedMessage = replyTo ?? null;
+    setTimeout(() => {
     this.isComposeModalOpen = true;
+  });
   }
 
   protected closeComposeModal(): void {
