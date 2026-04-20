@@ -26,6 +26,8 @@ import { DocumentsComponent } from './components/documents/documents.component';
 import { AddDocumentModalComponent } from './components/documents/add-document-modal/add-document-modal.component';
 import { PendingUsersComponent } from './components/pending-users/pending-users.component';
 import { MessagingComponent } from './components/messaging/messaging.component';
+import { MessageNewModalComponent } from './components/messaging/message-new-modal/message-new-modal.component';
+import { MessageViewModalComponent } from './components/messaging/message-view-modal/message-view-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { MessagingComponent } from './components/messaging/messaging.component';
     DocumentsComponent,
     AddDocumentModalComponent,
     PendingUsersComponent,
-    MessagingComponent
+    MessagingComponent,
+    MessageNewModalComponent,
+    MessageViewModalComponent
   ],
   imports: [
     BrowserModule,
