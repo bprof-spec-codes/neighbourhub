@@ -85,6 +85,7 @@ public class Program
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
         builder.Services.AddTransient<CommunityRoomLogic>();
+        builder.Services.AddTransient<BookingLogic>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
