@@ -25,6 +25,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { AddDocumentModalComponent } from './components/documents/add-document-modal/add-document-modal.component';
 import { PendingUsersComponent } from './components/pending-users/pending-users.component';
+import { MessagingComponent } from './components/messaging/messaging.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { PendingUsersComponent } from './components/pending-users/pending-users.
     RegisterComponent,
     DocumentsComponent,
     AddDocumentModalComponent,
-    PendingUsersComponent
+    PendingUsersComponent,
+    MessagingComponent
   ],
   imports: [
     BrowserModule,
