@@ -21,6 +21,7 @@ export class MessagingComponent implements OnInit {
   protected isComposeModalOpen = false;
   protected selectedMessage: IncomingMessageDto | null = null;
   protected isViewModalOpen = false;
+  protected selectedSentMessage: SentMessageDto | null = null;
 
   constructor(private messageService: MessageService) {}
 
@@ -38,8 +39,8 @@ export class MessagingComponent implements OnInit {
   protected openComposeModal(replyTo?: IncomingMessageDto): void {
     this.selectedMessage = replyTo ?? null;
     setTimeout(() => {
-    this.isComposeModalOpen = true;
-  });
+      this.isComposeModalOpen = true;
+    });
   }
 
   protected closeComposeModal(): void {
@@ -56,23 +57,33 @@ export class MessagingComponent implements OnInit {
   }
 
   protected openViewModal(message: IncomingMessageDto): void {
-  this.selectedMessage = message;
-  this.isViewModalOpen = true;
-  if (!message.isRead) {
-    this.markAsRead(message.id);
-  }
+    this.selectedMessage = message;
+    this.isViewModalOpen = true;
+    if (!message.isRead) {
+      this.markAsRead(message.id);
+    }
   }
 
   protected closeViewModal(): void {
-  this.isViewModalOpen = false;
-  this.selectedMessage = null;
+    this.isViewModalOpen = false;
+    this.selectedMessage = null;
   }
 
   protected replyToSelected(): void {
-  const message = this.selectedMessage;
-  this.closeViewModal();
-  if (message) {
-    this.openComposeModal(message);
+    const message = this.selectedMessage;
+    this.closeViewModal();
+    if (message) {
+      this.openComposeModal(message);
+    }
   }
-}
+
+  protected openSentViewModal(message: SentMessageDto): void {
+    this.selectedSentMessage = message;
+    this.isViewModalOpen = true;
+  }
+
+  protected closeSentViewModal(): void {
+    this.isViewModalOpen = false;
+    this.selectedSentMessage = null;
+  }
 }
