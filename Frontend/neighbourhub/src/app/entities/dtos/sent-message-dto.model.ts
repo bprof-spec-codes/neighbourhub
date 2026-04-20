@@ -7,6 +7,7 @@ export class SentMessageDto {
         public body: string,
         public sentAt: Date,
         public isRead: boolean,
-        public replyToId: string | null
+        public replyToId: string | null,
+        public receiverApartmentNumber: string | null
     ) {}
 }

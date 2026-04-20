@@ -3,9 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 import { IncomingMessageDto } from '../entities/dtos/incoming-message-dto.model';
 import { SentMessageDto } from '../entities/dtos/sent-message-dto.model';
 import { MessageBackendService } from '../backend/message-backend.service';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CreateMessageDto } from '../entities/dtos/create-message-dto.model';
 
+@UntilDestroy()
 @Injectable({
   providedIn: 'root'
 })

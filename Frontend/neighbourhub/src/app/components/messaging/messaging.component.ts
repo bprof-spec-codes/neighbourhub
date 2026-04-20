@@ -4,8 +4,9 @@ import { MessageService } from '../../services/message.service';
 import { IncomingMessageDto } from '../../entities/dtos/incoming-message-dto.model';
 import { SentMessageDto } from '../../entities/dtos/sent-message-dto.model';
 import { CreateMessageDto } from '../../entities/dtos/create-message-dto.model';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-messaging',
   standalone: false,
@@ -64,4 +65,12 @@ export class MessagingComponent implements OnInit {
   this.isViewModalOpen = false;
   this.selectedMessage = null;
   }
+
+  protected replyToSelected(): void {
+  const message = this.selectedMessage;
+  this.closeViewModal();
+  if (message) {
+    this.openComposeModal(message);
+  }
+}
 }

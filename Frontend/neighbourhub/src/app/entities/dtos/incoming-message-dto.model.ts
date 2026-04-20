@@ -7,6 +7,7 @@ export class IncomingMessageDto {
         public body: string,
         public sentAt: Date,
         public isRead: boolean,
-        public replyToId: string | null
+        public replyToId: string | null,
+        public senderApartmentNumber: string | null
     ) {}
 }

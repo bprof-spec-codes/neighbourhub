@@ -1,1 +1,37 @@
-<p>message-view-modal works!</p>
+<div *ngIf="isOpen && message" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0 modal-title">{{ message.subject }}</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="mb-3">
+        <span class="detail-label">From</span>
+        <span class="detail-value">{{ message.senderName }}</span>
+        <span *ngIf="message.senderApartmentNumber" class="text-muted small ms-2">
+          ({{ message.senderApartmentNumber }})
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <span class="detail-label">Date</span>
+        <span class="detail-value">{{ message.sentAt | date:'MMM d, yyyy, HH:mm' }}</span>
+      </div>
+
+      <div class="mb-3">
+        <span class="detail-label">Message</span>
+        <p class="detail-value detail-description mb-0">{{ message.body }}</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="onReply()">
+        <i class="bi bi-reply me-1"></i> Reply
+      </button>
+    </div>
+  </div>
+</div>

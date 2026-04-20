@@ -105,6 +105,6 @@
 <app-message-view-modal
   [isOpen]="isViewModalOpen"
   [message]="selectedMessage"
-  (reply)="openComposeModal(selectedMessage!)"
+  (reply)="replyToSelected()"
   (close)="closeViewModal()"
 />
