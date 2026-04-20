@@ -1,5 +1,7 @@
 using AutoMapper;
 using Entities.Dtos.Announcement;
+using Entities.Dtos.Booking;
+using Entities.Dtos.CommunityRoom;
 using Entities.Dtos.ErrorReport;
 using Entities.Dtos.Vote;
 using Entities.Enums;
@@ -36,6 +38,15 @@ public class DtoProvider
                 .ForMember(d => d.CreatedByUserId, o => o.Ignore())
                 .ForMember(d => d.CreatedByUser, o => o.Ignore())
                 .ForMember(d => d.Entries, o => o.Ignore());
+
+            cfg.CreateMap<CommunityRoomCreateDto, CommunityRoom>();
+
+            cfg.CreateMap<CommunityRoom, CommunityRoomListDto>();
+
+            cfg.CreateMap<Booking, BookingListDto>()
+                .ForMember(d => d.RoomName, o => o.MapFrom(s => s.CommunityRoom != null ? s.CommunityRoom.Name : ""))
+                .ForMember(d => d.BookedByName, o => o.MapFrom(s => s.BookedBy != null ? s.BookedBy.FirstName + " " + s.BookedBy.LastName : ""))
+                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()));
         });
         Mapper = new Mapper(config);
     }

@@ -12,10 +12,10 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<ErrorReport> ErrorReports { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
     public DbSet<AppUser> AppUsers { get; set; }
-
-
     public DbSet<Vote> Votes { get; set; }
     public DbSet<VoteEntry> VoteEntries { get; set; }
+    public DbSet<CommunityRoom> CommunityRooms { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
@@ -45,12 +45,25 @@ public class RepositoryContext : IdentityDbContext
 
 
         builder.Entity<VoteEntry>()
-        .HasOne(e => e.Vote)
-        .WithMany(v => v.Entries)
-        .HasForeignKey(e => e.VoteId)
-        .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(e => e.Vote)
+            .WithMany(v => v.Entries)
+            .HasForeignKey(e => e.VoteId)
+            .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Entity<Booking>()
+            .HasOne(b => b.CommunityRoom)
+            .WithMany()
+            .HasForeignKey(b => b.CommunityRoomId)
+            .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Entity<Booking>()
+            .HasOne(b => b.BookedBy)
+            .WithMany()
+            .HasForeignKey(b => b.BookedById)
+            .OnDelete(DeleteBehavior.Restrict);
 
+        builder.Entity<Booking>()
+            .Property(b => b.Status)
+            .HasConversion<string>();
     }
 }
