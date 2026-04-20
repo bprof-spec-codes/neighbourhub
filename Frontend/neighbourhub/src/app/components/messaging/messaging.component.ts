@@ -19,6 +19,7 @@ export class MessagingComponent implements OnInit {
   protected activeTab: 'incoming' | 'sent' = 'incoming';
   protected isComposeModalOpen = false;
   protected selectedMessage: IncomingMessageDto | null = null;
+  protected isViewModalOpen = false;
 
   constructor(private messageService: MessageService) {}
 
@@ -49,5 +50,18 @@ export class MessagingComponent implements OnInit {
 
   protected markAsRead(id: string): void {
     this.messageService.markAsRead(id);
+  }
+
+  protected openViewModal(message: IncomingMessageDto): void {
+  this.selectedMessage = message;
+  this.isViewModalOpen = true;
+  if (!message.isRead) {
+    this.markAsRead(message.id);
+  }
+  }
+
+  protected closeViewModal(): void {
+  this.isViewModalOpen = false;
+  this.selectedMessage = null;
   }
 }
