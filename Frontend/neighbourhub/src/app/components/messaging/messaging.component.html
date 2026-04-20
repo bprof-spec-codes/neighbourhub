@@ -50,8 +50,8 @@
               <td class="subject-cell">{{ message.subject }}</td>
               <td class="date-cell">{{ message.sentAt | date:'MMM d, y' }}</td>
               <td class="action-cell" (click)="$event.stopPropagation()">
-                <button class="action-btn reply-btn" title="Reply" (click)="openComposeModal(message)">
-                  <i class="bi bi-reply"></i>
+                <button class="btn btn-outline-primary btn-sm" title="Reply" (click)="openComposeModal(message)">
+                  <i class="bi bi-reply"></i> Reply
                 </button>
               </td>
             </tr>

@@ -26,7 +26,7 @@ export class MessageNewModalComponent implements OnChanges {
   constructor(private fb: FormBuilder, private residentService: ResidentService) {
     this.form = this.fb.nonNullable.group({
       receiverId: ['', [Validators.required]],
-      subject: ['', [Validators.required]],
+      subject: ['', [Validators.required, Validators.maxLength(200)]],
       body: ['', [Validators.required]]
     });
 

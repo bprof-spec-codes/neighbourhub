@@ -40,7 +40,7 @@
           placeholder="Enter subject"
         />
         <div class="invalid-feedback d-block" *ngIf="isControlInvalid('subject')">
-          Subject is required.
+          {{ form.controls['subject'].errors?.['required'] ? 'Subject is required.' : 'Subject cannot exceed 200 characters.' }}
         </div>
       </div>
 
