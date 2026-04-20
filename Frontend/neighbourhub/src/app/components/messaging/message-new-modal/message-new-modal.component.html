@@ -1,4 +1,4 @@
-<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+<div *ngIf="isOpen" class="modal-overlay">
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h5 class="mb-0">{{ replyTo ? 'Reply' : 'New Message' }}</h5>
@@ -10,6 +10,13 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
       <div class="mb-3">
         <label class="form-label" for="message-receiver">To</label>
+        <input
+          type="text"
+          class="form-control mb-2"
+          placeholder="Search by name or apartment..."
+          [(ngModel)]="searchTerm"
+          [ngModelOptions]="{standalone: true}"
+        />
         <select
           id="message-receiver"
           class="form-select"
@@ -17,7 +24,7 @@
           formControlName="receiverId"
         >
           <option value="" disabled>Select a resident</option>
-          <option *ngFor="let resident of residents" [value]="resident.id">
+          <option *ngFor="let resident of filteredResidents" [value]="resident.id">
             {{ resident.firstName }} {{ resident.lastName }}
             <ng-container *ngIf="resident.apartmentNumber?.length">
               ({{ resident.apartmentNumber.join(', ') }})

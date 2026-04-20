@@ -22,6 +22,7 @@ export class MessageNewModalComponent implements OnChanges {
 
   protected readonly form;
   protected residents: Resident[] = [];
+  protected searchTerm = '';
 
   constructor(private fb: FormBuilder, private residentService: ResidentService) {
     this.form = this.fb.nonNullable.group({
@@ -30,13 +31,18 @@ export class MessageNewModalComponent implements OnChanges {
       body: ['', [Validators.required]]
     });
 
-    this.residentService.residents$.pipe(untilDestroyed(this)).subscribe(r => this.residents = r);
+    
+    
+    this.residentService.residents$.pipe(untilDestroyed(this)).subscribe(r => {
+      this.residents = r;
+    });
     this.residentService.loadResidents();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     const isOpenChange = changes['isOpen'];
     if (isOpenChange && isOpenChange.currentValue === true) {
+      this.residentService.loadResidents();
       if (this.replyTo) {
         this.form.patchValue({
           receiverId: this.replyTo.senderId,
@@ -75,6 +81,16 @@ export class MessageNewModalComponent implements OnChanges {
 
   private resetForm(): void {
     this.form.reset({ receiverId: '', subject: '', body: '' });
+    this.searchTerm = '';
     this.form.markAsUntouched();
+  }
+
+  protected get filteredResidents(): Resident[] {
+    const term = this.searchTerm.toLowerCase();
+    if (!term) return this.residents;
+    return this.residents.filter(r =>
+      (r.firstName + ' ' + r.lastName).toLowerCase().includes(term) ||
+      r.apartmentNumber?.some(a => a.toLowerCase().includes(term))
+    );
   }
 }
