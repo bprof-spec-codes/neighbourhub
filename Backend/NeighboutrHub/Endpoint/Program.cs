@@ -84,6 +84,7 @@ public class Program
         builder.Services.AddTransient<DtoProvider>();
         builder.Services.AddTransient<AnnouncementLogic>();
         builder.Services.AddTransient<ErrorReportLogic>();
+        builder.Services.AddTransient<CommunityRoomLogic>();
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
