@@ -42,10 +42,12 @@ public class DtoProvider
             cfg.CreateMap<Document, DocumentShortViewDto>();
 
             cfg.CreateMap<Message, IncomingMessageDto>()
-                .ForMember(d => d.SenderName, o => o.MapFrom(s => s.Sender != null ? s.Sender.FirstName + " " + s.Sender.LastName : ""));
+                .ForMember(d => d.SenderName, o => o.MapFrom(s => s.Sender != null ? s.Sender.FirstName + " " + s.Sender.LastName : ""))
+                .ForMember(d => d.SenderApartmentNumber, o => o.MapFrom(s => s.Sender != null && s.Sender.ApartmentNumber.Any() ? string.Join(", ", s.Sender.ApartmentNumber) : null));
 
             cfg.CreateMap<Message, SentMessageDto>()
-                .ForMember(d => d.ReceiverName, o => o.MapFrom(s => s.Receiver != null ? s.Receiver.FirstName + " " + s.Receiver.LastName : ""));
+                .ForMember(d => d.ReceiverName, o => o.MapFrom(s => s.Receiver != null ? s.Receiver.FirstName + " " + s.Receiver.LastName : ""))
+                .ForMember(d => d.ReceiverApartmentNumber, o => o.MapFrom(s => s.Receiver != null && s.Receiver.ApartmentNumber.Any() ? string.Join(", ", s.Receiver.ApartmentNumber) : null));
 
             cfg.CreateMap<CreateMessageDto, Message>()
                 .ForMember(d => d.Id, o => o.Ignore())
