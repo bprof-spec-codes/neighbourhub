@@ -87,6 +87,18 @@ public class BookingLogic
         return (true, string.Empty);
     }
 
+    public IEnumerable<BookingSlotDto> GetAvailability(string roomId, DateTime date)
+    {
+        return _repository.GetAll()
+            .Where(b =>
+                b.CommunityRoomId == roomId
+                && b.BookingDate.Date == date.Date
+                && b.Status != BookingStatus.Cancelled)
+            .OrderBy(b => b.StartTime)
+            .Select(b => new BookingSlotDto { StartTime = b.StartTime, EndTime = b.EndTime })
+            .ToList();
+    }
+
     public bool Cancel(string id, string userId, bool isAdmin)
     {
         var entity = _repository.GetAll().FirstOrDefault(b => b.Id == id);

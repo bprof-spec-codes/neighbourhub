@@ -23,6 +23,13 @@ public class BookingController : ControllerBase
         return _bookingLogic.GetAll();
     }
 
+    [HttpGet("availability")]
+    [Authorize]
+    public IActionResult GetAvailability([FromQuery] string roomId, [FromQuery] DateTime date)
+    {
+        return Ok(_bookingLogic.GetAvailability(roomId, date));
+    }
+
     [HttpGet("my")]
     [Authorize]
     public IActionResult GetMy()
