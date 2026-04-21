@@ -26,7 +26,7 @@
 							<td>
 								<div class="resident-cell">
 									<span class="resident-avatar">
-										<ng-container *ngIf="getResidentProfileImageUrl(resident.profileImageUrl) as avatarUrl; else initialAvatar">
+										<ng-container *ngIf="getResidentProfileImageUrl(resident.profileImagePath) as avatarUrl; else initialAvatar">
 											<img [src]="avatarUrl" [alt]="getResidentName(resident)" class="resident-avatar-image" />
 										</ng-container>
 										<ng-template #initialAvatar>{{ getResidentInitial(resident.firstName, resident.lastName) }}</ng-template>
@@ -90,22 +90,24 @@
 
 		<div class="edit-modal-body">
 			<div class="form-item mb-3">
-				<label class="form-label form-label-icon" for="resident-profile-image-url">
+				<label class="form-label form-label-icon" for="resident-profile-image-file">
 					<i class="bi bi-image"></i>
-					<span>Profile Picture URL</span>
+					<span>Profile Picture</span>
 				</label>
-				<div class="input-group form-control-icon">
-					<span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
-					<input
-						id="resident-profile-image-url"
-						type="url"
-						class="form-control"
-						placeholder="https://example.com/avatar.jpg"
-						[(ngModel)]="draft.profileImageUrl"
-					/>
+				<input
+					id="resident-profile-image-file"
+					type="file"
+					class="form-control"
+					accept="image/png,image/jpeg,image/webp,image/gif"
+					(change)="onProfileImageSelected($event)"
+				/>
+				<div class="field-help-text">Upload JPG, PNG, WEBP or GIF. The file is saved into server storage.</div>
+				<div class="field-help-text" *ngIf="selectedProfileImageFileName">
+					Selected: <strong>{{ selectedProfileImageFileName }}</strong>
 				</div>
+				<div class="field-help-text" *ngIf="isUploadingProfileImage">Uploading image...</div>
 
-				<div class="profile-image-preview-wrap mt-2" *ngIf="getResidentProfileImageUrl(draft.profileImageUrl) as draftImageUrl">
+				<div class="profile-image-preview-wrap mt-2" *ngIf="getResidentProfileImageUrl(draft.profileImagePath) as draftImageUrl">
 					<img
 						[src]="draftImageUrl"
 						alt="Profile image preview"
@@ -185,7 +187,7 @@
 
 		<div class="edit-modal-footer">
 			<button type="button" class="btn btn-light" (click)="closeEditModal()">Cancel</button>
-			<button type="button" class="btn btn-primary" (click)="saveResidentChanges()" [disabled]="isDraftInvalid(draft)">
+			<button type="button" class="btn btn-primary" (click)="saveResidentChanges()" [disabled]="isDraftInvalid(draft) || isUploadingProfileImage">
 				Save Changes
 			</button>
 		</div>

@@ -27,8 +27,8 @@ export class ResidentBackendService {
     formData.append('file', file);
 
     return this.http
-      .post<{ profileImageUrl: string }>(`${this.baseApiUrl}/User/Residents/${id}/profile-image`, formData)
-      .pipe(map((response) => response.profileImageUrl));
+      .post<{ profileImagePath: string }>(`${this.baseApiUrl}/User/Residents/${id}/profile-image`, formData)
+      .pipe(map((response) => response.profileImagePath));
   }
 
   public resolveApiUrl(path: string): string {
