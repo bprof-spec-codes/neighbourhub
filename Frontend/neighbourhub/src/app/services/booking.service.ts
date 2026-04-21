@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BookingBackendService } from '../backend/booking-backend.service';
-import { BookingListItem } from '../entities/models/booking.model';
+import { BookingListItem, BookingSlot } from '../entities/models/booking.model';
 import { BookingCreateDto } from '../entities/dtos/booking-create-dto.model';
 
 @UntilDestroy()
@@ -15,6 +15,9 @@ export class BookingService {
 
   private _pastBookings = new BehaviorSubject<BookingListItem[]>([]);
   public pastBookings$ = this._pastBookings.asObservable();
+
+  private _availability = new BehaviorSubject<BookingSlot[]>([]);
+  public availability$ = this._availability.asObservable();
 
   constructor(private backendService: BookingBackendService) {}
 
@@ -32,6 +35,14 @@ export class BookingService {
     this.backendService.create(dto).pipe(untilDestroyed(this)).subscribe({
       next: () => this.loadMy(),
       error: (err) => console.error('Failed to create booking', err)
+    });
+  }
+
+  public loadAvailability(roomId: string, date: string): void {
+    this._availability.next([]);
+    this.backendService.getAvailability(roomId, date).pipe(untilDestroyed(this)).subscribe({
+      next: (slots) => this._availability.next(slots),
+      error: (err) => console.error('Failed to load availability', err)
     });
   }
 
