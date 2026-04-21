@@ -8,3 +8,8 @@ export interface BookingListItem {
   status: string;
   numberOfPeople: number;
 }
+
+export interface BookingSlot {
+  startTime: string;
+  endTime: string;
+}
