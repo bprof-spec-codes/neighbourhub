@@ -64,16 +64,24 @@ namespace Logic.Logic
                 .FirstOrDefault(m => m.Id == messageId);
             if (message == null)
                 throw new ArgumentException("Az üzenet nem található.");
-
+            if (message.SenderId != userId && message.ReceiverId != userId)
+                throw new ArgumentException("Nincs jogosultságod törölni ezt az üzenetet.");
             if (message.SenderId == userId)
                 message.IsDeletedBySender = true;
-            else if (message.ReceiverId == userId)
+            if (message.ReceiverId == userId)
                 message.IsDeletedByReceiver = true;
-            else
-                throw new ArgumentException("Nincs jogosultságod törölni ezt az üzenetet.");
-
             if (message.IsDeletedBySender && message.IsDeletedByReceiver)
+            {
+                var replies = _messageRepository.GetAll()
+                    .Where(m => m.ReplyToId == messageId)
+                    .ToList();
+                foreach (var reply in replies)
+                {
+                    reply.ReplyToId = null;
+                    _messageRepository.Update(reply);
+                }
                 _messageRepository.Delete(message);
+            }
             else
                 _messageRepository.Update(message);
         }
