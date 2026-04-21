@@ -31,9 +31,20 @@ export class BookingService {
     });
   }
 
+  public loadAll(): void {
+    this.backendService.getAll().pipe(untilDestroyed(this)).subscribe({
+      next: (all) => {
+        const today = new Date().toISOString().substring(0, 10);
+        this._upcomingBookings.next(all.filter(b => b.bookingDate >= today));
+        this._pastBookings.next(all.filter(b => b.bookingDate < today));
+      },
+      error: (err) => console.error('Failed to load all bookings', err)
+    });
+  }
+
   public create(dto: BookingCreateDto): void {
     this.backendService.create(dto).pipe(untilDestroyed(this)).subscribe({
-      next: () => this.loadMy(),
+      next: () => this.loadAll(),
       error: (err) => console.error('Failed to create booking', err)
     });
   }
@@ -48,7 +59,7 @@ export class BookingService {
 
   public cancel(id: string): void {
     this.backendService.cancel(id).pipe(untilDestroyed(this)).subscribe({
-      next: () => this.loadMy(),
+      next: () => this.loadAll(),
       error: (err) => console.error('Failed to cancel booking', err)
     });
   }

@@ -17,7 +17,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public IEnumerable<BookingListDto> GetAll()
     {
         return _bookingLogic.GetAll();

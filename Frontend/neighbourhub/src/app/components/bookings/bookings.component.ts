@@ -36,7 +36,7 @@ export class BookingsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.bookingService.loadMy();
+    this.bookingService.loadAll();
     if (this.authService.isAdmin()) {
       this.communityRoomService.loadAllForAdmin();
     } else {

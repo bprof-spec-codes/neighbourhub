@@ -54,12 +54,18 @@
   font-weight: 700;
   color: #212529;
   margin-bottom: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .room-description {
   font-size: 0.9rem;
-  flex-grow: 1;
-  min-height: 2.5rem;
+  max-height: calc(0.9rem * 1.5 * 3);
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .room-capacity {

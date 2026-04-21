@@ -28,6 +28,7 @@ public class CommunityRoomLogic
     public IEnumerable<CommunityRoomListDto> GetAllForAdmin()
     {
         var rooms = _repository.GetAll()
+            .Where(r => r.IsActive)
             .OrderBy(r => r.Name)
             .ToList();
         return _dtoProvider.Mapper.Map<List<CommunityRoomListDto>>(rooms);

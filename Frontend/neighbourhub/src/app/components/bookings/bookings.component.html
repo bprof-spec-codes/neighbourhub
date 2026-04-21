@@ -18,11 +18,12 @@
 
   <ng-container *ngIf="rooms$ | async as rooms">
     <div class="row g-3 mb-5">
-      <div *ngFor="let room of rooms" class="col-12 col-md-4">
+      <div *ngFor="let room of rooms" class="col-12 col-sm-6 col-lg-4">
         <div class="room-card">
           <div class="room-card-body">
             <h5 class="room-name">{{ room.name }}</h5>
             <p class="room-description text-muted mb-3">{{ room.description }}</p>
+            <div class="flex-grow-1"></div>
             <hr class="my-2">
             <p class="room-capacity mb-3">Capacity: <strong>{{ room.capacity }} people</strong></p>
             <button type="button" class="btn btn-primary w-100" (click)="openCreateModal(room.id)">
