@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
@@ -36,6 +36,8 @@ type ResidentDraft = {
   styleUrl: './residents.component.scss'
 })
 export class ResidentsComponent implements OnInit {
+  @ViewChild('residentProfileImageInput') residentProfileImageInput?: ElementRef<HTMLInputElement>;
+
   protected residents$ = new Observable<ResidentViewModel[]>();
 
   protected isEditModalOpen = false;
@@ -176,6 +178,10 @@ export class ResidentsComponent implements OnInit {
     );
 
     input.value = '';
+  }
+
+  protected openProfileImagePicker(): void {
+    this.residentProfileImageInput?.nativeElement.click();
   }
 
   protected saveResidentChanges(): void {

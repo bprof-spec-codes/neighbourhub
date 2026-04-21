@@ -90,30 +90,47 @@
 
 		<div class="edit-modal-body">
 			<div class="form-item mb-3">
-				<label class="form-label form-label-icon" for="resident-profile-image-file">
+				<label class="form-label form-label-icon" for="resident-profile-image-file-hidden">
 					<i class="bi bi-image"></i>
 					<span>Profile Picture</span>
 				</label>
+
 				<input
-					id="resident-profile-image-file"
+					#residentProfileImageInput
+					id="resident-profile-image-file-hidden"
 					type="file"
-					class="form-control"
+					class="d-none"
 					accept="image/png,image/jpeg,image/webp,image/gif"
 					(change)="onProfileImageSelected($event)"
 				/>
-				<div class="field-help-text">Upload JPG, PNG, WEBP or GIF. The file is saved into server storage.</div>
+
+				<div
+					class="resident-profile-avatar-upload mt-2"
+					(click)="openProfileImagePicker()"
+					role="button"
+					tabindex="0"
+					(title)="'Click to change profile picture'"
+				>
+					<ng-container *ngIf="getResidentProfileImageUrl(draft.profileImagePath) as draftImageUrl; else draftAvatarInitial">
+						<img
+							[src]="draftImageUrl"
+							alt="Profile image preview"
+							class="profile-image-preview"
+						/>
+					</ng-container>
+					<ng-template #draftAvatarInitial>{{ getResidentInitial(draft.firstName, draft.lastName) }}</ng-template>
+
+					<div class="resident-profile-avatar-overlay">
+						<i class="bi bi-camera-fill"></i>
+						<span>Change</span>
+					</div>
+				</div>
+
+				<div class="field-help-text">Click the profile picture to upload JPG, PNG, WEBP or GIF. The file is saved into server storage.</div>
 				<div class="field-help-text" *ngIf="selectedProfileImageFileName">
 					Selected: <strong>{{ selectedProfileImageFileName }}</strong>
 				</div>
 				<div class="field-help-text" *ngIf="isUploadingProfileImage">Uploading image...</div>
-
-				<div class="profile-image-preview-wrap mt-2" *ngIf="getResidentProfileImageUrl(draft.profileImagePath) as draftImageUrl">
-					<img
-						[src]="draftImageUrl"
-						alt="Profile image preview"
-						class="profile-image-preview"
-					/>
-				</div>
 			</div>
 
 			<div class="row g-2 mb-3">
