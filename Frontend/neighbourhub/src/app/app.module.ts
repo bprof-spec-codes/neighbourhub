@@ -18,6 +18,7 @@ import { VoteAddModalComponent } from './components/voting-list/vote-add-modal/v
 import { VoteModalComponent } from './components/voting-list/vote-modal/vote-modal.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingCreateModalComponent } from './components/bookings/booking-create-modal/booking-create-modal.component';
+import { RoomManageModalComponent } from './components/bookings/room-manage-modal/room-manage-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { BookingCreateModalComponent } from './components/bookings/booking-creat
     VoteAddModalComponent,
     VoteModalComponent,
     BookingsComponent,
-    BookingCreateModalComponent
+    BookingCreateModalComponent,
+    RoomManageModalComponent
   ],
   imports: [
     BrowserModule,

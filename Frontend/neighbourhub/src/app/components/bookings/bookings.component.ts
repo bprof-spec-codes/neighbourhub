@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { BookingListItem } from '../../entities/models/booking.model';
 import { CommunityRoom } from '../../entities/models/community-room.model';
 import { BookingCreateDto } from '../../entities/dtos/booking-create-dto.model';
+import { CommunityRoomCreateDto } from '../../entities/dtos/community-room-create-dto.model';
+import { CommunityRoomUpdateDto } from '../../entities/dtos/community-room-update-dto.model';
 
 @Component({
   selector: 'app-bookings',
@@ -19,6 +21,8 @@ export class BookingsComponent implements OnInit {
   protected rooms$: Observable<CommunityRoom[]>;
 
   protected isCreateModalOpen = false;
+  protected isRoomModalOpen = false;
+  protected selectedRoom: CommunityRoom | null = null;
 
   constructor(
     private bookingService: BookingService,
@@ -32,7 +36,11 @@ export class BookingsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.bookingService.loadMy();
-    this.communityRoomService.loadAll();
+    if (this.authService.isAdmin()) {
+      this.communityRoomService.loadAllForAdmin();
+    } else {
+      this.communityRoomService.loadAll();
+    }
   }
 
   protected openCreateModal(): void {
@@ -50,6 +58,34 @@ export class BookingsComponent implements OnInit {
 
   protected cancelBooking(id: string): void {
     this.bookingService.cancel(id);
+  }
+
+  protected openAddRoomModal(): void {
+    this.selectedRoom = null;
+    this.isRoomModalOpen = true;
+  }
+
+  protected openEditRoomModal(room: CommunityRoom): void {
+    this.selectedRoom = room;
+    this.isRoomModalOpen = true;
+  }
+
+  protected closeRoomModal(): void {
+    this.isRoomModalOpen = false;
+    this.selectedRoom = null;
+  }
+
+  protected saveRoom(event: { id: string | null; dto: CommunityRoomCreateDto | CommunityRoomUpdateDto }): void {
+    if (event.id) {
+      this.communityRoomService.update(event.id, event.dto as CommunityRoomUpdateDto);
+    } else {
+      this.communityRoomService.create(event.dto as CommunityRoomCreateDto);
+    }
+    this.closeRoomModal();
+  }
+
+  protected deleteRoom(id: string): void {
+    this.communityRoomService.delete(id);
   }
 
   protected getStatusClass(status: string): string {
