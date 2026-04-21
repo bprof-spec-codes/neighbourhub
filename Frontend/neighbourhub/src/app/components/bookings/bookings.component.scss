@@ -25,12 +25,28 @@
 
 .page-header-actions {
   flex-shrink: 0;
+
+  @media (max-width: 575px) {
+    width: 100%;
+    display: flex;
+
+    .btn {
+      flex: 1;
+    }
+  }
 }
 
 .section-title {
   font-size: 1rem;
   font-weight: 700;
   color: #212529;
+}
+
+// Facilities grid
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 1rem;
 }
 
 // Room cards
@@ -71,6 +87,7 @@
 .room-capacity {
   font-size: 0.9rem;
   color: $dark-gray;
+  word-break: break-word;
 }
 
 // Filters
