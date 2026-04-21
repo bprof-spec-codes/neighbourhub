@@ -11,7 +11,7 @@
       </div>
 
       <div *ngIf="!collapsed" class="brand-text">
-        <h5>BuildingHub</h5>
+        <h5>NeighbourHub</h5>
         <small>Property Management</small>
       </div>
 
@@ -42,6 +42,14 @@
       <span *ngIf="!collapsed">{{ item.label }}</span>
     </a>
   </nav>
+
+  <a *ngIf="isAdmin()" 
+     routerLink="/pendingUsers" 
+     class="nav-link-item" 
+     title="Pending Users">
+    <i class="bi bi-person-check-fill nav-icon"></i>
+    <span *ngIf="!collapsed">Pending Users</span>
+  </a>
 
   <footer class="sidebar-footer">
     <button class="profile-button" [class.justify-content-center]="collapsed">

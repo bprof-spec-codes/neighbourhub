@@ -54,10 +54,11 @@ public class ErrorReportLogic
         return _dtoProvider.Mapper.Map<ErrorReportDetailDto>(entity);
     }
 
-    public bool Update(string id, ErrorReportUpdateDto dto)
+    public bool Update(string id, ErrorReportUpdateDto dto, string userId, bool isAdmin)
     {
         var entity = _repository.GetAll().FirstOrDefault(e => e.Id == id);
         if (entity == null) return false;
+        if (!isAdmin) return false;
 
         entity.Title = dto.Title;
         entity.Description = dto.Description;
@@ -77,10 +78,11 @@ public class ErrorReportLogic
         return true;
     }
 
-    public bool Delete(string id)
+    public bool Delete(string id, string userId, bool isAdmin)
     {
         var entity = _repository.GetAll().FirstOrDefault(e => e.Id == id);
         if (entity == null) return false;
+        if (!isAdmin) return false;
 
         _repository.Delete(entity);
         return true;

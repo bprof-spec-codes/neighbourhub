@@ -6,6 +6,7 @@ using Entities.Dtos.ErrorReport;
 using Entities.Dtos.Vote;
 using Entities.Enums;
 using Entities.Models;
+using Logic.Logic;
 
 namespace Logic.Helper;
 
@@ -38,6 +39,8 @@ public class DtoProvider
                 .ForMember(d => d.CreatedByUserId, o => o.Ignore())
                 .ForMember(d => d.CreatedByUser, o => o.Ignore())
                 .ForMember(d => d.Entries, o => o.Ignore());
+
+            cfg.CreateMap<Document, DocumentShortViewDto>();
 
             cfg.CreateMap<CommunityRoomCreateDto, CommunityRoom>();
 

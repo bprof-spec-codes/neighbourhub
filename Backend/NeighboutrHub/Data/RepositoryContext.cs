@@ -12,6 +12,7 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<ErrorReport> ErrorReports { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
     public DbSet<AppUser> AppUsers { get; set; }
+    public DbSet<Document> Documents { get; set; }
     public DbSet<Vote> Votes { get; set; }
     public DbSet<VoteEntry> VoteEntries { get; set; }
     public DbSet<CommunityRoom> CommunityRooms { get; set; }

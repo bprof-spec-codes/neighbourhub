@@ -1,0 +1,110 @@
+<div class="register-page">
+    <div class="logo" routerLink="/dashboard">NeighbourHub</div> 
+    <div class="register-wrapper">
+        <div class="register-left">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <h4 class="text-center mb-3">Registration</h4>
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <input type="text" id="firstname" formControlName="firstname" class="form-control" placeholder="First Name" />
+                </div>
+                <div *ngIf="registerForm.get('firstname')?.dirty && registerForm.get('firstname')?.invalid" class="text-danger mb-2 small">
+                    <span *ngIf="registerForm.get('firstname')?.errors?.['required']">First name is required.</span>
+                    <span *ngIf="registerForm.get('firstname')?.errors?.['minlength']">First name must be at least 3 characters.</span>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" id="lastname" formControlName="lastname" class="form-control" placeholder="Last Name" />
+                </div>
+                <div *ngIf="registerForm.get('lastname')?.dirty && registerForm.get('lastname')?.invalid" class="text-danger mb-2 small">
+                    <span *ngIf="registerForm.get('lastname')?.errors?.['required']">Last name is required.</span>
+                    <span *ngIf="registerForm.get('lastname')?.errors?.['minlength']">Last name must be at least 3 characters.</span>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="text" id="email" formControlName="email" class="form-control" placeholder="Email" />
+                </div>
+                <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-danger mb-2 small">
+                    <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="registerForm.get('email')?.errors?.['pattern']">Invalid email format </span>
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input *ngIf="hidePass" type="password" id="password" formControlName="password" class="form-control" placeholder="Password" />
+                        <input *ngIf="!hidePass" type="text" id="shownpw" formControlName="password" class="form-control" placeholder="Password" />
+                        <button (click)="passwordVisibility('password')" type="button" class="btn btn-primary" style="border-radius: 0 8px 8px 0; width: auto; padding: 0 15px; margin: 0;">
+                            <i [class]="hidePass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="registerForm.get('password')?.dirty && registerForm.get('password')?.invalid" class="text-danger small mt-1">
+                        <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</div>
+                        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</div>
+                        <div *ngIf="registerForm.get('password')?.errors?.['pattern']">Password must contain at least one number and one uppercase letter.</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-check-circle"></i></span>
+                        <input *ngIf="hidePass2" type="password" id="password2" formControlName="password2" class="form-control" placeholder="Confirm Password" />
+                        <input *ngIf="!hidePass2" type="text" id="shownpw2" formControlName="password2" class="form-control" placeholder="Confirm Password" />
+                        <button (click)="passwordVisibility('password2')" type="button" class="btn btn-primary" style="border-radius: 0 8px 8px 0; width: auto; padding: 0 15px; margin: 0;">
+                            <i [class]="hidePass2 ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="registerForm.get('password2')?.dirty && registerForm.get('password2')?.invalid" class="text-danger small mt-1">
+                        Password confirmation is required.
+                    </div>
+                    <div *ngIf="PasswordMatch() && registerForm.get('password2')?.touched" class="text-danger small mt-1">
+                        The two passwords do not match.
+                    </div>
+                </div>
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-house"></i></span>
+                    <input type="text" id="apartmentNumber" formControlName="apartmentNumber" class="form-control" placeholder="Apartment Number" />
+                </div>
+                <div *ngIf="registerForm.get('apartmentNumber')?.dirty && registerForm.get('apartmentNumber')?.invalid" class="text-danger mb-2 small">
+                    <span *ngIf="registerForm.get('apartmentNumber')?.errors?.['required']">Apartment number is required.</span>
+                    <!-- <span *ngIf="registerForm.get('apartmentNumber')?.errors?.['pattern']">Invalid format (e.g., 12/A).</span> -->
+                </div>
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                    <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" placeholder="Phone Number" />
+                </div>
+                <div *ngIf="registerForm.get('phoneNumber')?.dirty && registerForm.get('phoneNumber')?.invalid" class="text-danger mb-2 small">
+                    <span *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</span>
+                    <span *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone number format.</span>
+                </div>
+                <div class="role-selection-group">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                        <i class="bi bi-person-badge"></i>
+                        </span>
+                        <select class="form-select" formControlName="requestedRole">
+                        <option value="Occupant">Occupant</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Tenant">Tenant</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div *ngIf="serverErrorMessage" class="alert alert-danger mt-3">
+                    {{ serverErrorMessage }}
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!canSubmit()">
+                    Register
+                </button>
+                
+                <p>Already have an account? <a routerLink="/auth/login" class="login-link">Login</a></p>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
-﻿using Entities.Helpers;
+﻿using Entities.Enums;
+using Entities.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,22 @@ namespace Entities.Models
 {
     public class AppUser: IdentityUser, IIdEntity
     {
+        public UserRole RequestedRole { get; set; }
         [StringLength(50)]
         public string FirstName { get; set; } = string.Empty;
 
         [StringLength(50)]
         public string LastName { get; set; } = string.Empty;
+
+        [StringLength(2048)]
+        public string? ProfileImageUrl { get; set; }
+
         [StringLength(50)]
         public List<string> Storage { get; set; } = new List<string>();
         [StringLength(50)]
         public List<string> ApartmentNumber { get; set; } = new List<string>();
         [StringLength(50)]
         public List<string> ParkingSpace { get; set; } = new List<string>();
+        public bool IsApproved { get; set; } = false;
     }
 }

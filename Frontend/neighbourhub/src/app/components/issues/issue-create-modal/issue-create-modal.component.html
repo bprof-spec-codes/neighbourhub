@@ -1,0 +1,62 @@
+<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">Report New Issue</h5>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+      <div class="mb-3">
+        <label class="form-label" for="issue-title">Title</label>
+        <input
+          id="issue-title"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="isControlInvalid('title')"
+          formControlName="title"
+          placeholder="Brief description of the issue"
+        />
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('title')">
+          {{ getErrorText('title') }}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="issue-description">Description</label>
+        <textarea
+          id="issue-description"
+          rows="4"
+          class="form-control"
+          [class.is-invalid]="isControlInvalid('description')"
+          formControlName="description"
+          placeholder="Detailed description of the issue"
+        ></textarea>
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('description')">
+          {{ getErrorText('description') }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" for="issue-category">Category</label>
+        <select
+          id="issue-category"
+          class="form-select"
+          [class.is-invalid]="isControlInvalid('category')"
+          formControlName="category"
+        >
+          <option value="" disabled>Select a category</option>
+          <option *ngFor="let cat of categoryOptions" [value]="cat">
+            {{ cat }}
+          </option>
+        </select>
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('category')">
+          {{ getErrorText('category') }}
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Issue</button>
+      </div>
+    </form>
+  </div>
+</div>
