@@ -58,6 +58,31 @@ export class DocumentService {
     });
   }
 
+  public previewDocument(documentId: string): void {
+    this.documentBackendService.downloadDocument(documentId).pipe(untilDestroyed(this)).subscribe({
+      next: (response) => {
+        const blob = response.body;
+
+        if (!blob) {
+          return;
+        }
+
+        const objectUrl = window.URL.createObjectURL(blob);
+        const previewWindow = window.open(objectUrl, '_blank', 'noopener,noreferrer');
+
+        if (!previewWindow) {
+          window.URL.revokeObjectURL(objectUrl);
+          return;
+        }
+
+        setTimeout(() => window.URL.revokeObjectURL(objectUrl), 60_000);
+      },
+      error: (err) => {
+        console.error('Failed to preview document', err);
+      }
+    });
+  }
+
   public addDocument(documentAddDto: DocumentAddDto): void {
     this.documentBackendService.addDocument(documentAddDto).pipe(untilDestroyed(this)).subscribe({
       next: () => {
