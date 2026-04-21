@@ -18,6 +18,10 @@ export class ResidentBackendService {
     return this.http.get<Resident[]>(`${this.baseApiUrl}/User/Residents`);
   }
 
+  public getResidentById(id: string): Observable<Resident> {
+    return this.http.get<Resident>(`${this.baseApiUrl}/User/Residents/${id}`);
+  }
+
   public updateResident(id: string, resident: AdminUpdateResidentDto): Observable<void> {
     return this.http.put<void>(`${this.baseApiUrl}/User/Residents/${id}`, resident);
   }

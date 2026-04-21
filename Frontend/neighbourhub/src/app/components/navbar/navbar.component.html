@@ -52,15 +52,73 @@
   </a>
 
   <footer class="sidebar-footer">
-    <button class="profile-button" [class.justify-content-center]="collapsed">
-      <div class="profile-avatar">
-        JR
+    <div class="profile-popover-wrap" [class.is-open]="profileCardOpen">
+      <div class="profile-popover" *ngIf="profileCardOpen">
+        <div class="profile-popover-header">
+          <div>
+            <div class="profile-popover-title">My Profile</div>
+          </div>
+          <button type="button" class="profile-popover-close" (click)="closeProfileCard()" aria-label="Close profile card">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="profile-popover-body" *ngIf="currentResident as resident; else loadingProfile">
+          <div class="profile-avatar-upload" (click)="onAvatarClick()" role="button" tabindex="0" aria-label="Change profile picture">
+            <ng-container *ngIf="getProfileAvatarUrl() as avatarUrl; else avatarInitial">
+              <img [src]="avatarUrl" [alt]="profileName" class="profile-avatar-image" />
+            </ng-container>
+            <ng-template #avatarInitial>{{ getResidentInitial(resident.firstName, resident.lastName) }}</ng-template>
+
+            <div class="profile-avatar-overlay">
+              <i class="bi bi-camera-fill"></i>
+              <span>Change</span>
+            </div>
+          </div>
+
+          <div class="profile-meta">
+            <div class="profile-name">{{ profileName }}</div>
+            <div class="profile-email">{{ profileEmail }}</div>
+            <div class="profile-phone" *ngIf="profilePhoneNumber">{{ profilePhoneNumber }}</div>
+            <div class="profile-apartment">{{ profileSubtitle }}</div>
+
+            <input
+              #profileImageInput
+              type="file"
+              class="d-none"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              (change)="onProfileImageSelected($event)"
+            />
+
+            <div class="profile-upload-state" *ngIf="selectedProfileImageFileName">
+              Selected: <strong>{{ selectedProfileImageFileName }}</strong>
+            </div>
+            <div class="profile-upload-state" *ngIf="isProfileImageUploading">
+              Uploading image...
+            </div>
+          </div>
+        </div>
+
+        <ng-template #loadingProfile>
+          <div class="profile-popover-loading">Loading profile...</div>
+        </ng-template>
       </div>
 
-      <div *ngIf="!collapsed" class="profile-details">
-        <div class="profile-name">John Resident</div>
-        <small>Apt 4B</small>
-      </div>
-    </button>
+      <button class="profile-button" [class.justify-content-center]="collapsed" type="button" (click)="toggleProfileCard()">
+        <div class="profile-avatar">
+          <ng-container *ngIf="getProfileAvatarUrl() as footerAvatarUrl; else footerInitial">
+            <img [src]="footerAvatarUrl" [alt]="profileName" class="profile-avatar-image" />
+          </ng-container>
+          <ng-template #footerInitial>
+            {{ currentResident ? getResidentInitial(currentResident.firstName, currentResident.lastName) : 'U' }}
+          </ng-template>
+        </div>
+
+        <div *ngIf="!collapsed" class="profile-details">
+          <div class="profile-name">{{ currentResident ? profileName : 'Profile' }}</div>
+          <small>{{ currentResident ? profileSubtitle : 'Open your profile card' }}</small>
+        </div>
+      </button>
+    </div>
   </footer>
 </aside>

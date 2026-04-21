@@ -22,6 +22,10 @@ export class ResidentService {
     });
   }
 
+  public getResidentById(id: string) {
+    return this.residentBackendService.getResidentById(id);
+  }
+
   public updateResident(
     id: string,
     resident: AdminUpdateResidentDto,

@@ -246,13 +246,19 @@ namespace Endpoint.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpPost("Residents/{id}/profile-image")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadResidentProfileImage(string id, [FromForm] ResidentProfileImageUploadRequestDto request)
         {
             try
             {
+                var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (!User.IsInRole("Admin") && !string.Equals(currentUserId, id, StringComparison.OrdinalIgnoreCase))
+                {
+                    return Forbid();
+                }
+
                 if (request.File == null || request.File.Length == 0)
                 {
                     return BadRequest("No file uploaded.");
