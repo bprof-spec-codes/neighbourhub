@@ -35,5 +35,9 @@ namespace Entities.Models
         public string? ReplyToId { get; set; }
         public Message? ReplyTo { get; set; }
 
+
+        public bool IsDeletedBySender { get; set; } = false;
+        public bool IsDeletedByReceiver { get; set; } = false;
+
     }
 }
