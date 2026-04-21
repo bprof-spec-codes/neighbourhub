@@ -62,5 +62,23 @@ namespace Endpoint.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public IActionResult DeleteMessage(string id)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null) return Unauthorized();
+            try
+            {
+                _messageLogic.DeleteMessage(id, userId);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
