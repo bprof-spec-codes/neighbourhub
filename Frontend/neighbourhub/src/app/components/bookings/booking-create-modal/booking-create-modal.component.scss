@@ -42,3 +42,51 @@
   display: flex;
   gap: 0.75rem;
 }
+
+// Timeline
+.timeline-wrapper {
+  position: relative;
+  padding-bottom: 1.25rem;
+}
+
+.timeline-track {
+  position: relative;
+  height: 24px;
+  background: #f1f3f5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timeline-block {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 3px;
+}
+
+.booked {
+  background: #4993e7;
+  opacity: 0.8;
+}
+
+.selected {
+  background: #198754;
+  opacity: 0.7;
+
+  &.conflict {
+    background: #dc3545;
+  }
+}
+
+.timeline-labels {
+  position: relative;
+  height: 1rem;
+  margin-top: 2px;
+}
+
+.timeline-hour {
+  position: absolute;
+  font-size: 0.65rem;
+  color: #6c757d;
+  transform: translateX(-50%);
+}

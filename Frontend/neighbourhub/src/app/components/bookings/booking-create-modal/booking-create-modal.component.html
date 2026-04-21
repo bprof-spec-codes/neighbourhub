@@ -24,6 +24,22 @@
           <div class="invalid-feedback">Date is required.</div>
         </div>
 
+        <div *ngIf="bookedSlots.length > 0 || form.get('communityRoomId')!.value && form.get('bookingDate')!.value" class="mb-3">
+          <label class="form-label">Availability</label>
+          <div class="timeline-wrapper">
+            <div class="timeline-track">
+              <div *ngFor="let slot of bookedSlots" class="timeline-block booked" [ngStyle]="getSlotStyle(slot)"></div>
+              <div *ngIf="getSelectionStyle() as sel" class="timeline-block selected" [ngStyle]="sel" [class.conflict]="hasConflict"></div>
+            </div>
+            <div class="timeline-labels">
+              <span *ngFor="let h of getHourMarkers()" class="timeline-hour" [style.left]="(h / 24 * 100) + '%'">
+                {{ h % 6 === 0 ? (h + ':00') : '' }}
+              </span>
+            </div>
+          </div>
+          <div *ngIf="bookedSlots.length === 0" class="text-muted small mt-1">No bookings on this day.</div>
+        </div>
+
         <div class="row mb-3">
           <div class="col-6">
             <label class="form-label">Start Time</label>
@@ -37,6 +53,11 @@
           </div>
         </div>
 
+        <div *ngIf="hasConflict" class="alert alert-danger py-2 mb-3">
+          <i class="bi bi-exclamation-triangle me-1"></i>
+          The selected time overlaps with an existing booking.
+        </div>
+
         <div class="mb-3">
           <label class="form-label">Number of People Attending</label>
           <input type="number" class="form-control" formControlName="numberOfPeople" min="1" [class.is-invalid]="isInvalid('numberOfPeople')">
@@ -46,7 +67,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
-        <button type="submit" class="btn btn-primary flex-grow-1">Confirm Booking</button>
+        <button type="submit" class="btn btn-primary flex-grow-1" [disabled]="hasConflict">Confirm Booking</button>
       </div>
     </form>
   </div>
