@@ -3,6 +3,7 @@ using Entities.Dtos.Announcement;
 using Entities.Dtos.Booking;
 using Entities.Dtos.CommunityRoom;
 using Entities.Dtos.ErrorReport;
+using Entities.Dtos.Message;
 using Entities.Dtos.Vote;
 using Entities.Enums;
 using Entities.Models;
@@ -41,6 +42,21 @@ public class DtoProvider
                 .ForMember(d => d.Entries, o => o.Ignore());
 
             cfg.CreateMap<Document, DocumentShortViewDto>();
+
+            cfg.CreateMap<Message, IncomingMessageDto>()
+                .ForMember(d => d.SenderName, o => o.MapFrom(s => s.Sender != null ? s.Sender.FirstName + " " + s.Sender.LastName : ""));
+
+            cfg.CreateMap<Message, SentMessageDto>()
+                .ForMember(d => d.ReceiverName, o => o.MapFrom(s => s.Receiver != null ? s.Receiver.FirstName + " " + s.Receiver.LastName : ""));
+
+            cfg.CreateMap<CreateMessageDto, Message>()
+                .ForMember(d => d.Id, o => o.Ignore())
+                .ForMember(d => d.SenderId, o => o.Ignore())
+                .ForMember(d => d.Sender, o => o.Ignore())
+                .ForMember(d => d.Receiver, o => o.Ignore())
+                .ForMember(d => d.ReplyTo, o => o.Ignore())
+                .ForMember(d => d.SentAt, o => o.Ignore())
+                .ForMember(d => d.IsRead, o => o.Ignore());
 
             cfg.CreateMap<CommunityRoomCreateDto, CommunityRoom>();
 

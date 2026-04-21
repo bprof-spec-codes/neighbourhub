@@ -46,6 +46,10 @@ export class DocumentsComponent implements OnInit {
     this.documentService.downloadDocument(documentId);
   }
 
+  protected onPreviewDocument(documentId: string): void {
+    this.documentService.previewDocument(documentId);
+  }
+
   protected openDeleteModal(documentId: string): void {
     this.isDeleteModalOpen = true;
     this.idToDelete = documentId;
