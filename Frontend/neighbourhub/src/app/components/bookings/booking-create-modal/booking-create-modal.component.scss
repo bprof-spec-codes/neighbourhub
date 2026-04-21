@@ -1,0 +1,44 @@
+@import "../../../../styles/colors";
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.modal-card {
+  background: $white;
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  padding: 1.5rem 1.5rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h5 {
+    font-weight: 700;
+    color: #2d3748;
+  }
+}
+
+.modal-body {
+  padding: 0.75rem 1.5rem;
+}
+
+.modal-footer {
+  padding: 0.75rem 1.5rem 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+}

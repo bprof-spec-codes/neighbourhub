@@ -1,0 +1,53 @@
+<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">Book a Facility</h5>
+      <button type="button" class="btn btn-sm btn-light" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Facility</label>
+          <select class="form-select" formControlName="communityRoomId" [class.is-invalid]="isInvalid('communityRoomId')">
+            <option value="">Select a facility</option>
+            <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
+          </select>
+          <div class="invalid-feedback">Please select a facility.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" formControlName="bookingDate" [class.is-invalid]="isInvalid('bookingDate')">
+          <div class="invalid-feedback">Date is required.</div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <label class="form-label">Start Time</label>
+            <input type="time" class="form-control" formControlName="startTime" [class.is-invalid]="isInvalid('startTime')">
+            <div class="invalid-feedback">Start time is required.</div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">End Time</label>
+            <input type="time" class="form-control" formControlName="endTime" [class.is-invalid]="isInvalid('endTime')">
+            <div class="invalid-feedback">End time is required.</div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Number of People Attending</label>
+          <input type="number" class="form-control" formControlName="numberOfPeople" min="1" [class.is-invalid]="isInvalid('numberOfPeople')">
+          <div class="invalid-feedback">At least 1 person required.</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-grow-1">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+</div>
