@@ -1,0 +1,122 @@
+@import "../../../styles/colors";
+
+.bookings-page {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+
+  @media (min-width: 768px) {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+  }
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+// Room cards
+.room-card {
+  background: $white;
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+  border-top: 3px solid $neigh-blue;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  height: 100%;
+}
+
+.room-card-body {
+  padding: 1.25rem;
+}
+
+.room-name {
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.room-description {
+  font-size: 0.9rem;
+}
+
+.room-capacity {
+  font-size: 0.9rem;
+  color: $dark-gray;
+}
+
+// Booking cards
+.booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.booking-card {
+  background: $white;
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+  border-left: 4px solid transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.booking-card-upcoming {
+  border-left-color: $green;
+}
+
+.booking-card-past {
+  border-left-color: #dee2e6;
+  opacity: 0.8;
+}
+
+.booking-card-inner {
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.booking-room {
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+  color: #212529;
+}
+
+.booking-meta {
+  font-size: 0.85rem;
+}
+
+.booking-time-row {
+  font-size: 0.875rem;
+  color: $dark-gray;
+}
+
+// Status badges
+.status-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 1rem;
+  white-space: nowrap;
+}
+
+.status-confirmed {
+  background: #d1e7dd;
+  color: #0a3622;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #664d03;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #58151c;
+}
+
+.status-completed {
+  background: #e9ecef;
+  color: $dark-gray;
+}
