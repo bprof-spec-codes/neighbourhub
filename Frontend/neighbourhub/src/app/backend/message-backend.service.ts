@@ -29,4 +29,8 @@ export class MessageBackendService {
     public markAsRead(id: string): Observable<void>{
         return this.http.patch<void>(`${this.baseApiUrl}/Message/${id}/read`,{})
     }
+
+    public deleteMessage(id: string): Observable<void>{
+        return this.http.delete<void>(`${this.baseApiUrl}/Message/${id}`)
+    }
 }

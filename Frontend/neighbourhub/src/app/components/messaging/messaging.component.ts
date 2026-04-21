@@ -23,6 +23,11 @@ export class MessagingComponent implements OnInit {
   protected isViewModalOpen = false;
   protected selectedSentMessage: SentMessageDto | null = null;
 
+  protected isDeleteModalOpen = false;
+  protected messageToDeleteId: string | null = null;
+  protected isDeleteSent = false;
+
+
   constructor(private messageService: MessageService) {}
 
   public ngOnInit(): void {
@@ -85,5 +90,22 @@ export class MessagingComponent implements OnInit {
   protected closeSentViewModal(): void {
     this.isViewModalOpen = false;
     this.selectedSentMessage = null;
+  }
+
+  protected openDeleteModal(id: string, isSent: boolean):void {
+    this.messageToDeleteId = id
+    this.isDeleteSent = isSent
+    this.isDeleteModalOpen = true
+  }
+
+  protected closeDeleteModal(): void{
+    this.isDeleteModalOpen = false
+    this.messageToDeleteId = null
+  }
+
+  protected deleteMessage(): void{
+    if(!this.messageToDeleteId) return
+    this.messageService.deleteMessage(this.messageToDeleteId, this.isDeleteSent)
+    this.closeDeleteModal()
   }
 }

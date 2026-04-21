@@ -53,6 +53,9 @@
                 <button class="btn btn-outline-primary btn-sm" title="Reply" (click)="openComposeModal(message)">
                   <i class="bi bi-reply"></i> Reply
                 </button>
+                <button class="btn btn-outline-danger btn-sm" title="Delete" (click)="openDeleteModal(message.id, false)">
+                  <i class="bi bi-trash"></i>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -75,6 +78,7 @@
               <th>To</th>
               <th>Subject</th>
               <th>Date</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -87,6 +91,11 @@
               </td>
               <td class="subject-cell">{{ message.subject }}</td>
               <td class="date-cell">{{ message.sentAt | date:'MMM d, y' }}</td>
+              <td class="action-cell" (click)="$event.stopPropagation()">
+                <button class="btn btn-outline-danger btn-sm" title="Delete" (click)="openDeleteModal(message.id, true)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -108,4 +117,11 @@
   [sentMessage]="selectedSentMessage"
   (reply)="replyToSelected()"
   (close)="selectedSentMessage ? closeSentViewModal() : closeViewModal()"
+/>
+
+<app-delete-modal
+  [isOpen]="isDeleteModalOpen"
+  [content]="'Are you sure you want to delete this message?'"
+  (confirm)="deleteMessage()"
+  (cancel)="closeDeleteModal()"
 />

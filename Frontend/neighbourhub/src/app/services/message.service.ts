@@ -53,4 +53,17 @@ export class MessageService {
       error: (err) => console.error('Failed to mark message as read', err)
     });
   }
+
+  public deleteMessage(id: string, isSent: boolean): void {
+  this.messageBackendService.deleteMessage(id).pipe(untilDestroyed(this)).subscribe({
+    next: () => {
+      if (isSent) {
+        this.loadSent();
+      } else {
+        this.loadIncoming();
+      }
+    },
+    error: (err) => console.error('Failed to delete message', err)
+  });
+}
 }
