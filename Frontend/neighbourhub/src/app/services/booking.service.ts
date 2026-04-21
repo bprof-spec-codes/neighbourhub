@@ -34,9 +34,19 @@ export class BookingService {
   public loadAll(): void {
     this.backendService.getAll().pipe(untilDestroyed(this)).subscribe({
       next: (all) => {
-        const today = new Date().toISOString().substring(0, 10);
-        this._upcomingBookings.next(all.filter(b => b.bookingDate >= today));
-        this._pastBookings.next(all.filter(b => b.bookingDate < today));
+        const now = new Date();
+        const today = now.toISOString().substring(0, 10);
+        const currentTime = now.toTimeString().substring(0, 5);
+
+        const isUpcoming = (b: BookingListItem) => {
+          const bDate = b.bookingDate.substring(0, 10);
+          if (bDate > today) return true;
+          if (bDate < today) return false;
+          return b.endTime.substring(0, 5) > currentTime;
+        };
+
+        this._upcomingBookings.next(all.filter(b => isUpcoming(b)));
+        this._pastBookings.next(all.filter(b => !isUpcoming(b)));
       },
       error: (err) => console.error('Failed to load all bookings', err)
     });

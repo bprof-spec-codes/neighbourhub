@@ -80,7 +80,7 @@ public class BookingLogic
             StartTime = dto.StartTime,
             EndTime = dto.EndTime,
             NumberOfPeople = dto.NumberOfPeople,
-            Status = BookingStatus.Confirmed
+            Status = BookingStatus.Active
         };
 
         _repository.Add(booking);

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { BookingService } from '../../services/booking.service';
 import { CommunityRoomService } from '../../services/community-room.service';
 import { AuthService } from '../../services/auth.service';
@@ -15,33 +15,79 @@ import { CommunityRoomUpdateDto } from '../../entities/dtos/community-room-updat
   templateUrl: './bookings.component.html',
   styleUrl: './bookings.component.scss'
 })
-export class BookingsComponent implements OnInit {
-  protected upcomingBookings$: Observable<BookingListItem[]>;
-  protected pastBookings$: Observable<BookingListItem[]>;
-  protected rooms$: Observable<CommunityRoom[]>;
+export class BookingsComponent implements OnInit, OnDestroy {
+  protected rooms$;
 
   protected isCreateModalOpen = false;
   protected isRoomModalOpen = false;
   protected selectedRoom: CommunityRoom | null = null;
   protected preselectedRoomId: string | null = null;
 
+  protected filterRoomId = '';
+  protected filterDate = '';
+  protected filterStatus = 'Active';
+  protected filterPeriod = 'upcoming';
+
+  protected filteredUpcoming: BookingListItem[] = [];
+  protected filteredPast: BookingListItem[] = [];
+
+  private allUpcoming: BookingListItem[] = [];
+  private allPast: BookingListItem[] = [];
+  private subs = new Subscription();
+
   constructor(
     private bookingService: BookingService,
     private communityRoomService: CommunityRoomService,
     protected authService: AuthService
   ) {
-    this.upcomingBookings$ = this.bookingService.upcomingBookings$;
-    this.pastBookings$ = this.bookingService.pastBookings$;
     this.rooms$ = this.communityRoomService.rooms$;
   }
 
   public ngOnInit(): void {
+    this.subs.add(this.bookingService.upcomingBookings$.subscribe(b => {
+      this.allUpcoming = b;
+      this.applyFilters();
+    }));
+    this.subs.add(this.bookingService.pastBookings$.subscribe(b => {
+      this.allPast = b;
+      this.applyFilters();
+    }));
+
     this.bookingService.loadAll();
     if (this.authService.isAdmin()) {
       this.communityRoomService.loadAllForAdmin();
     } else {
       this.communityRoomService.loadAll();
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  protected onFilterChange(): void {
+    this.applyFilters();
+  }
+
+  protected resetFilters(): void {
+    this.filterRoomId = '';
+    this.filterDate = '';
+    this.filterStatus = 'Active';
+    this.filterPeriod = 'upcoming';
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    const currentUserId = this.authService.getUserId();
+    const filter = (list: BookingListItem[]) => list.filter(b => {
+      if (this.filterRoomId && b.communityRoomId !== this.filterRoomId) return false;
+      if (this.filterDate && b.bookingDate.substring(0, 10) !== this.filterDate) return false;
+      if (this.filterStatus && b.status !== this.filterStatus) return false;
+      if (this.filterPeriod === 'my' && b.bookedById !== currentUserId) return false;
+      return true;
+    });
+    this.filteredUpcoming = filter(this.allUpcoming);
+    this.filteredPast = filter(this.allPast);
   }
 
   protected openCreateModal(roomId: string | null = null): void {
@@ -93,8 +139,7 @@ export class BookingsComponent implements OnInit {
 
   protected getStatusClass(status: string): string {
     switch (status) {
-      case 'Confirmed': return 'status-confirmed';
-      case 'Pending': return 'status-pending';
+      case 'Active': return 'status-active';
       case 'Cancelled': return 'status-cancelled';
       default: return '';
     }

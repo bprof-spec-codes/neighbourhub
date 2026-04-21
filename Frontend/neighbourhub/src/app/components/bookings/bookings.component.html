@@ -43,24 +43,47 @@
     </div>
   </ng-container>
 
-  <h2 class="section-title mb-3">Upcoming Bookings</h2>
+  <div class="booking-filters mb-4">
+    <ng-container *ngIf="rooms$ | async as rooms">
+      <select class="form-select filter-control" [(ngModel)]="filterRoomId" (ngModelChange)="onFilterChange()">
+        <option value="">All Facilities</option>
+        <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
+      </select>
+    </ng-container>
+    <input type="date" class="form-control filter-control" [(ngModel)]="filterDate" (ngModelChange)="onFilterChange()">
+    <select class="form-select filter-control" [(ngModel)]="filterStatus" (ngModelChange)="onFilterChange()">
+      <option value="">All Statuses</option>
+      <option value="Active">Active</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+    <select class="form-select filter-control" [(ngModel)]="filterPeriod" (ngModelChange)="onFilterChange()">
+      <option value="upcoming">Upcoming</option>
+      <option value="my">My Bookings</option>
+      <option value="past">Past Bookings</option>
+    </select>
+    <button type="button" class="btn btn-outline-secondary filter-reset" (click)="resetFilters()">Reset</button>
+  </div>
 
-  <ng-container *ngIf="upcomingBookings$ | async as upcoming">
-    <p *ngIf="upcoming.length === 0" class="text-muted">No upcoming bookings.</p>
-    <div class="booking-list mb-5">
-      <div *ngFor="let booking of upcoming" class="booking-card booking-card-upcoming">
+  <h2 class="section-title mb-3">
+    {{ filterPeriod === 'past' ? 'Past Bookings' : filterPeriod === 'my' ? 'My Bookings' : 'Upcoming Bookings' }}
+  </h2>
+
+  <ng-container *ngIf="filterPeriod === 'upcoming' || filterPeriod === 'my'">
+    <p *ngIf="filteredUpcoming.length === 0" class="text-muted">No upcoming bookings.</p>
+    <div class="booking-list">
+      <div *ngFor="let booking of filteredUpcoming" class="booking-card booking-card-upcoming">
         <div class="booking-card-inner">
-          <div>
+          <div class="booking-info">
             <h6 class="booking-room">{{ booking.roomName }}</h6>
             <p class="booking-meta text-muted mb-2">Booked by {{ booking.bookedByName }}</p>
-            <div class="d-flex gap-3 booking-time-row">
+            <div class="booking-time-row">
               <span><i class="bi bi-calendar3 me-1"></i>{{ booking.bookingDate | date:'MMM d, yyyy' }}</span>
               <span><i class="bi bi-clock me-1"></i>{{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }}</span>
             </div>
           </div>
-          <div class="d-flex flex-column align-items-end gap-2">
+          <div class="booking-actions">
             <span class="status-badge" [ngClass]="getStatusClass(booking.status)">{{ booking.status }}</span>
-            <button *ngIf="booking.status !== 'Cancelled'" type="button" class="btn btn-sm btn-outline-danger" (click)="cancelBooking(booking.id)">
+            <button *ngIf="booking.status === 'Active'" type="button" class="btn btn-sm btn-outline-danger" (click)="cancelBooking(booking.id)">
               Cancel
             </button>
           </div>
@@ -69,20 +92,22 @@
     </div>
   </ng-container>
 
-  <h2 class="section-title mb-3">Past Bookings</h2>
-
-  <ng-container *ngIf="pastBookings$ | async as past">
-    <p *ngIf="past.length === 0" class="text-muted">No past bookings.</p>
+  <ng-container *ngIf="filterPeriod === 'past'">
+    <p *ngIf="filteredPast.length === 0" class="text-muted">No past bookings.</p>
     <div class="booking-list">
-      <div *ngFor="let booking of past" class="booking-card booking-card-past">
+      <div *ngFor="let booking of filteredPast" class="booking-card booking-card-past">
         <div class="booking-card-inner">
-          <div>
+          <div class="booking-info">
             <h6 class="booking-room">{{ booking.roomName }}</h6>
-            <p class="booking-time-row text-muted mb-0">
-              {{ booking.bookingDate | date:'MMM d, yyyy' }} at {{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }}
-            </p>
+            <p class="booking-meta text-muted mb-2">Booked by {{ booking.bookedByName }}</p>
+            <div class="booking-time-row">
+              <span><i class="bi bi-calendar3 me-1"></i>{{ booking.bookingDate | date:'MMM d, yyyy' }}</span>
+              <span><i class="bi bi-clock me-1"></i>{{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }}</span>
+            </div>
           </div>
-          <span class="status-badge status-completed">Completed</span>
+          <div class="booking-actions">
+            <span class="status-badge" [ngClass]="getStatusClass(booking.status)">{{ booking.status }}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -73,6 +73,32 @@
   color: $dark-gray;
 }
 
+// Filters
+.booking-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filter-control {
+  flex: 1 1 100%;
+
+  @media (min-width: 576px) {
+    flex: 1 1 160px;
+    max-width: 240px;
+  }
+}
+
+.filter-reset {
+  width: 100%;
+
+  @media (min-width: 576px) {
+    width: auto;
+    flex-shrink: 0;
+  }
+}
+
 // Booking cards
 .booking-list {
   display: flex;
@@ -106,6 +132,21 @@
   flex-wrap: wrap;
 }
 
+.booking-info {
+  min-width: 0;
+  flex: 1 1 200px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.booking-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
 .booking-room {
   font-weight: 600;
   margin-bottom: 0.1rem;
@@ -117,6 +158,9 @@
 }
 
 .booking-time-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   font-size: 0.875rem;
   color: $dark-gray;
 }
@@ -130,14 +174,9 @@
   white-space: nowrap;
 }
 
-.status-confirmed {
+.status-active {
   background: #d1e7dd;
   color: #0a3622;
-}
-
-.status-pending {
-  background: #fff3cd;
-  color: #664d03;
 }
 
 .status-cancelled {

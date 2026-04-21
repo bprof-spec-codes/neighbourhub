@@ -22,7 +22,7 @@ namespace Entities.Models
 
         public TimeOnly EndTime { get; set; }
 
-        public BookingStatus Status { get; set; } = BookingStatus.Confirmed;
+        public BookingStatus Status { get; set; } = BookingStatus.Active;
 
         public int NumberOfPeople { get; set; }
 

@@ -1,6 +1,8 @@
 export interface BookingListItem {
   id: string;
+  communityRoomId: string;
   roomName: string;
+  bookedById: string;
   bookedByName: string;
   bookingDate: string;
   startTime: string;
