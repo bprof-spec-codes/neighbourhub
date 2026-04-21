@@ -1,8 +1,10 @@
 using Data;
+using Endpoint.Dtos;
 using Entities.Dtos.User;
 using Entities.Enums;
 using Entities.Helpers;
 using Entities.Models;
+using Logic.Logic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +24,18 @@ namespace Endpoint.Controllers
         UserManager<AppUser> userManager;
         RoleManager<IdentityRole> roleManager;
         private readonly JwtSettings jwtSettings;
-        public UserController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IOptions<JwtSettings> jwtSettings)
+        private readonly UserLogic userLogic;
+
+        public UserController(
+            UserManager<AppUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IOptions<JwtSettings> jwtSettings,
+            UserLogic userLogic)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.jwtSettings = jwtSettings.Value;
+            this.userLogic = userLogic;
         }
 
         [HttpPost("Register")]
@@ -195,147 +204,76 @@ namespace Endpoint.Controllers
         [HttpGet("Residents")]
         public IActionResult GetResidents()
         {
-            var residents = userManager.Users
-                .Select(u => new ResidentListItemDto
-                {
-                    Id = u.Id,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email ?? string.Empty,
-                    PhoneNumber = u.PhoneNumber ?? string.Empty,
-                    ProfileImageUrl = u.ProfileImageUrl,
-                    ApartmentNumber = u.ApartmentNumber ?? new List<string>(),
-                    ParkingSpace = u.ParkingSpace ?? new List<string>(),
-                    Storage = u.Storage ?? new List<string>()
-                })
-                .OrderBy(u => u.LastName)
-                .ThenBy(u => u.FirstName)
-                .ToList();
-
-            return Ok(residents);
+            return Ok(userLogic.GetResidents());
         }
 
         [Authorize]
         [HttpGet("Residents/{id}")]
         public async Task<IActionResult> GetResidentById(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
-            if (user == null) return NotFound("A felhasználó nem található.");
-
-            var resident = new ResidentListItemDto
+            try
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email ?? string.Empty,
-                PhoneNumber = user.PhoneNumber ?? string.Empty,
-                ProfileImageUrl = user.ProfileImageUrl,
-                ApartmentNumber = user.ApartmentNumber ?? new List<string>(),
-                ParkingSpace = user.ParkingSpace ?? new List<string>(),
-                Storage = user.Storage ?? new List<string>()
-            };
-
-            return Ok(resident);
+                var resident = await userLogic.GetResidentByIdAsync(id);
+                return Ok(resident);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("Residents/{id}")]
         public async Task<IActionResult> UpdateResident(string id, AdminUpdateResidentDto dto)
         {
-            var user = await userManager.FindByIdAsync(id);
-            if (user == null) return NotFound("A felhasználó nem található.");
-
-            if (!IsValidEmail(dto.Email)) return BadRequest("Az email cím formátuma nem megfelelő!");
-            if (!IsValidPhoneNumber(dto.PhoneNumber)) return BadRequest("A telefonszám formátuma nem megfelelő!");
-
-            var existingUserWithEmail = await userManager.FindByEmailAsync(dto.Email);
-            if (existingUserWithEmail != null && existingUserWithEmail.Id != user.Id)
+            try
             {
-                return BadRequest("Az email cím már foglalt.");
+                var errors = await userLogic.UpdateResidentAsync(id, dto);
+                if (errors.Count > 0)
+                {
+                    return BadRequest(errors);
+                }
+
+                return Ok();
             }
-
-            var apartmentNumbers = NormalizeCodes(dto.ApartmentNumber);
-            var parkingSpaces = NormalizeCodes(dto.ParkingSpace);
-            var storages = NormalizeCodes(dto.Storage);
-
-            var otherUsers = userManager.Users.Where(u => u.Id != user.Id).ToList();
-
-            var apartmentConflict = otherUsers
-                .SelectMany(u => u.ApartmentNumber ?? new List<string>())
-                .Select(NormalizeCode)
-                .FirstOrDefault(code => apartmentNumbers.Contains(code));
-
-            if (!string.IsNullOrEmpty(apartmentConflict))
+            catch (KeyNotFoundException ex)
             {
-                return BadRequest($"A lakás már másik lakóhoz van rendelve: {apartmentConflict}");
+                return NotFound(ex.Message);
             }
-
-            var parkingConflict = otherUsers
-                .SelectMany(u => u.ParkingSpace ?? new List<string>())
-                .Select(NormalizeCode)
-                .FirstOrDefault(code => parkingSpaces.Contains(code));
-
-            if (!string.IsNullOrEmpty(parkingConflict))
+            catch (ArgumentException ex)
             {
-                return BadRequest($"A parkolóhely már másik lakóhoz van rendelve: {parkingConflict}");
+                return BadRequest(ex.Message);
             }
-
-            var storageConflict = otherUsers
-                .SelectMany(u => u.Storage ?? new List<string>())
-                .Select(NormalizeCode)
-                .FirstOrDefault(code => storages.Contains(code));
-
-            if (!string.IsNullOrEmpty(storageConflict))
-            {
-                return BadRequest($"A tároló már másik lakóhoz van rendelve: {storageConflict}");
-            }
-
-            user.FirstName = dto.FirstName;
-            user.LastName = dto.LastName;
-            user.Email = dto.Email;
-            user.UserName = dto.Email.Split('@')[0];
-            user.PhoneNumber = dto.PhoneNumber;
-            user.ProfileImageUrl = string.IsNullOrWhiteSpace(dto.ProfileImageUrl) ? null : dto.ProfileImageUrl.Trim();
-            user.ApartmentNumber = apartmentNumbers;
-            user.ParkingSpace = parkingSpaces;
-            user.Storage = storages;
-
-            var result = await userManager.UpdateAsync(user);
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(e => e.Description).ToList();
-                return BadRequest(errors);
-            }
-
-            return Ok();
         }
 
-        private static List<string> NormalizeCodes(List<string>? codes)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Residents/{id}/profile-image")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadResidentProfileImage(string id, [FromForm] ResidentProfileImageUploadRequestDto request)
         {
-            return (codes ?? new List<string>())
-                .SelectMany(SplitCodes)
-                .Select(NormalizeCode)
-                .Where(code => !string.IsNullOrWhiteSpace(code))
-                .Distinct()
-                .ToList();
-        }
-
-        private static IEnumerable<string> SplitCodes(string? rawCodes)
-        {
-            if (string.IsNullOrWhiteSpace(rawCodes))
+            try
             {
-                return Enumerable.Empty<string>();
+                if (request.File == null || request.File.Length == 0)
+                {
+                    return BadRequest("No file uploaded.");
+                }
+
+                await using var fileStream = request.File.OpenReadStream();
+                var profileImagePath = await userLogic.UploadResidentProfileImageAsync(id, fileStream, request.File.FileName);
+                return Ok(new { profileImagePath });
             }
-
-            return rawCodes
-                .Split(new[] { '|', ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(code => code.Trim())
-                .Where(code => code.Length > 0);
-        }
-
-        private static string NormalizeCode(string? code)
-        {
-            return (code ?? string.Empty).Trim().ToUpperInvariant();
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

@@ -97,6 +97,7 @@ public class Program
         builder.Services.AddTransient<ErrorReportLogic>();
         builder.Services.AddTransient<DocumentLogic>();
         builder.Services.AddTransient<MessageLogic>();
+        builder.Services.AddTransient<UserLogic>();
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
@@ -141,6 +142,7 @@ public class Program
         }
 
         app.UseCors("AllowAngularApp");
+        app.UseStaticFiles();
 
         app.UseAuthentication(); 
         app.UseAuthorization();
