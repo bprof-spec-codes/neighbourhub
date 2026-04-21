@@ -25,7 +25,7 @@
             <p class="room-description text-muted mb-3">{{ room.description }}</p>
             <hr class="my-2">
             <p class="room-capacity mb-3">Capacity: <strong>{{ room.capacity }} people</strong></p>
-            <button type="button" class="btn btn-primary w-100" (click)="openCreateModal()">
+            <button type="button" class="btn btn-primary w-100" (click)="openCreateModal(room.id)">
               Reserve Now
             </button>
             <div *ngIf="authService.isAdmin()" class="d-flex gap-2 mt-2">
@@ -91,6 +91,7 @@
 <app-booking-create-modal
   [isOpen]="isCreateModalOpen"
   [rooms]="(rooms$ | async) ?? []"
+  [preselectedRoomId]="preselectedRoomId"
   (add)="createBooking($event)"
   (close)="closeCreateModal()"
 />

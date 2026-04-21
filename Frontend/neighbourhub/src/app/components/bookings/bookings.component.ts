@@ -23,6 +23,7 @@ export class BookingsComponent implements OnInit {
   protected isCreateModalOpen = false;
   protected isRoomModalOpen = false;
   protected selectedRoom: CommunityRoom | null = null;
+  protected preselectedRoomId: string | null = null;
 
   constructor(
     private bookingService: BookingService,
@@ -43,12 +44,14 @@ export class BookingsComponent implements OnInit {
     }
   }
 
-  protected openCreateModal(): void {
+  protected openCreateModal(roomId: string | null = null): void {
+    this.preselectedRoomId = roomId;
     this.isCreateModalOpen = true;
   }
 
   protected closeCreateModal(): void {
     this.isCreateModalOpen = false;
+    this.preselectedRoomId = null;
   }
 
   protected createBooking(dto: BookingCreateDto): void {

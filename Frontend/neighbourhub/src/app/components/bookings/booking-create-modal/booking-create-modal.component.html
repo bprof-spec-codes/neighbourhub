@@ -60,8 +60,14 @@
 
         <div class="mb-3">
           <label class="form-label">Number of People Attending</label>
-          <input type="number" class="form-control" formControlName="numberOfPeople" min="1" [class.is-invalid]="isInvalid('numberOfPeople')">
-          <div class="invalid-feedback">At least 1 person required.</div>
+          <input type="number" class="form-control" formControlName="numberOfPeople" min="1" [max]="selectedRoomCapacity ?? 9999" [class.is-invalid]="isInvalid('numberOfPeople')">
+          <div class="invalid-feedback">
+            <ng-container *ngIf="form.get('numberOfPeople')?.errors as errs">
+              <span *ngIf="errs['max']">Max {{ selectedRoomCapacity }} person.</span>
+              <span *ngIf="!errs['max'] && errs['min']">At least 1 person required.</span>
+              <span *ngIf="!errs['max'] && !errs['min'] && errs['required']">This field is required.</span>
+            </ng-container>
+          </div>
         </div>
       </div>
 

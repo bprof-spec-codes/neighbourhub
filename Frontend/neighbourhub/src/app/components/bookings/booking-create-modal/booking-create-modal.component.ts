@@ -15,6 +15,7 @@ import { BookingService } from '../../../services/booking.service';
 export class BookingCreateModalComponent implements OnChanges, OnDestroy {
   @Input() isOpen = false;
   @Input() rooms: CommunityRoom[] = [];
+  @Input() preselectedRoomId: string | null = null;
 
   @Output() add = new EventEmitter<BookingCreateDto>();
   @Output() close = new EventEmitter<void>();
@@ -22,6 +23,7 @@ export class BookingCreateModalComponent implements OnChanges, OnDestroy {
   protected readonly form;
   protected bookedSlots: BookingSlot[] = [];
   protected hasConflict = false;
+  protected selectedRoomCapacity: number | null = null;
 
   private availabilitySub?: Subscription;
 
@@ -41,13 +43,20 @@ export class BookingCreateModalComponent implements OnChanges, OnDestroy {
 
     this.form.valueChanges.subscribe(() => this.checkConflict());
 
-    this.form.get('communityRoomId')!.valueChanges.subscribe(() => this.fetchAvailability());
+    this.form.get('communityRoomId')!.valueChanges.subscribe((roomId) => {
+      this.fetchAvailability();
+      const room = this.rooms.find(r => r.id === roomId) ?? null;
+      this.selectedRoomCapacity = room ? room.capacity : null;
+      const ctrl = this.form.get('numberOfPeople')!;
+      ctrl.setValidators([Validators.required, Validators.min(1), ...(room ? [Validators.max(room.capacity)] : [])]);
+      ctrl.updateValueAndValidity();
+    });
     this.form.get('bookingDate')!.valueChanges.subscribe(() => this.fetchAvailability());
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['isOpen']?.currentValue === true) {
-      this.form.reset({ numberOfPeople: 1 });
+      this.form.reset({ numberOfPeople: 1, communityRoomId: this.preselectedRoomId ?? '' });
       this.form.markAsUntouched();
       this.bookedSlots = [];
       this.hasConflict = false;
