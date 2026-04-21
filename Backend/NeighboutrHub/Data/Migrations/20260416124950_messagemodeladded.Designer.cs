@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20260416124950_messagemodeladded")]
+    partial class messagemodeladded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,9 +135,6 @@ namespace Data.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ReplyToId")
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("SenderId")
                         .IsRequired()
                         .HasMaxLength(450)
@@ -151,8 +151,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ReceiverId");
-
-                    b.HasIndex("ReplyToId");
 
                     b.HasIndex("SenderId");
 
@@ -481,11 +479,6 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.Message", "ReplyTo")
-                        .WithMany()
-                        .HasForeignKey("ReplyToId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Entities.Models.AppUser", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
@@ -493,8 +486,6 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Receiver");
-
-                    b.Navigation("ReplyTo");
 
                     b.Navigation("Sender");
                 });

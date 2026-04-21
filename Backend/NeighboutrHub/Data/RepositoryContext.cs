@@ -17,6 +17,7 @@ public class RepositoryContext : IdentityDbContext
 
     public DbSet<Vote> Votes { get; set; }
     public DbSet<VoteEntry> VoteEntries { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
@@ -46,10 +47,28 @@ public class RepositoryContext : IdentityDbContext
 
 
         builder.Entity<VoteEntry>()
-        .HasOne(e => e.Vote)
-        .WithMany(v => v.Entries)
-        .HasForeignKey(e => e.VoteId)
-        .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(e => e.Vote)
+            .WithMany(v => v.Entries)
+            .HasForeignKey(e => e.VoteId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany()
+            .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Message>()
+            .HasOne(m => m.Receiver)
+            .WithMany()
+            .HasForeignKey(m => m.ReceiverId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Message>()
+            .HasOne(m => m.ReplyTo)
+            .WithMany()
+            .HasForeignKey(m => m.ReplyToId)
+            .OnDelete(DeleteBehavior.Restrict);
 
 
 
