@@ -11,31 +11,37 @@
       <div class="mb-3">
         <label class="form-label">To</label>
         <ng-container *ngIf="replyTo; else selectResident">
-            <div class="form-control-plaintext fw-semibold">{{ replyTo.senderName }}</div>
+          <div class="form-control-plaintext fw-semibold">{{ replyTo.senderName }}</div>
         </ng-container>
-          <ng-template #selectResident>
+        <ng-template #selectResident>
+          <div class="position-relative">
             <input
               type="text"
-              class="form-control mb-2"
-              placeholder="Search by name or apartment..."
-              (input)="searchTerm = $any($event.target).value"
-            />
-            <select
-              id="message-receiver"
-              class="form-select"
+              class="form-control"
               [class.is-invalid]="isControlInvalid('receiverId')"
-              formControlName="receiverId"
-            >
-              <option value="" disabled>Select a resident</option>
-              <option *ngFor="let recipient  of filteredRecipients" [value]="recipient.id">
-                {{ recipient.firstName }} {{ recipient.lastName }} {{ recipient.apartmentNumber.length ? '(' + recipient.apartmentNumber.join(', ') + ')' : '' }}
-              </option>
-            </select>
-            <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">
-              Recipient is required.
+              placeholder="Search by name or apartment..."
+              [value]="searchTerm"
+              (input)="onSearchInput($event)"
+              autocomplete="off"
+            />
+            <div *ngIf="showDropdown && filteredRecipients.length > 0" class="autocomplete-dropdown">
+              <div
+                *ngFor="let recipient of filteredRecipients"
+                class="autocomplete-item"
+                (mousedown)="selectRecipient(recipient)"
+              >
+                {{ recipient.firstName }} {{ recipient.lastName }}
+                <span *ngIf="recipient.apartmentNumber.length" class="text-muted small ms-1">
+                  ({{ recipient.apartmentNumber.join(', ') }})
+                </span>
+              </div>
             </div>
-          </ng-template>
-        </div>
+          </div>
+          <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">
+            Recipient is required.
+          </div>
+        </ng-template>
+      </div>
 
       <div class="mb-3">
         <label class="form-label" for="message-subject">Subject</label>

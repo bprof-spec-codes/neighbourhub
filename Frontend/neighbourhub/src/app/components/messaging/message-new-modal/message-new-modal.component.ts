@@ -24,6 +24,9 @@ export class MessageNewModalComponent implements OnChanges {
   protected recipients: RecipientDto[] = [];
   protected searchTerm = '';
 
+  protected selectedRecipient: RecipientDto | null = null
+  protected showDropdown = false;
+
   constructor(private fb: FormBuilder, private messageBackendService: MessageBackendService) {
     this.form = this.fb.nonNullable.group({
       receiverId: ['', [Validators.required]],
@@ -77,6 +80,8 @@ export class MessageNewModalComponent implements OnChanges {
   private resetForm(): void {
     this.form.reset({ receiverId: '', subject: '', body: '' });
     this.searchTerm = '';
+    this.selectedRecipient = null;
+    this.showDropdown = false;
     this.form.markAsUntouched();
   }
 
@@ -87,5 +92,24 @@ export class MessageNewModalComponent implements OnChanges {
       (r.firstName + ' ' + r.lastName).toLowerCase().includes(term) ||
       r.apartmentNumber?.some(a => a.toLowerCase().includes(term))
     );
+  }
+
+  
+
+  protected onSearchInput(event: Event): void {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+    this.showDropdown = this.searchTerm.length > 0;
+    this.selectedRecipient = null;
+    this.form.patchValue({ receiverId: '' });
+  }
+
+  protected selectRecipient(recipient: RecipientDto): void {
+    this.selectedRecipient = recipient;
+    this.searchTerm = `${recipient.firstName} ${recipient.lastName}`;
+    if (recipient.apartmentNumber.length) {
+      this.searchTerm += ` (${recipient.apartmentNumber.join(', ')})`;
+    }
+    this.form.patchValue({ receiverId: recipient.id });
+    this.showDropdown = false;
   }
 }
