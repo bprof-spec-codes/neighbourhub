@@ -28,6 +28,9 @@ import { PendingUsersComponent } from './components/pending-users/pending-users.
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { MessageNewModalComponent } from './components/messaging/message-new-modal/message-new-modal.component';
 import { MessageViewModalComponent } from './components/messaging/message-view-modal/message-view-modal.component';
+import { BookingsComponent } from './components/bookings/bookings.component';
+import { BookingCreateModalComponent } from './components/bookings/booking-create-modal/booking-create-modal.component';
+import { RoomManageModalComponent } from './components/bookings/room-manage-modal/room-manage-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import { MessageViewModalComponent } from './components/messaging/message-view-m
     VoteAddModalComponent,
     ResidentsComponent,
     VoteModalComponent,
+    BookingsComponent,
+    BookingCreateModalComponent,
+    RoomManageModalComponent,
     RegisterComponent,
     DocumentsComponent,
     AddDocumentModalComponent,

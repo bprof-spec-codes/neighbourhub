@@ -14,6 +14,7 @@ import { DocumentsComponent } from './components/documents/documents.component';
 import { PendingUsersComponent } from './components/pending-users/pending-users.component';
 import { adminGuard } from './services/guards/admin.guard';
 import { MessagingComponent } from './components/messaging/messaging.component';
+import { BookingsComponent } from './components/bookings/bookings.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'documents', component: DocumentsComponent, canActivate: [authGuard] },
       { path: 'pendingUsers', component: PendingUsersComponent, canActivate: [authGuard, adminGuard] },
       { path: 'messaging', component: MessagingComponent, canActivate: [authGuard] },
+      { path: 'bookings', component: BookingsComponent, canActivate: [authGuard] },
     ]
   },
   { path: '**', redirectTo: '/dashboard' },
