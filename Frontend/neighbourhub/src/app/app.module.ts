@@ -25,6 +25,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { AddDocumentModalComponent } from './components/documents/add-document-modal/add-document-modal.component';
 import { PendingUsersComponent } from './components/pending-users/pending-users.component';
+import { BookingsComponent } from './components/bookings/bookings.component';
+import { BookingCreateModalComponent } from './components/bookings/booking-create-modal/booking-create-modal.component';
+import { RoomManageModalComponent } from './components/bookings/room-manage-modal/room-manage-modal.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { PendingUsersComponent } from './components/pending-users/pending-users.
     VoteAddModalComponent,
     ResidentsComponent,
     VoteModalComponent,
+    BookingsComponent,
+    BookingCreateModalComponent,
+    RoomManageModalComponent,
     RegisterComponent,
     DocumentsComponent,
     AddDocumentModalComponent,
