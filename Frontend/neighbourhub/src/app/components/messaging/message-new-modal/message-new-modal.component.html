@@ -27,8 +27,8 @@
               formControlName="receiverId"
             >
               <option value="" disabled>Select a resident</option>
-              <option *ngFor="let resident of filteredResidents" [value]="resident.id">
-                {{ resident.firstName }} {{ resident.lastName }} {{ resident.apartmentNumber.length ? '(' + resident.apartmentNumber.join(', ') + ')' : '' }}
+              <option *ngFor="let recipient  of filteredRecipients" [value]="recipient.id">
+                {{ recipient.firstName }} {{ recipient.lastName }} {{ recipient.apartmentNumber.length ? '(' + recipient.apartmentNumber.join(', ') + ')' : '' }}
               </option>
             </select>
             <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">

@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormBuilder, Validators } from '@angular/forms';
 import { CreateMessageDto } from '../../../entities/dtos/create-message-dto.model';
 import { IncomingMessageDto } from '../../../entities/dtos/incoming-message-dto.model';
-import { ResidentService } from '../../../services/resident.service';
-import { Resident } from '../../../entities/models/resident.model';
+import { MessageBackendService } from '../../../backend/message-backend.service';
+import { RecipientDto } from '../../../entities/dtos/recipient-dto.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -21,28 +21,23 @@ export class MessageNewModalComponent implements OnChanges {
   @Output() close = new EventEmitter<void>();
 
   protected readonly form;
-  protected residents: Resident[] = [];
+  protected recipients: RecipientDto[] = [];
   protected searchTerm = '';
 
-  constructor(private fb: FormBuilder, private residentService: ResidentService) {
+  constructor(private fb: FormBuilder, private messageBackendService: MessageBackendService) {
     this.form = this.fb.nonNullable.group({
       receiverId: ['', [Validators.required]],
       subject: ['', [Validators.required, Validators.maxLength(200)]],
       body: ['', [Validators.required]]
     });
-
-    
-    
-    this.residentService.residents$.pipe(untilDestroyed(this)).subscribe(r => {
-      this.residents = r;
-    });
-    this.residentService.loadResidents();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     const isOpenChange = changes['isOpen'];
     if (isOpenChange && isOpenChange.currentValue === true) {
-      this.residentService.loadResidents();
+      this.messageBackendService.getRecipients().pipe(untilDestroyed(this)).subscribe(r => {
+        this.recipients = r;
+      });
       if (this.replyTo) {
         this.form.patchValue({
           receiverId: this.replyTo.senderId,
@@ -85,10 +80,10 @@ export class MessageNewModalComponent implements OnChanges {
     this.form.markAsUntouched();
   }
 
-  protected get filteredResidents(): Resident[] {
+  protected get filteredRecipients(): RecipientDto[] {
     const term = this.searchTerm.toLowerCase();
-    if (!term) return this.residents;
-    return this.residents.filter(r =>
+    if (!term) return this.recipients;
+    return this.recipients.filter(r =>
       (r.firstName + ' ' + r.lastName).toLowerCase().includes(term) ||
       r.apartmentNumber?.some(a => a.toLowerCase().includes(term))
     );

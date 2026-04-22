@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IncomingMessageDto } from '../entities/dtos/incoming-message-dto.model';
 import { SentMessageDto } from '../entities/dtos/sent-message-dto.model';
 import { CreateMessageDto } from '../entities/dtos/create-message-dto.model';
+import { RecipientDto } from '../entities/dtos/recipient-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,8 @@ export class MessageBackendService {
     public deleteMessage(id: string): Observable<void>{
         return this.http.delete<void>(`${this.baseApiUrl}/Message/${id}`)
     }
+
+    public getRecipients(): Observable<RecipientDto[]>{
+        return this.http.get<RecipientDto[]>(`${this.baseApiUrl}/Message/recipients`)
+    } 
 }
