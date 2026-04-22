@@ -80,5 +80,12 @@ namespace Endpoint.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpGet("recipients")]
+        [Authorize]
+        public IActionResult GetRecipients()
+        {
+            return Ok(_messageLogic.GetRecipients());
+        }
     }
 }

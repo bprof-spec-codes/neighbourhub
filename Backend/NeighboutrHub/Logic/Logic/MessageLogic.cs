@@ -1,5 +1,6 @@
 ﻿using Data;
 using Entities.Dtos.Message;
+using Entities.Dtos.User;
 using Entities.Models;
 using Logic.Helper;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,29 @@ namespace Logic.Logic
 
         private readonly Repository<Message> _messageRepository;
         private readonly DtoProvider _dtoProvider;
+        private readonly Repository<AppUser> _userRepository;
 
-        public MessageLogic(Repository<Message> messageRepository, DtoProvider dtoProvider)
+        public MessageLogic(Repository<Message> messageRepository, DtoProvider dtoProvider, Repository<AppUser> userRepository)
         {
             _messageRepository = messageRepository;
             _dtoProvider = dtoProvider;
+            _userRepository = userRepository;
+        }
+
+        public IEnumerable<RecipientDto> GetRecipients()
+        {
+            return _userRepository.GetAll()
+                .Where(u => u.IsApproved)
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .Select(u => new RecipientDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    ApartmentNumber = u.ApartmentNumber
+                })
+                .ToList();
         }
 
         public IEnumerable<IncomingMessageDto> GetIncoming(string userId)
