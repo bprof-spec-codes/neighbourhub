@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20260420211735_BookingFeatureAdded")]
+    partial class BookingFeatureAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,27 +119,6 @@ namespace Data.Migrations
                     b.ToTable("CommunityRooms");
                 });
 
-            modelBuilder.Entity("Entities.Models.Document", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Documents");
-                });
-
             modelBuilder.Entity("Entities.Models.ErrorReport", b =>
                 {
                     b.Property<string>("Id")
@@ -179,51 +161,6 @@ namespace Data.Migrations
                     b.HasIndex("ReportedById");
 
                     b.ToTable("ErrorReports");
-                });
-
-            modelBuilder.Entity("Entities.Models.Message", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReceiverId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ReplyToId")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("SenderId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("ReplyToId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>
@@ -501,9 +438,6 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -513,14 +447,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ProfileImagePath")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)")
-                        .HasColumnName("ProfileImageUrl");
-
-                    b.Property<int>("RequestedRole")
-                        .HasColumnType("int");
 
                     b.PrimitiveCollection<string>("Storage")
                         .IsRequired()
@@ -558,32 +484,6 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ReportedBy");
-                });
-
-            modelBuilder.Entity("Entities.Models.Message", b =>
-                {
-                    b.HasOne("Entities.Models.AppUser", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Message", "ReplyTo")
-                        .WithMany()
-                        .HasForeignKey("ReplyToId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Entities.Models.AppUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("ReplyTo");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>

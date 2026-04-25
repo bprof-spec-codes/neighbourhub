@@ -13,6 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PendingUsersComponent } from './components/pending-users/pending-users.component';
 import { adminGuard } from './services/guards/admin.guard';
+import { BookingsComponent } from './components/bookings/bookings.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
       { path: 'issues', component: IssuesComponent, canActivate: [authGuard] },
       { path: 'documents', component: DocumentsComponent, canActivate: [authGuard] },
       { path: 'pendingUsers', component: PendingUsersComponent, canActivate: [authGuard, adminGuard] },
+      { path: 'bookings', component: BookingsComponent, canActivate: [authGuard] },
     ]
   },
   { path: '**', redirectTo: '/dashboard' },

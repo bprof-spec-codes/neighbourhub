@@ -98,6 +98,8 @@ public class Program
         builder.Services.AddTransient<DocumentLogic>();
         builder.Services.AddTransient<MessageLogic>();
         builder.Services.AddTransient<UserLogic>();
+        builder.Services.AddTransient<CommunityRoomLogic>();
+        builder.Services.AddTransient<BookingLogic>();
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
