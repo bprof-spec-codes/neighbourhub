@@ -140,17 +140,23 @@
 }
 
 .profile-popover {
-	position: absolute;
-	left: 0.25rem;
-	right: 0.25rem;
-	bottom: calc(100% + 0.75rem);
-	z-index: 3;
+	position: fixed;
+	left: 0.75rem;
+	right: auto;
+	width: min(360px, calc(100vw - 1.5rem));
+	bottom: 5.5rem;
+	z-index: 1200;
 	background: $white;
 	border: 1px solid $border-muted;
 	border-radius: 16px;
 	box-shadow: 0 18px 42px $shadow-lg;
 	padding: 0.9rem;
 	animation: popoverFadeIn 0.16s ease;
+}
+
+.sidebar-collapsed .profile-popover {
+	left: 0.5rem;
+	width: min(340px, calc(100vw - 1rem));
 }
 
 .profile-popover-header {
