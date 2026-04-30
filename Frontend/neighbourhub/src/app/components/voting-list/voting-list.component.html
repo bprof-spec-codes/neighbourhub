@@ -48,7 +48,7 @@
                     {{ vote.deadline | date: 'MMM d, y' }}
                   </span>
                   <div class="d-flex gap-2">
-                    <button class="btn btn-primary btn-sm" (click)="openVoteModal(vote.id)">Vote</button>
+                    <button class="btn btn-primary btn-sm" *ngIf="!vote.hasVoted" (click)="openVoteModal(vote.id)">Vote</button>
                     <button class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(vote.id)">Delete</button>
                   </div>
                 </div>
