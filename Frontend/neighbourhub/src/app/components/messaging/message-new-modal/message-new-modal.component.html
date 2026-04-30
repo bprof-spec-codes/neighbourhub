@@ -1,0 +1,82 @@
+<div *ngIf="isOpen" class="modal-overlay">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">{{ replyTo ? 'Reply' : 'New Message' }}</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">To</label>
+        <ng-container *ngIf="replyTo; else selectResident">
+          <div class="form-control-plaintext fw-semibold">{{ replyTo.senderName }}</div>
+        </ng-container>
+        <ng-template #selectResident>
+          <div class="position-relative">
+            <input
+              type="text"
+              class="form-control"
+              [class.is-invalid]="isControlInvalid('receiverId')"
+              placeholder="Search by name or apartment..."
+              [value]="searchTerm"
+              (input)="onSearchInput($event)"
+              autocomplete="off"
+            />
+            <div *ngIf="showDropdown && filteredRecipients.length > 0" class="autocomplete-dropdown">
+              <div
+                *ngFor="let recipient of filteredRecipients"
+                class="autocomplete-item"
+                (mousedown)="selectRecipient(recipient)"
+              >
+                {{ recipient.firstName }} {{ recipient.lastName }}
+                <span *ngIf="recipient.apartmentNumber.length" class="text-muted small ms-1">
+                  ({{ recipient.apartmentNumber.join(', ') }})
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">
+            Recipient is required.
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="message-subject">Subject</label>
+        <input
+          id="message-subject"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="isControlInvalid('subject')"
+          formControlName="subject"
+          placeholder="Enter subject"
+        />
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('subject')">
+          {{ form.controls['subject'].errors?.['required'] ? 'Subject is required.' : 'Subject cannot exceed 200 characters.' }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" for="message-body">Message</label>
+        <textarea
+          id="message-body"
+          rows="5"
+          class="form-control"
+          [class.is-invalid]="isControlInvalid('body')"
+          formControlName="body"
+          placeholder="Write your message here..."
+        ></textarea>
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('body')">
+          Message is required.
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </div>
+    </form>
+  </div>
+</div>

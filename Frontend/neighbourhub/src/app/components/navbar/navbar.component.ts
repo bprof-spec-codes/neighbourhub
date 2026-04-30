@@ -30,7 +30,8 @@ export class NavbarComponent {
     { label: 'Announcements', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
     { label: 'Bookings', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
     { label: 'Residents', route: '/residents', iconClass: 'bi bi-people-fill' },
-    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' }
+    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' },
+    { label: 'Messages', route: '/messaging', iconClass: 'bi bi-envelope-fill' }
   ];
   
   toggleSidebar(): void {
