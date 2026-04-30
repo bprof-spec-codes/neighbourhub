@@ -43,12 +43,12 @@ namespace Logic.Logic
             };
         }
 
-        public IEnumerable<VoteDto> GetAll()
+        public IEnumerable<VoteDto> GetAll(string? userId = null)
         {
             return voteRepository.GetAll()
                 .Include(v => v.Entries)
                 .AsEnumerable()
-                .Select(v => ToDto(v));
+                .Select(v => ToDto(v, userId));
         }
 
         public IEnumerable<VoteDto> GetActive(string? userId = null)
