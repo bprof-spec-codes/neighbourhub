@@ -15,5 +15,6 @@ namespace Entities.Dtos.Vote
         public int YesCount { get; set; }
         public int NoCount { get; set; }
         public int AbstainCount { get; set; }
+        public bool HasVoted { get; set; }
     }
 }

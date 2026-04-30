@@ -28,7 +28,7 @@ namespace Logic.Logic
             this.dtoProvider = dtoProvider;
             
         }
-        private VoteDto ToDto(Vote vote)
+        private VoteDto ToDto(Vote vote, string? userId = null)
         {
             return new VoteDto
             {
@@ -38,23 +38,26 @@ namespace Logic.Logic
                 IsActive = vote.IsActive,
                 YesCount = vote.Entries.Count(e => e.Option == VoteOption.Yes),
                 NoCount = vote.Entries.Count(e => e.Option == VoteOption.No),
-                AbstainCount = vote.Entries.Count(e => e.Option == VoteOption.Abstain)
+                AbstainCount = vote.Entries.Count(e => e.Option == VoteOption.Abstain),
+                HasVoted = userId != null && vote.Entries.Any(e => e.UserId == userId)
             };
         }
 
-        public IEnumerable<VoteDto> GetAll()
+        public IEnumerable<VoteDto> GetAll(string? userId = null)
         {
             return voteRepository.GetAll()
                 .Include(v => v.Entries)
-                .Select(ToDto);
+                .AsEnumerable()
+                .Select(v => ToDto(v, userId));
         }
 
-        public IEnumerable<VoteDto> GetActive()
+        public IEnumerable<VoteDto> GetActive(string? userId = null)
         {
             return voteRepository.GetAll()
                 .Include(v => v.Entries)
                 .Where(v => v.Deadline > DateTime.Now)
-                .Select(ToDto);
+                .AsEnumerable()
+                .Select(v => ToDto(v, userId));
         }
 
         public IEnumerable<VoteDto> GetInactive()
@@ -62,7 +65,8 @@ namespace Logic.Logic
             return voteRepository.GetAll()
                 .Include(v => v.Entries)
                 .Where(v => v.Deadline <= DateTime.Now)
-                .Select(ToDto);
+                .AsEnumerable()
+                .Select(v => ToDto(v));
         }
 
         public VoteDto Create(CreateVoteDto dto, string createdByUserId)

@@ -1,5 +1,3 @@
-import { VoteOption } from "../enums/vote-option.model";
-
 export class Vote {
     constructor(
         public id: string,
@@ -8,6 +6,6 @@ export class Vote {
         public yesCount: number,
         public noCount: number,
         public abstainCount: number,
-        public userVote: VoteOption | null
+        public hasVoted: boolean
     ) {}
 }
