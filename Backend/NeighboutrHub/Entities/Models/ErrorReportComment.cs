@@ -1,8 +1,9 @@
+using Entities.Helpers;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
-    public class ErrorReportComment
+    public class ErrorReportComment : IIdEntity
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 

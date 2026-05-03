@@ -99,6 +99,7 @@ public class Program
         builder.Services.AddTransient<MessageLogic>();
         builder.Services.AddTransient<CommunityRoomLogic>();
         builder.Services.AddTransient<BookingLogic>();
+        builder.Services.AddTransient<ErrorReportCommentLogic>();
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
