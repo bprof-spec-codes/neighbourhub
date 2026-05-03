@@ -29,5 +29,7 @@ namespace Entities.Models
         [Required]
         public string ReportedById { get; set; } = string.Empty;
         public AppUser? ReportedBy { get; set; }
+
+        public ICollection<ErrorReportComment> Comments { get; set; } = new List<ErrorReportComment>();
     }
 }

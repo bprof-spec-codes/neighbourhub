@@ -3,6 +3,7 @@ using Entities.Dtos.Announcement;
 using Entities.Dtos.Booking;
 using Entities.Dtos.CommunityRoom;
 using Entities.Dtos.ErrorReport;
+using Entities.Dtos.ErrorReportComment;
 using Entities.Dtos.Message;
 using Entities.Dtos.Vote;
 using Entities.Enums;
@@ -68,6 +69,9 @@ public class DtoProvider
                 .ForMember(d => d.RoomName, o => o.MapFrom(s => s.CommunityRoom != null ? s.CommunityRoom.Name : ""))
                 .ForMember(d => d.BookedByName, o => o.MapFrom(s => s.BookedBy != null ? s.BookedBy.FirstName + " " + s.BookedBy.LastName : ""))
                 .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()));
+
+            cfg.CreateMap<ErrorReportComment, ErrorReportCommentListDto>()
+                .ForMember(d => d.AuthorName, o => o.MapFrom(s => s.Author != null ? s.Author.FirstName + " " + s.Author.LastName : ""));
         });
         Mapper = new Mapper(config);
     }
