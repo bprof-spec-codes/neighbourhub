@@ -25,7 +25,8 @@ public class DtoProvider
             cfg.CreateMap<ErrorReport, ErrorReportListDto>()
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.ToString()))
                 .ForMember(d => d.Priority, o => o.MapFrom(s => s.Priority.ToString()))
-                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()));
+                .ForMember(d => d.Status, o => o.MapFrom(s => s.Status.ToString()))
+                .ForMember(d => d.CommentCount, o => o.MapFrom(s => s.Comments.Count));
 
             cfg.CreateMap<ErrorReportCreateDto, ErrorReport>()
                 .ForMember(d => d.Category, o => o.MapFrom(s => Enum.Parse<ErrorCategory>(s.Category, true)));
