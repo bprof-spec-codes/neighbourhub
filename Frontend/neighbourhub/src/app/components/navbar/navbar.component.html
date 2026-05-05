@@ -90,9 +90,6 @@
               (change)="onProfileImageSelected($event)"
             />
 
-            <div class="profile-upload-state" *ngIf="selectedProfileImageFileName">
-              Selected: <strong>{{ selectedProfileImageFileName }}</strong>
-            </div>
             <div class="profile-upload-state" *ngIf="isProfileImageUploading">
               Uploading image...
             </div>

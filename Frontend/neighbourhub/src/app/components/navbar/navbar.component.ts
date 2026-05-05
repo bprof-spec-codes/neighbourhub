@@ -27,7 +27,6 @@ export class NavbarComponent implements OnInit {
   protected profileCardOpen = false;
   protected isProfileImageUploading = false;
   protected currentResident: Resident | null = null;
-  protected selectedProfileImageFileName = '';
 
   constructor(
     private authService: AuthService,
@@ -114,7 +113,6 @@ export class NavbarComponent implements OnInit {
       return;
     }
 
-    this.selectedProfileImageFileName = file.name;
     this.isProfileImageUploading = true;
 
     this.residentService.uploadResidentProfileImage(

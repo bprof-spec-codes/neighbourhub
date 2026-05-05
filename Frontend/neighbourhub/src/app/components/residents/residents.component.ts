@@ -44,7 +44,6 @@ export class ResidentsComponent implements OnInit {
   protected editDraft: ResidentDraft | null = null;
   protected saveErrorMessage = '';
   protected isUploadingProfileImage = false;
-  protected selectedProfileImageFileName = '';
 
   private selectedResidentId: string | null = null;
 
@@ -124,7 +123,6 @@ export class ResidentsComponent implements OnInit {
     }
 
     this.saveErrorMessage = '';
-    this.selectedProfileImageFileName = '';
     this.isUploadingProfileImage = false;
     this.selectedResidentId = resident.id;
     this.editDraft = {
@@ -146,7 +144,6 @@ export class ResidentsComponent implements OnInit {
     this.editDraft = null;
     this.saveErrorMessage = '';
     this.isUploadingProfileImage = false;
-    this.selectedProfileImageFileName = '';
   }
 
   protected onProfileImageSelected(event: Event): void {
@@ -157,7 +154,6 @@ export class ResidentsComponent implements OnInit {
       return;
     }
 
-    this.selectedProfileImageFileName = file.name;
     this.isUploadingProfileImage = true;
     this.saveErrorMessage = '';
 
