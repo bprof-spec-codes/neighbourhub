@@ -33,9 +33,12 @@ export class ErrorReportCommentService {
     });
   }
 
-  public delete(errorReportId: string, commentId: string): void {
+  public delete(errorReportId: string, commentId: string, onSuccess?: () => void): void {
     this.backendService.delete(errorReportId, commentId).pipe(untilDestroyed(this)).subscribe({
-      next: () => this.loadByErrorReport(errorReportId),
+      next: () => {
+        this.loadByErrorReport(errorReportId);
+        onSuccess?.();
+      },
       error: (err) => console.error('Failed to delete comment', err)
     });
   }

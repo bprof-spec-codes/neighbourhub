@@ -100,6 +100,15 @@ export class IssuesComponent implements OnInit {
     this.selectedCommentReportId = null;
   }
 
+  protected onCommentChanged(): void {
+    this.errorReportService.loadAll();
+  }
+
+  protected openCommentsFromView(id: string): void {
+    this.isViewModalOpen = false;
+    this.openCommentModal(id);
+  }
+
   protected deleteErrorReport(): void {
     if (this.idToDelete === '') return;
     this.errorReportService.delete(this.idToDelete);

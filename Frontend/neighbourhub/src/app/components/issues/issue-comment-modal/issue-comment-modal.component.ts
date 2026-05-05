@@ -16,6 +16,7 @@ export class IssueCommentModalComponent implements OnChanges {
   @Input() isAdmin = false;
 
   @Output() close = new EventEmitter<void>();
+  @Output() commented = new EventEmitter<void>();
 
   protected comments$;
   protected newContent = '';
@@ -36,12 +37,13 @@ export class IssueCommentModalComponent implements OnChanges {
     if (!content || !this.errorReportId) return;
     this.commentService.add(this.errorReportId, { content }, () => {
       this.newContent = '';
+      this.commented.emit();
     });
   }
 
   protected deleteComment(commentId: string): void {
     if (this.errorReportId) {
-      this.commentService.delete(this.errorReportId, commentId);
+      this.commentService.delete(this.errorReportId, commentId, () => this.commented.emit());
     }
   }
 

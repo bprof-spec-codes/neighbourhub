@@ -22,7 +22,7 @@ public class ErrorReportCommentLogic
         var list = _repository.GetAll()
             .Include(c => c.Author)
             .Where(c => c.ErrorReportId == errorReportId)
-            .OrderBy(c => c.CreatedAt)
+            .OrderByDescending(c => c.CreatedAt)
             .ToList();
 
         return _dtoProvider.Mapper.Map<List<ErrorReportCommentListDto>>(list);

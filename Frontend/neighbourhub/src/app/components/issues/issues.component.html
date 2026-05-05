@@ -103,6 +103,7 @@
   [isOpen]="isViewModalOpen"
   [report]="selectedReport$ | async"
   (close)="closeViewModal()"
+  (openComments)="openCommentsFromView($event)"
 />
 
 <app-issue-edit-modal
@@ -125,4 +126,5 @@
   [currentUserId]="currentUserId"
   [isAdmin]="canModifyReport()"
   (close)="closeCommentModal()"
+  (commented)="onCommentChanged()"
 />
