@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +12,7 @@ type ResidentViewModel = {
   lastName: string;
   email: string;
   phoneNumber: string;
-  profileImageUrl: string | null;
+  profileImagePath: string | null;
   apartmentNumber: string;
   parkingSpace: string;
   storage: string;
@@ -23,7 +23,7 @@ type ResidentDraft = {
   lastName: string;
   email: string;
   phoneNumber: string;
-  profileImageUrl: string | null;
+  profileImagePath: string | null;
   apartmentNumber: string;
   parkingSpace: string;
   storage: string;
@@ -36,11 +36,14 @@ type ResidentDraft = {
   styleUrl: './residents.component.scss'
 })
 export class ResidentsComponent implements OnInit {
+  @ViewChild('residentProfileImageInput') residentProfileImageInput?: ElementRef<HTMLInputElement>;
+
   protected residents$ = new Observable<ResidentViewModel[]>();
 
   protected isEditModalOpen = false;
   protected editDraft: ResidentDraft | null = null;
   protected saveErrorMessage = '';
+  protected isUploadingProfileImage = false;
 
   private selectedResidentId: string | null = null;
 
@@ -67,7 +70,7 @@ export class ResidentsComponent implements OnInit {
       lastName: resident.lastName,
       email: resident.email,
       phoneNumber: resident.phoneNumber,
-      profileImageUrl: resident.profileImageUrl,
+      profileImagePath: resident.profileImagePath,
       apartmentNumber: this.joinCodes(resident.apartmentNumber),
       parkingSpace: this.joinCodes(resident.parkingSpace),
       storage: this.joinCodes(resident.storage)
@@ -102,16 +105,16 @@ export class ResidentsComponent implements OnInit {
     return `${resident.firstName} ${resident.lastName}`.trim();
   }
 
-  protected getResidentProfileImageUrl(profileImageUrl: string | null): string | null {
-    if (!profileImageUrl || profileImageUrl.trim().length === 0) {
+  protected getResidentProfileImageUrl(profileImagePath: string | null): string | null {
+    if (!profileImagePath || profileImagePath.trim().length === 0) {
       return null;
     }
 
-    if (profileImageUrl.startsWith('http://') || profileImageUrl.startsWith('https://')) {
-      return profileImageUrl;
+    if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
+      return profileImagePath;
     }
 
-    return this.residentService.resolveApiUrl(profileImageUrl);
+    return this.residentService.resolveApiUrl(profileImagePath);
   }
 
   protected openEditModal(resident: ResidentViewModel): void {
@@ -120,13 +123,14 @@ export class ResidentsComponent implements OnInit {
     }
 
     this.saveErrorMessage = '';
+    this.isUploadingProfileImage = false;
     this.selectedResidentId = resident.id;
     this.editDraft = {
       firstName: resident.firstName,
       lastName: resident.lastName,
       email: resident.email,
       phoneNumber: resident.phoneNumber,
-      profileImageUrl: resident.profileImageUrl,
+      profileImagePath: resident.profileImagePath,
       apartmentNumber: resident.apartmentNumber === '-' ? '' : resident.apartmentNumber.replace(/,\s*/g, ' | '),
       parkingSpace: resident.parkingSpace === '-' ? '' : resident.parkingSpace.replace(/,\s*/g, ' | '),
       storage: resident.storage === '-' ? '' : resident.storage.replace(/,\s*/g, ' | ')
@@ -139,6 +143,41 @@ export class ResidentsComponent implements OnInit {
     this.selectedResidentId = null;
     this.editDraft = null;
     this.saveErrorMessage = '';
+    this.isUploadingProfileImage = false;
+  }
+
+  protected onProfileImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+
+    if (!file || !this.editDraft || this.selectedResidentId === null) {
+      return;
+    }
+
+    this.isUploadingProfileImage = true;
+    this.saveErrorMessage = '';
+
+    this.residentService.uploadResidentProfileImage(
+      this.selectedResidentId,
+      file,
+      (profileImagePath) => {
+        if (this.editDraft) {
+          this.editDraft.profileImagePath = profileImagePath;
+        }
+        this.isUploadingProfileImage = false;
+        this.residentService.loadResidents();
+      },
+      (error) => {
+        this.isUploadingProfileImage = false;
+        this.saveErrorMessage = this.readErrorMessage(error);
+      }
+    );
+
+    input.value = '';
+  }
+
+  protected openProfileImagePicker(): void {
+    this.residentProfileImageInput?.nativeElement.click();
   }
 
   protected saveResidentChanges(): void {
@@ -155,7 +194,6 @@ export class ResidentsComponent implements OnInit {
       this.editDraft.lastName.trim(),
       this.editDraft.email.trim(),
       this.editDraft.phoneNumber.trim(),
-      this.editDraft.profileImageUrl?.trim() || null,
       this.splitCodes(this.editDraft.apartmentNumber),
       this.splitCodes(this.editDraft.parkingSpace),
       this.splitCodes(this.editDraft.storage)

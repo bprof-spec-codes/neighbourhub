@@ -18,6 +18,10 @@ export class ResidentBackendService {
     return this.http.get<Resident[]>(`${this.baseApiUrl}/User/Residents`);
   }
 
+  public getResidentById(id: string): Observable<Resident> {
+    return this.http.get<Resident>(`${this.baseApiUrl}/User/Residents/${id}`);
+  }
+
   public updateResident(id: string, resident: AdminUpdateResidentDto): Observable<void> {
     return this.http.put<void>(`${this.baseApiUrl}/User/Residents/${id}`, resident);
   }
@@ -27,8 +31,8 @@ export class ResidentBackendService {
     formData.append('file', file);
 
     return this.http
-      .post<{ profileImageUrl: string }>(`${this.baseApiUrl}/User/Residents/${id}/profile-image`, formData)
-      .pipe(map((response) => response.profileImageUrl));
+      .post<{ profileImagePath: string }>(`${this.baseApiUrl}/User/Residents/${id}/profile-image`, formData)
+      .pipe(map((response) => response.profileImagePath));
   }
 
   public resolveApiUrl(path: string): string {

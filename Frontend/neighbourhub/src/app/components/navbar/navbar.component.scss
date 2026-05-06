@@ -135,6 +135,154 @@
 	padding: 1rem 0.75rem;
 }
 
+.profile-popover-wrap {
+	position: relative;
+}
+
+.profile-popover {
+	position: fixed;
+	left: 0.75rem;
+	right: auto;
+	width: min(360px, calc(100vw - 1.5rem));
+	bottom: 5.5rem;
+	z-index: 1200;
+	background: $white;
+	border: 1px solid $border-muted;
+	border-radius: 16px;
+	box-shadow: 0 18px 42px $shadow-lg;
+	padding: 0.9rem;
+	animation: popoverFadeIn 0.16s ease;
+}
+
+.sidebar-collapsed .profile-popover {
+	left: 0.5rem;
+	width: min(340px, calc(100vw - 1rem));
+}
+
+.profile-popover-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-bottom: 0.85rem;
+}
+
+.profile-popover-title {
+	font-size: 0.95rem;
+	font-weight: 700;
+	color: $text-base;
+}
+
+.profile-popover-subtitle,
+.profile-email,
+.profile-phone,
+.profile-upload-state,
+.profile-popover-loading,
+.profile-apartment {
+	font-size: 0.78rem;
+	color: $light-gray;
+}
+
+.profile-popover-close {
+	border: 0;
+	background: transparent;
+	color: $light-gray;
+	width: 30px;
+	height: 30px;
+	border-radius: 8px;
+	display: grid;
+	place-items: center;
+	transition: background-color 0.18s ease, color 0.18s ease;
+
+	&:hover {
+		background: $card-background-grey;
+		color: $text-base;
+	}
+}
+
+.profile-popover-body {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+}
+
+.profile-avatar-upload {
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	position: relative;
+	overflow: hidden;
+	flex-shrink: 0;
+	background: $surface-primary-soft;
+	color: $blue;
+	display: grid;
+	place-items: center;
+	font-size: 1.05rem;
+	font-weight: 700;
+	cursor: pointer;
+	border: 1px solid $border-muted;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 22px rgba(20, 66, 122, 0.14);
+	}
+
+	&:hover .profile-avatar-overlay,
+	&:focus-within .profile-avatar-overlay {
+		opacity: 1;
+	}
+}
+
+.profile-avatar-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profile-avatar-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(18, 33, 58, 0.62);
+	color: $white;
+	display: grid;
+	place-items: center;
+	gap: 0.2rem;
+	opacity: 0;
+	transition: opacity 0.18s ease;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+
+	i {
+		font-size: 0.95rem;
+	}
+}
+
+.profile-meta {
+	min-width: 0;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+
+.profile-name {
+	font-size: 0.93rem;
+	font-weight: 700;
+	color: $text-base;
+}
+
+.profile-email {
+	word-break: break-word;
+}
+
+.profile-upload-state {
+	margin-top: 0.25rem;
+	color: $blue;
+}
+
 .profile-button {
 	width: 100%;
 	border: 0;
@@ -161,6 +309,13 @@
 	color: $blue;
 	font-weight: 700;
 	font-size: 0.8rem;
+		overflow: hidden;
+	}
+
+	.profile-avatar .profile-avatar-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 }
 
 .profile-details {
@@ -182,4 +337,16 @@
 	text-align: center;
 	color: $light-gray;
 	font-size: 0.77rem;
+}
+
+@keyframes popoverFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }

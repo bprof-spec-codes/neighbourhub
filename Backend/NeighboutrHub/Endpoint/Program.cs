@@ -97,6 +97,7 @@ public class Program
         builder.Services.AddTransient<ErrorReportLogic>();
         builder.Services.AddTransient<DocumentLogic>();
         builder.Services.AddTransient<MessageLogic>();
+        builder.Services.AddTransient<UserLogic>();
         builder.Services.AddTransient<CommunityRoomLogic>();
         builder.Services.AddTransient<BookingLogic>();
 
@@ -143,6 +144,7 @@ public class Program
         }
 
         app.UseCors("AllowAngularApp");
+        app.UseStaticFiles();
 
         app.UseAuthentication(); 
         app.UseAuthorization();
