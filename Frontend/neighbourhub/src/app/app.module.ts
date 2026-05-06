@@ -35,7 +35,6 @@ import { RoomManageModalComponent } from './components/bookings/room-manage-moda
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     IssuesComponent,
     IssueCreateModalComponent,
     IssueViewModalComponent,

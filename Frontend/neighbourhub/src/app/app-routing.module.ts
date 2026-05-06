@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 import { VotingListComponent } from './components/voting-list/voting-list.component';
 import { LoginComponent } from './components/login/login.component';
