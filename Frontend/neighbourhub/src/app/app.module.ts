@@ -58,7 +58,8 @@ import { RoomManageModalComponent } from './components/bookings/room-manage-moda
     PendingUsersComponent,
     MessagingComponent,
     MessageNewModalComponent,
-    MessageViewModalComponent
+    MessageViewModalComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

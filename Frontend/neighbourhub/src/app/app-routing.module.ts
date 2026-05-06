@@ -14,6 +14,7 @@ import { PendingUsersComponent } from './components/pending-users/pending-users.
 import { adminGuard } from './services/guards/admin.guard';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
