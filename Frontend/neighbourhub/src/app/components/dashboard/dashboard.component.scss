@@ -1,0 +1,172 @@
+// 1. Változók és Színpaletta
+$primary-blue: #2563eb;
+$bg-main: #f8fafc;
+$card-bg: #ffffff;
+$border-color: #e2e8f0;
+
+$text-dark: #1e293b;
+$text-muted: #64748b;
+
+$status-colors: (
+  "blue":   #3b82f6,
+  "red":    #ef4444,
+  "orange": #f59e0b,
+  "green":  #10b981
+);
+
+// 2. Mixinek az újrahasználhatóságért
+@mixin card-style {
+  background: $card-bg;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+// 3. Fő konténer
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  background-color: $bg-main;
+
+  // Hero szekció beágyazva
+  .hero-section {
+    @include card-style;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+
+    .hero-content {
+      h1 {
+        margin: 0 0 0.75rem 0;
+        color: $text-dark;
+        font-size: 1.75rem;
+      }
+      p {
+        color: $text-muted;
+        max-width: 550px;
+        line-height: 1.6;
+        margin: 0;
+      }
+    }
+  }
+
+  // Statisztikai rács
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .stat-card {
+      @include card-style;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+
+      // Dinamikus sávok generálása a map alapján
+      @each $name, $color in $status-colors {
+        &.#{$name} {
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background-color: $color;
+          }
+        }
+      }
+
+      .stat-info {
+        .stat-label {
+          display: block;
+          font-size: 0.875rem;
+          color: $text-muted;
+          margin-bottom: 0.5rem;
+        }
+        .stat-value {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: $text-dark;
+        }
+      }
+
+      .stat-icon {
+        font-size: 1.5rem;
+        background: $bg-main;
+        padding: 10px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  // Alsó szekciók (Grafikon és Infó)
+  .details-section {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-box, .info-box {
+      @include card-style;
+      padding: 1.5rem;
+
+      h3 {
+        font-size: 1.1rem;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      height: 180px;
+      padding-bottom: 1.5rem;
+
+      .bar {
+        flex: 1;
+        background: $primary-blue;
+        border-radius: 4px 4px 0 0;
+        position: relative;
+        transition: opacity 0.3s;
+
+        &:hover { opacity: 0.8; }
+
+        span {
+          position: absolute;
+          bottom: -25px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 0.75rem;
+          color: $text-muted;
+        }
+      }
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+      li {
+        padding: 10px 0;
+        border-bottom: 1px solid $border-color;
+        color: $text-muted;
+        font-size: 0.9rem;
+
+        &:last-child { border-bottom: none; }
+        strong { color: $text-dark; }
+      }
+    }
+  }
+}
