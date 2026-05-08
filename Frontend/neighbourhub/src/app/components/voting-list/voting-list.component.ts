@@ -4,6 +4,7 @@ import { Vote } from '../../entities/models/vote.model';
 import { VoteService } from '../../services/vote.service';
 import { VoteAddDto } from '../../entities/dtos/vote-add-dto.model';
 import { VoteOption } from '../../entities/enums/vote-option.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-voting-list',
@@ -21,7 +22,14 @@ export class VotingListComponent implements OnInit {
 
   private idToDelete: string = '';
 
-  constructor(private voteService: VoteService){}
+  protected currentUserId: string | null = null;
+  protected isAdmin: boolean = false;
+
+  constructor(private voteService: VoteService,private authService: AuthService){
+
+    this.currentUserId = this.authService.getUserId();
+    this.isAdmin = this.authService.isAdmin();
+  }
 
   public ngOnInit(): void {
     this.loadVotes();
