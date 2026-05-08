@@ -36,6 +36,7 @@ namespace Logic.Logic
                 Title = vote.Title,
                 Deadline = vote.Deadline,
                 IsActive = vote.IsActive,
+                CreatedByUserId = vote.CreatedByUserId,
                 YesCount = vote.Entries.Count(e => e.Option == VoteOption.Yes),
                 NoCount = vote.Entries.Count(e => e.Option == VoteOption.No),
                 AbstainCount = vote.Entries.Count(e => e.Option == VoteOption.Abstain),
