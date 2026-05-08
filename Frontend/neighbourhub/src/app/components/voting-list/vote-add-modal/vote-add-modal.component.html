@@ -29,6 +29,7 @@
           id="vote-deadline"
           type="datetime-local"
           class="form-control"
+          [min]="today"
           [class.is-invalid]="isControlInvalid('deadline')"
           formControlName="deadline"
         />

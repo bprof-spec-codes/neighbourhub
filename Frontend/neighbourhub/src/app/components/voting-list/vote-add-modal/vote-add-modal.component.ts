@@ -17,6 +17,8 @@ export class VoteAddModalComponent implements OnChanges {
 
   protected readonly form;
 
+  protected readonly today = new Date().toISOString().slice(0, 16);
+
   constructor(private fb: FormBuilder) {
     this.form = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
