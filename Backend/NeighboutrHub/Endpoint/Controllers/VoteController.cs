@@ -54,7 +54,7 @@ namespace Endpoint.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(string id)
         {
             voteLogic.Delete(id);
