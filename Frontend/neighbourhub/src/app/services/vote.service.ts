@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VoteBackendService } from '../backend/vote-backend.service';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Vote } from '../entities/models/vote.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { VoteAddDto } from '../entities/dtos/vote-add-dto.model';
