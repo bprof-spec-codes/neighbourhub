@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VoteBackendService } from '../backend/vote-backend.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Vote } from '../entities/models/vote.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { VoteAddDto } from '../entities/dtos/vote-add-dto.model';
@@ -34,7 +34,7 @@ export class VoteService {
       next: () => this.loadVotes(),
       error: (err) => console.error('Failed to add vote', err)
     });
-  }
+}
 
   public castVote(voteId: string, option: number): void {
     this.voteBackendService.castVote(voteId, option).pipe(untilDestroyed(this)).subscribe({

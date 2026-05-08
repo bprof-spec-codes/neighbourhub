@@ -36,6 +36,9 @@
         <div class="invalid-feedback d-block" *ngIf="isControlInvalid('deadline')">
           {{ getErrorText('deadline') }}
         </div>
+        <div class="invalid-feedback d-block" *ngIf="deadlineError">
+          {{ deadlineError }}
+        </div>
       </div>
 
       <div class="vote-add-modal-footer">

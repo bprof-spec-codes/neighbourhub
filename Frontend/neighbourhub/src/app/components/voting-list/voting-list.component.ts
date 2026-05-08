@@ -43,7 +43,7 @@ export class VotingListComponent implements OnInit {
   protected addVote(voteToAdd: VoteAddDto): void {
     this.voteService.addVote(voteToAdd);
     this.closeAddModal();
-  }
+}
 
   protected openDeleteModal(id: string): void {
     this.isDeleteModalOpen = true;

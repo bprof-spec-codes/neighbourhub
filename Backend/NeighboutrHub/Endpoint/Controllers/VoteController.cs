@@ -49,16 +49,37 @@ namespace Endpoint.Controllers
             if (userId == null)
                 return Unauthorized();
 
-            var result = voteLogic.Create(dto, userId);
-            return Ok(result);
+            try
+            {
+                var result = voteLogic.Create(dto, userId);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Delete(string id)
         {
-            voteLogic.Delete(id);
-            return Ok();
+
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+
+            var isAdmin = User.IsInRole("Admin");
+
+            try
+            {
+                voteLogic.Delete(id, userId, isAdmin);
+                return Ok();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid();
+            }
         }
 
         [HttpPost("{id}/entry")]
