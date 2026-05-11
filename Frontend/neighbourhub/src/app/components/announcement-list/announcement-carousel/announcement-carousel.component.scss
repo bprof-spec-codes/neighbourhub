@@ -49,6 +49,10 @@
   font-size: 1.4rem;
   color: $dark-gray;
   line-height: 1.8;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .carousel-date {

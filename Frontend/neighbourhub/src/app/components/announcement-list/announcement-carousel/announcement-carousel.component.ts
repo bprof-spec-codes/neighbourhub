@@ -26,11 +26,13 @@ export class AnnouncementCarouselComponent implements OnInit, OnDestroy {
     this.announcementService.carouselAnnouncements$.pipe(untilDestroyed(this)).subscribe({
       next: (announcements) => {
         this.announcements = announcements;
-        this.currentIndex = 0;
+        if (this.currentIndex >= announcements.length) {
+          this.currentIndex = 0;
+        }
       }
     });
 
-    this.intervalId = setInterval(() => this.nextSlide(), 8000);
+    this.intervalId = setInterval(() => this.nextSlide(), 7500);
     this.refreshId = setInterval(() => this.announcementService.loadCarouselAnnouncements(), 60000);
   }
 
