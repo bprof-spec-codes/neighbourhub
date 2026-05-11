@@ -31,6 +31,7 @@ import { MessageViewModalComponent } from './components/messaging/message-view-m
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { BookingCreateModalComponent } from './components/bookings/booking-create-modal/booking-create-modal.component';
 import { RoomManageModalComponent } from './components/bookings/room-manage-modal/room-manage-modal.component';
+import { AnnouncementCarouselComponent } from './components/announcement-list/announcement-carousel/announcement-carousel.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { RoomManageModalComponent } from './components/bookings/room-manage-moda
     PendingUsersComponent,
     MessagingComponent,
     MessageNewModalComponent,
-    MessageViewModalComponent
+    MessageViewModalComponent,
+    AnnouncementCarouselComponent
   ],
   imports: [
     BrowserModule,
