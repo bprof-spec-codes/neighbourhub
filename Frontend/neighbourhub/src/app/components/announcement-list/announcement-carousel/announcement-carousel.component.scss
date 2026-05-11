@@ -10,13 +10,13 @@
 }
 
 .carousel-card {
-  width: 80%;
-  max-width: 900px;
+  width: 90%;
+  max-width: 1100px;
   background-color: $white;
   border-left: 0.5rem solid $green;
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 2rem $shadow-lg;
-  padding: 3rem;
+  padding: 4rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -39,14 +39,14 @@
 .badge-general { background-color: $green; color: $white; }
 
 .carousel-title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
   color: $text-strong;
   margin: 0.5rem 0;
 }
 
 .carousel-text {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: $dark-gray;
   line-height: 1.8;
 }

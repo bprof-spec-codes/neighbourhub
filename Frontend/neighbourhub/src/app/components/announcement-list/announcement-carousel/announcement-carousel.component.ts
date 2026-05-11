@@ -30,7 +30,7 @@ export class AnnouncementCarouselComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.intervalId = setInterval(() => this.nextSlide(), 5000);
+    this.intervalId = setInterval(() => this.nextSlide(), 8000);
     this.refreshId = setInterval(() => this.announcementService.loadCarouselAnnouncements(), 60000);
   }
 
