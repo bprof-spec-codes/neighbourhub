@@ -13,6 +13,10 @@ export class AnnouncementService {
   private announcements = new BehaviorSubject<Announcement[]>([]);
   public announcements$ = this.announcements.asObservable();
 
+  private carouselAnnouncements = new BehaviorSubject<Announcement[]>([]);
+  public carouselAnnouncements$ = this.carouselAnnouncements.asObservable();
+  
+
   constructor(private announcementBackendService: AnnouncementBackendService) {}
 
   public loadAnnouncements(): void {
@@ -39,6 +43,15 @@ export class AnnouncementService {
         this.loadAnnouncements();
       },
       error: (err) => console.error('Failed to create announcement', err)
+    });
+  }
+
+  public loadCarouselAnnouncements(): void {
+    this.announcementBackendService.getCarouselAnnouncements().pipe(untilDestroyed(this)).subscribe({
+        next: (announcements) => {
+            this.carouselAnnouncements.next(announcements);
+        },
+        error: (err) => console.error('Failed to load carousel announcements', err)
     });
   }
 }
