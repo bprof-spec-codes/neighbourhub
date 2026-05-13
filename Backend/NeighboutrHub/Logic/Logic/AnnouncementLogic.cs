@@ -32,4 +32,12 @@ public class AnnouncementLogic
     {
         _announcementRepository.DeleteById(id);
     }
+
+
+    public IEnumerable<Announcement> GetCarouselAnnouncements(int count = 5)
+    {
+        return _announcementRepository.GetAll()
+            .OrderByDescending(a => a.CreatedDate)
+            .Take(count);
+    }
 }

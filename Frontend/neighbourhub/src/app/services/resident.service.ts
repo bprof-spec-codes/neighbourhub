@@ -22,6 +22,10 @@ export class ResidentService {
     });
   }
 
+  public getResidentById(id: string) {
+    return this.residentBackendService.getResidentById(id);
+  }
+
   public updateResident(
     id: string,
     resident: AdminUpdateResidentDto,
@@ -43,11 +47,11 @@ export class ResidentService {
   public uploadResidentProfileImage(
     id: string,
     file: File,
-    onSuccess?: (profileImageUrl: string) => void,
+    onSuccess?: (profileImagePath: string) => void,
     onError?: (err: unknown) => void
   ): void {
     this.residentBackendService.uploadResidentProfileImage(id, file).pipe(untilDestroyed(this)).subscribe({
-      next: (profileImageUrl) => onSuccess?.(profileImageUrl),
+      next: (profileImagePath) => onSuccess?.(profileImagePath),
       error: (err) => {
         console.error('Failed to upload resident profile image', err);
         onError?.(err);

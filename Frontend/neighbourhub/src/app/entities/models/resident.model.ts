@@ -5,7 +5,7 @@ export class Resident {
     public lastName: string,
     public email: string,
     public phoneNumber: string,
-    public profileImageUrl: string | null,
+    public profileImagePath: string | null,
     public apartmentNumber: string[],
     public parkingSpace: string[],
     public storage: string[]
