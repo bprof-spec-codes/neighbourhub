@@ -333,6 +333,57 @@
       "OPERATIONS": "Operations"
     }
   },
+  "MESSAGING": {
+    "TITLE": "Messages",
+    "DESCRIPTION": "Send and receive messages",
+    "NEW_MESSAGE": "New Message",
+    "DELETE_CONFIRM": "Are you sure you want to delete this message?",
+    "FLATS": "Flat(s)",
+    "TABS": {
+      "INBOX": "Inbox",
+      "SENT": "Sent"
+    },
+    "EMPTY": {
+      "INCOMING": "No incoming messages.",
+      "SENT": "No sent messages."
+    },
+    "TABLE": {
+      "FROM": "From",
+      "TO": "To",
+      "SUBJECT": "Subject",
+      "DATE": "Date",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "REPLY": "Reply",
+      "DELETE": "Delete"
+    },
+    "NEW_MODAL": {
+      "NEW_TITLE": "New Message",
+      "REPLY_TITLE": "Reply",
+      "RE_PREFIX": "Re",
+      "TO": "To",
+      "SEARCH_PLACEHOLDER": "Search by name or apartment...",
+      "SUBJECT": "Subject",
+      "SUBJECT_PLACEHOLDER": "Enter subject",
+      "MESSAGE": "Message",
+      "MESSAGE_PLACEHOLDER": "Write your message here...",
+      "CANCEL": "Cancel",
+      "SEND": "Send",
+      "VALIDATION": {
+        "RECIPIENT_REQUIRED": "Recipient is required.",
+        "SUBJECT_REQUIRED": "Subject is required.",
+        "SUBJECT_MAX": "Subject cannot exceed 200 characters.",
+        "MESSAGE_REQUIRED": "Message is required."
+      }
+    },
+    "VIEW_MODAL": {
+      "FROM": "From",
+      "TO": "To",
+      "DATE": "Date",
+      "MESSAGE": "Message"
+    }
+  },
   "RESIDENTS": {
     "TITLE": "Residents",
     "DESCRIPTION": "View information of all residents.",

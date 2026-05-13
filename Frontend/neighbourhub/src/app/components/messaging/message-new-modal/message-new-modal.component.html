@@ -1,17 +1,17 @@
 <div *ngIf="isOpen" class="modal-overlay">
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h5 class="mb-0">{{ replyTo ? 'Reply' : 'New Message' }}</h5>
-      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+      <h5 class="mb-0">{{ replyTo ? ('MESSAGING.NEW_MODAL.REPLY_TITLE' | translate) : ('MESSAGING.NEW_MODAL.NEW_TITLE' | translate) }}</h5>
+      <button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
       <div class="mb-3">
-        <label class="form-label">To</label>
+        <label class="form-label">{{ 'MESSAGING.NEW_MODAL.TO' | translate }}</label>
         <ng-container *ngIf="replyTo; else selectResident">
-          <div class="form-control-plaintext fw-semibold">{{ replyTo.senderName }}</div>
+          <div class="form-control-plaintext fw-semibold">{{ replyTo!.senderName }}</div>
         </ng-container>
         <ng-template #selectResident>
           <div class="position-relative">
@@ -19,7 +19,7 @@
               type="text"
               class="form-control"
               [class.is-invalid]="isControlInvalid('receiverId')"
-              placeholder="Search by name or apartment..."
+              [placeholder]="'MESSAGING.NEW_MODAL.SEARCH_PLACEHOLDER' | translate"
               [value]="searchTerm"
               (input)="onSearchInput($event)"
               autocomplete="off"
@@ -38,44 +38,44 @@
             </div>
           </div>
           <div class="invalid-feedback d-block" *ngIf="isControlInvalid('receiverId')">
-            Recipient is required.
+            {{ 'MESSAGING.NEW_MODAL.VALIDATION.RECIPIENT_REQUIRED' | translate }}
           </div>
         </ng-template>
       </div>
 
       <div class="mb-3">
-        <label class="form-label" for="message-subject">Subject</label>
+        <label class="form-label" for="message-subject">{{ 'MESSAGING.NEW_MODAL.SUBJECT' | translate }}</label>
         <input
           id="message-subject"
           type="text"
           class="form-control"
           [class.is-invalid]="isControlInvalid('subject')"
           formControlName="subject"
-          placeholder="Enter subject"
+          [placeholder]="'MESSAGING.NEW_MODAL.SUBJECT_PLACEHOLDER' | translate"
         />
         <div class="invalid-feedback d-block" *ngIf="isControlInvalid('subject')">
-          {{ form.controls['subject'].errors?.['required'] ? 'Subject is required.' : 'Subject cannot exceed 200 characters.' }}
+          {{ form.controls['subject'].errors?.['required'] ? ('MESSAGING.NEW_MODAL.VALIDATION.SUBJECT_REQUIRED' | translate) : ('MESSAGING.NEW_MODAL.VALIDATION.SUBJECT_MAX' | translate) }}
         </div>
       </div>
 
       <div class="mb-4">
-        <label class="form-label" for="message-body">Message</label>
+        <label class="form-label" for="message-body">{{ 'MESSAGING.NEW_MODAL.MESSAGE' | translate }}</label>
         <textarea
           id="message-body"
           rows="5"
           class="form-control"
           [class.is-invalid]="isControlInvalid('body')"
           formControlName="body"
-          placeholder="Write your message here..."
+          [placeholder]="'MESSAGING.NEW_MODAL.MESSAGE_PLACEHOLDER' | translate"
         ></textarea>
         <div class="invalid-feedback d-block" *ngIf="isControlInvalid('body')">
-          Message is required.
+          {{ 'MESSAGING.NEW_MODAL.VALIDATION.MESSAGE_REQUIRED' | translate }}
         </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">{{ 'MESSAGING.NEW_MODAL.CANCEL' | translate }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'MESSAGING.NEW_MODAL.SEND' | translate }}</button>
       </div>
     </form>
   </div>

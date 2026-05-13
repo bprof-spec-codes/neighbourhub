@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { CreateMessageDto } from '../../../entities/dtos/create-message-dto.model';
 import { IncomingMessageDto } from '../../../entities/dtos/incoming-message-dto.model';
 import { MessageBackendService } from '../../../backend/message-backend.service';
@@ -27,7 +28,11 @@ export class MessageNewModalComponent implements OnChanges {
   protected selectedRecipient: RecipientDto | null = null
   protected showDropdown = false;
 
-  constructor(private fb: FormBuilder, private messageBackendService: MessageBackendService) {
+  constructor(
+    private fb: FormBuilder,
+    private messageBackendService: MessageBackendService,
+    private translate: TranslateService
+  ) {
     this.form = this.fb.nonNullable.group({
       receiverId: ['', [Validators.required]],
       subject: ['', [Validators.required, Validators.maxLength(200)]],
@@ -44,7 +49,7 @@ export class MessageNewModalComponent implements OnChanges {
       if (this.replyTo) {
         this.form.patchValue({
           receiverId: this.replyTo.senderId,
-          subject: `Re: ${this.replyTo.subject}`
+          subject: `${this.translate.instant('MESSAGING.NEW_MODAL.RE_PREFIX')}: ${this.replyTo.subject}`
         });
       } else {
         this.resetForm();

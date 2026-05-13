@@ -333,6 +333,57 @@
       "OPERATIONS": "Műveletek"
     }
   },
+  "MESSAGING": {
+    "TITLE": "Üzenetek",
+    "DESCRIPTION": "Üzenetek küldése és fogadása",
+    "NEW_MESSAGE": "Új üzenet",
+    "DELETE_CONFIRM": "Biztosan törölni szeretné ezt az üzenetet?",
+    "FLATS": "Lakás(ok)",
+    "TABS": {
+      "INBOX": "Bejövő",
+      "SENT": "Elküldött"
+    },
+    "EMPTY": {
+      "INCOMING": "Nincsenek bejövő üzenetek.",
+      "SENT": "Nincsenek elküldött üzenetek."
+    },
+    "TABLE": {
+      "FROM": "Feladó",
+      "TO": "Címzett",
+      "SUBJECT": "Tárgy",
+      "DATE": "Dátum",
+      "ACTIONS": "Műveletek"
+    },
+    "ACTIONS": {
+      "REPLY": "Válasz",
+      "DELETE": "Törlés"
+    },
+    "NEW_MODAL": {
+      "NEW_TITLE": "Új üzenet",
+      "REPLY_TITLE": "Válasz",
+      "RE_PREFIX": "Válasz",
+      "TO": "Címzett",
+      "SEARCH_PLACEHOLDER": "Keresés név vagy lakásszám alapján...",
+      "SUBJECT": "Tárgy",
+      "SUBJECT_PLACEHOLDER": "Adja meg a tárgyat",
+      "MESSAGE": "Üzenet",
+      "MESSAGE_PLACEHOLDER": "Írja ide az üzenetet...",
+      "CANCEL": "Mégse",
+      "SEND": "Küldés",
+      "VALIDATION": {
+        "RECIPIENT_REQUIRED": "A címzett megadása kötelező.",
+        "SUBJECT_REQUIRED": "A tárgy megadása kötelező.",
+        "SUBJECT_MAX": "A tárgy legfeljebb 200 karakter lehet.",
+        "MESSAGE_REQUIRED": "Az üzenet megadása kötelező."
+      }
+    },
+    "VIEW_MODAL": {
+      "FROM": "Feladó",
+      "TO": "Címzett",
+      "DATE": "Dátum",
+      "MESSAGE": "Üzenet"
+    }
+  },
   "RESIDENTS": {
     "TITLE": "Lakók",
     "DESCRIPTION": "Az összes lakó adatainak megtekintése.",
