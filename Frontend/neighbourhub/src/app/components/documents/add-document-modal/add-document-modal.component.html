@@ -1,15 +1,15 @@
 <div *ngIf="isOpen" class="document-add-modal-overlay" (click)="onClose()">
 	<div class="document-add-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
 		<div class="document-add-modal-header">
-			<h5 class="mb-0">Add Document</h5>
-			<button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+			<h5 class="mb-0">{{ 'DOCUMENTS.ADD_MODAL.TITLE' | translate }}</h5>
+			<button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onClose()">
 				<i class="bi bi-x-lg"></i>
 			</button>
 		</div>
 
 		<form [formGroup]="form" (ngSubmit)="onSubmit()" class="document-add-modal-body">
 			<div class="mb-3">
-				<label class="form-label" for="document-title">Title</label>
+				<label class="form-label" for="document-title">{{ 'DOCUMENTS.ADD_MODAL.TITLE_LABEL' | translate }}</label>
 				<input
 					id="document-title"
 					type="text"
@@ -23,7 +23,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label class="form-label">PDF File</label>
+				<label class="form-label">{{ 'DOCUMENTS.ADD_MODAL.PDF_LABEL' | translate }}</label>
 				<div
 					class="document-dropzone"
 					[class.is-dragover]="isDragOver"
@@ -45,20 +45,20 @@
 						<div class="mb-2">
 							<i class="bi bi-cloud-arrow-up fs-1 text-primary"></i>
 						</div>
-						<h6 class="mb-1">Drag and drop your PDF here</h6>
-						<p class="text-muted mb-2">or click to choose a file</p>
+						<h6 class="mb-1">{{ 'DOCUMENTS.ADD_MODAL.DROPZONE_TITLE' | translate }}</h6>
+						<p class="text-muted mb-2">{{ 'DOCUMENTS.ADD_MODAL.DROPZONE_HINT' | translate }}</p>
 						<div class="selected-file-name">{{ getSelectedFileName() }}</div>
 					</div>
 				</div>
-				<div class="form-text mt-2">Only PDF files are allowed.</div>
+				<div class="form-text mt-2">{{ 'DOCUMENTS.ADD_MODAL.FILE_HINT' | translate }}</div>
 				<div class="invalid-feedback d-block" *ngIf="isControlInvalid('file') || fileTypeError">
 					{{ getErrorText('file') }}
 				</div>
 			</div>
 
 			<div class="document-add-modal-footer">
-				<button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
-				<button type="submit" class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-outline-secondary" (click)="onClose()">{{ 'DOCUMENTS.ADD_MODAL.CANCEL' | translate }}</button>
+				<button type="submit" class="btn btn-primary">{{ 'DOCUMENTS.ADD_MODAL.SAVE' | translate }}</button>
 			</div>
 		</form>
 	</div>

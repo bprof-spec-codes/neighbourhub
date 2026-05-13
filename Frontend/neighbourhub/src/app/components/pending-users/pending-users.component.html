@@ -1,18 +1,18 @@
 <div class="approval-container">
   <div class="header-section">
-    <h2><i class="bi bi-person-check"></i> Pending Registrations</h2>
-    <p>Here you can approve the access of new residents to the system.</p>
+    <h2><i class="bi bi-person-check"></i> {{ 'PENDING_USERS.TITLE' | translate }}</h2>
+    <p>{{ 'PENDING_USERS.DESCRIPTION' | translate }}</p>
   </div>
 
   <div class="table-card">
     <table class="approval-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Apartment Number</th>
-          <th>Roles</th>
-          <th class="text-center">Operations</th>
+          <th>{{ 'PENDING_USERS.TABLE.NAME' | translate }}</th>
+          <th>{{ 'PENDING_USERS.TABLE.EMAIL' | translate }}</th>
+          <th>{{ 'PENDING_USERS.TABLE.APARTMENT_NUMBER' | translate }}</th>
+          <th>{{ 'PENDING_USERS.TABLE.ROLES' | translate }}</th>
+          <th class="text-center">{{ 'PENDING_USERS.TABLE.OPERATIONS' | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -25,9 +25,9 @@
             </td>
             <td class="align-middle">
               <select [(ngModel)]="profile.role" class="form-select form-select-sm">
-                <option value="Occupant">Occupant</option>
-                <option value="Owner">Owner</option>
-                <option value="Tenant">Tenant</option>
+                <option value="Occupant">{{ 'AUTH.REGISTER.ROLES.OCCUPANT' | translate }}</option>
+                <option value="Owner">{{ 'AUTH.REGISTER.ROLES.OWNER' | translate }}</option>
+                <option value="Tenant">{{ 'AUTH.REGISTER.ROLES.TENANT' | translate }}</option>
               </select>
             </td>
             <td class="actions align-middle text-center">
@@ -47,7 +47,7 @@
           <tr>
             <td colspan="5" class="text-center py-5 text-muted">
               <i class="bi bi-info-circle me-2"></i>
-              There are no pending registrations at the moment.
+              {{ 'PENDING_USERS.EMPTY' | translate }}
             </td>
           </tr>
         </ng-template>

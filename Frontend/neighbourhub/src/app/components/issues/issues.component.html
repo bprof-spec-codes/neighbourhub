@@ -1,12 +1,12 @@
 <section class="container-fluid py-4 issues-page ps-5 pe-5">
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
     <div>
-      <h1 class="h2 mb-1">Issues</h1>
-      <p class="text-muted mb-0">Manage reported problems and repairs</p>
+      <h1 class="h2 mb-1">{{ 'ISSUES.TITLE' | translate }}</h1>
+      <p class="text-muted mb-0">{{ 'ISSUES.DESCRIPTION' | translate }}</p>
     </div>
 
     <button type="button" class="btn btn-primary ps-3 pe-3" (click)="openAddModal()">
-      + New Issue
+      + {{ 'ISSUES.NEW_ISSUE' | translate }}
     </button>
   </div>
 
@@ -14,25 +14,25 @@
     <div class="row g-3 mb-4">
       <div class="col-6 col-md-3">
         <div class="summary-card summary-total">
-          <span class="summary-label">Total Issues</span>
+          <span class="summary-label">{{ 'ISSUES.SUMMARY.TOTAL' | translate }}</span>
           <span class="summary-value total-value">{{ summary.total }}</span>
         </div>
       </div>
       <div class="col-6 col-md-3">
         <div class="summary-card summary-open">
-          <span class="summary-label">Open Issues</span>
+          <span class="summary-label">{{ 'ISSUES.SUMMARY.OPEN' | translate }}</span>
           <span class="summary-value open-value">{{ summary.open }}</span>
         </div>
       </div>
       <div class="col-6 col-md-3">
         <div class="summary-card summary-in-progress">
-          <span class="summary-label">In Progress</span>
+          <span class="summary-label">{{ 'ISSUES.SUMMARY.IN_PROGRESS' | translate }}</span>
           <span class="summary-value in-progress-value">{{ summary.inProgress }}</span>
         </div>
       </div>
       <div class="col-6 col-md-3">
         <div class="summary-card summary-resolved">
-          <span class="summary-label">Resolved</span>
+          <span class="summary-label">{{ 'ISSUES.SUMMARY.RESOLVED' | translate }}</span>
           <span class="summary-value resolved-value">{{ summary.resolved }}</span>
         </div>
       </div>
@@ -42,43 +42,43 @@
   <ng-container *ngIf="errorReports$ | async as reports">
     <div *ngIf="reports.length === 0" class="alert alert-light border" role="status">
       <i class="bi bi-info-circle-fill me-2"></i>
-      No issues reported yet.
+      {{ 'ISSUES.EMPTY' | translate }}
     </div>
 
     <div *ngIf="reports.length > 0" class="issues-table-wrapper table-responsive">
       <table class="issues-table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Repair Date</th>
-            <th>Action</th>
+            <th>{{ 'ISSUES.TABLE.TITLE' | translate }}</th>
+            <th>{{ 'ISSUES.TABLE.CATEGORY' | translate }}</th>
+            <th>{{ 'ISSUES.TABLE.PRIORITY' | translate }}</th>
+            <th>{{ 'ISSUES.TABLE.STATUS' | translate }}</th>
+            <th>{{ 'ISSUES.TABLE.REPAIR_DATE' | translate }}</th>
+            <th>{{ 'ISSUES.TABLE.ACTION' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let report of reports">
             <td class="issue-title">{{ report.title }}</td>
-            <td>{{ report.category }}</td>
-            <td [ngClass]="getPriorityClass(report.priority)">{{ report.priority }}</td>
+            <td>{{ getCategoryText(report.category) }}</td>
+            <td [ngClass]="getPriorityClass(report.priority)">{{ getPriorityText(report.priority) }}</td>
             <td [ngClass]="getStatusClass(report.status)">{{ getStatusText(report.status) }}</td>
             <td class="repair-date">
               <ng-container *ngIf="report.scheduledRepairDate; else notScheduled">
                 {{ report.scheduledRepairDate | date:'MMM d, yyyy' }}
               </ng-container>
               <ng-template #notScheduled>
-                <span class="text-muted">Not scheduled</span>
+                <span class="text-muted">{{ 'ISSUES.NOT_SCHEDULED' | translate }}</span>
               </ng-template>
             </td>
             <td class="action-cell">
-              <button class="action-btn view-btn" title="View" (click)="openViewModal(report.id)">
+              <button class="action-btn view-btn" [attr.title]="'ISSUES.ACTIONS.VIEW' | translate" (click)="openViewModal(report.id)">
                 <i class="bi bi-eye"></i>
               </button>
-              <button *ngIf="canModifyReport()" class="action-btn edit-btn" title="Edit" (click)="openEditModal(report.id)">
+              <button *ngIf="canModifyReport()" class="action-btn edit-btn" [attr.title]="'ISSUES.ACTIONS.EDIT' | translate" (click)="openEditModal(report.id)">
                 <i class="bi bi-pencil"></i>
               </button>
-              <button *ngIf="canModifyReport()" class="action-btn delete-btn" title="Delete" (click)="openDeleteModal(report.id)">
+              <button *ngIf="canModifyReport()" class="action-btn delete-btn" [attr.title]="'ISSUES.ACTIONS.DELETE' | translate" (click)="openDeleteModal(report.id)">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
@@ -110,7 +110,7 @@
 
 <app-delete-modal
   [isOpen]="isDeleteModalOpen"
-  [content]="'Are you sure you want to delete this issue?'"
+  [content]="'ISSUES.DELETE_CONFIRM' | translate"
   (confirm)="deleteErrorReport()"
   (cancel)="closeDeleteModal()"
 />

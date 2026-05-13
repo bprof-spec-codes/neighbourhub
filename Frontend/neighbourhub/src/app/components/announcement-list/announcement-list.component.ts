@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnouncementService } from '../../services/announcement.service';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Announcement } from '../../entities/models/announcement.model';
 import { AnnouncementCategory } from '../../entities/enums/announcement-category.model';
 import { AnnouncementAddDto } from '../../entities/dtos/announcement-add-dto.model';
@@ -19,7 +20,11 @@ export class AnnouncementListComponent implements OnInit {
 
   private idToDelete: string = "";
 
-  constructor(private announcementService: AnnouncementService, protected authService: AuthService) { }
+  constructor(
+    private announcementService: AnnouncementService,
+    protected authService: AuthService,
+    private translate: TranslateService
+  ) { }
 
   public ngOnInit(): void {
     this.loadAnnouncements();
@@ -62,11 +67,15 @@ export class AnnouncementListComponent implements OnInit {
   }
 
   protected getCategoryText(category: Announcement['category']): string {
+    let categoryText = '';
+
     if (typeof category === 'number') {
-      return AnnouncementCategory[category] ?? 'General';
+      categoryText = AnnouncementCategory[category] ?? 'General';
+    } else {
+      categoryText = String(category);
     }
 
-    return String(category);
+    return this.translate.instant(`ANNOUNCEMENTS.CATEGORIES.${categoryText.toUpperCase()}`);
   }
 
   protected getCategoryBadgeClass(category: Announcement['category']): string {

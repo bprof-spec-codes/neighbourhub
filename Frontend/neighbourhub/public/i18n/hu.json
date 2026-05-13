@@ -1,0 +1,374 @@
+{
+  "NAVBAR": {
+    "PROPERTY_MANAGEMENT": "Ingatlankezelés",
+    "PENDING_USERS": "Függőben lévő felhasználók",
+    "MY_PROFILE": "Saját profil",
+    "OPEN_PROFILE": "Nyissa meg a profilkártyát",
+    "CHANGE_PICTURE": "Módosítás",
+    "CLOSE_SIDEBAR": "Oldalsáv bezárása",
+    "OPEN_SIDEBAR": "Oldalsáv megnyitása",
+    "CLOSE_PROFILE_CARD": "Profilkártya bezárása",
+    "CLOSE": "Bezárás",
+    "NO_APARTMENT": "Nincs hozzárendelt lakás",
+    "UPLOADING_IMAGE": "Kép feltöltése...",
+    "NAV_ITEMS": {
+      "DASHBOARD": "Irányítópult",
+      "VOTING": "Szavazás",
+      "ISSUES": "Problémák",
+      "ANNOUNCEMENTS": "Hirdetmények",
+      "BOOKINGS": "Foglalások",
+      "RESIDENTS": "Lakók",
+      "DOCUMENTS": "Dokumentumok",
+      "LOADING_PROFILE": "Profil betöltése...",
+      "PROFILE": "Profil"
+    }
+  },
+  "COMMON": {
+    "CLOSE": "Bezárás"
+  },
+  "DASHBOARD": {
+    "PLACEHOLDER": "Dashboard működik!"
+  },
+  "DELETE_MODAL": {
+    "TITLE": "Törlés megerősítése",
+    "CANCEL": "Mégse",
+    "DELETE": "Törlés"
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Bejelentkezés",
+      "EMAIL_PLACEHOLDER": "E-mail",
+      "PASSWORD_PLACEHOLDER": "Jelszó",
+      "SUBMIT": "Bejelentkezés",
+      "SIGN_UP_PROMPT": "Még új vagy a NeighbourHubban?",
+      "SIGN_UP_LINK": "Regisztráció"
+    },
+    "REGISTER": {
+      "TITLE": "Regisztráció",
+      "FIRST_NAME_PLACEHOLDER": "Keresztnév",
+      "LAST_NAME_PLACEHOLDER": "Vezetéknév",
+      "EMAIL_PLACEHOLDER": "E-mail",
+      "PASSWORD_PLACEHOLDER": "Jelszó",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Jelszó megerősítése",
+      "APARTMENT_NUMBER_PLACEHOLDER": "Lakásszám",
+      "PHONE_NUMBER_PLACEHOLDER": "Telefonszám",
+      "SUBMIT": "Regisztráció",
+      "LOGIN_PROMPT": "Már van fiókod?",
+      "LOGIN_LINK": "Bejelentkezés",
+      "ROLES": {
+        "OCCUPANT": "Lakó",
+        "OWNER": "Tulajdonos",
+        "TENANT": "Bérlő"
+      },
+      "VALIDATION": {
+        "FIRST_NAME_REQUIRED": "A keresztnév megadása kötelező.",
+        "FIRST_NAME_MINLENGTH": "A keresztnév legalább 3 karakter hosszú legyen.",
+        "LAST_NAME_REQUIRED": "A vezetéknév megadása kötelező.",
+        "LAST_NAME_MINLENGTH": "A vezetéknév legalább 3 karakter hosszú legyen.",
+        "EMAIL_REQUIRED": "Az e-mail megadása kötelező.",
+        "EMAIL_PATTERN": "Érvénytelen e-mail formátum.",
+        "PASSWORD_REQUIRED": "A jelszó megadása kötelező.",
+        "PASSWORD_MINLENGTH": "A jelszó legalább 8 karakter hosszú legyen.",
+        "PASSWORD_PATTERN": "A jelszónak legalább egy számot és egy nagybetűt kell tartalmaznia.",
+        "CONFIRM_PASSWORD_REQUIRED": "A jelszó megerősítése kötelező.",
+        "PASSWORD_MISMATCH": "A két jelszó nem egyezik meg.",
+        "APARTMENT_REQUIRED": "A lakásszám megadása kötelező.",
+        "PHONE_REQUIRED": "A telefonszám megadása kötelező.",
+        "PHONE_PATTERN": "Érvénytelen telefonszám formátum."
+      }
+    }
+  },
+  "VOTING": {
+    "TITLE": "Szavazás",
+    "DESCRIPTION": "Vegyen részt az épülettel kapcsolatos döntésekben.",
+    "NEW_VOTE": "Új szavazás",
+    "EMPTY": "Még nincs szavazás.",
+    "ACTIVE_VOTES": "Aktív szavazások",
+    "CLOSED_VOTES": "Lezárt szavazások",
+    "YES": "Igen",
+    "NO": "Nem",
+    "ABSTAIN": "Tartózkodom",
+    "VOTE": "Szavazás",
+    "DELETE": "Törlés",
+    "DELETE_CONFIRM": "Biztosan törölni szeretné ezt a szavazást?",
+    "ADD_MODAL": {
+      "TITLE": "Új szavazás létrehozása",
+      "QUESTION_LABEL": "Kérdés",
+      "QUESTION_PLACEHOLDER": "Adja meg a szavazás kérdését",
+      "DEADLINE_LABEL": "Határidő",
+      "CANCEL": "Mégse",
+      "SUBMIT": "Szavazás létrehozása",
+      "VALIDATION": {
+        "QUESTION_REQUIRED": "A kérdés megadása kötelező.",
+        "DEADLINE_REQUIRED": "A határidő megadása kötelező.",
+        "INVALID_VALUE": "Érvénytelen érték."
+      }
+    },
+    "VOTE_MODAL": {
+      "TITLE": "Szavazat leadása",
+      "DESCRIPTION": "Válassza ki a szavazatát:",
+      "CANCEL": "Mégse"
+    }
+  },
+  "ISSUES": {
+    "TITLE": "Problémák",
+    "DESCRIPTION": "A bejelentett hibák és javítások kezelése",
+    "NEW_ISSUE": "Új hiba",
+    "EMPTY": "Még nincs bejelentett probléma.",
+    "NOT_SCHEDULED": "Nincs ütemezve",
+    "DELETE_CONFIRM": "Biztosan törölni szeretné ezt a problémát?",
+    "SUMMARY": {
+      "TOTAL": "Összes probléma",
+      "OPEN": "Nyitott problémák",
+      "IN_PROGRESS": "Folyamatban",
+      "RESOLVED": "Megoldott"
+    },
+    "TABLE": {
+      "TITLE": "Cím",
+      "CATEGORY": "Kategória",
+      "PRIORITY": "Prioritás",
+      "STATUS": "Állapot",
+      "REPAIR_DATE": "Javítás dátuma",
+      "ACTION": "Művelet"
+    },
+    "ACTIONS": {
+      "VIEW": "Megtekintés",
+      "EDIT": "Szerkesztés",
+      "DELETE": "Törlés"
+    },
+    "CATEGORIES": {
+      "PLUMBING": "Vízvezeték",
+      "ELECTRICAL": "Villamosság",
+      "HVAC": "Fűtés-szellőzés-klíma",
+      "MAINTENANCE": "Karbantartás",
+      "STRUCTURAL": "Szerkezeti",
+      "OTHER": "Egyéb"
+    },
+    "PRIORITIES": {
+      "LOW": "Alacsony",
+      "MEDIUM": "Közepes",
+      "HIGH": "Magas"
+    },
+    "STATUSES": {
+      "OPEN": "Nyitott",
+      "INPROGRESS": "Folyamatban",
+      "RESOLVED": "Megoldott"
+    },
+    "CREATE_MODAL": {
+      "TITLE": "Új probléma bejelentése",
+      "TITLE_LABEL": "Cím",
+      "TITLE_PLACEHOLDER": "A probléma rövid leírása",
+      "DESCRIPTION_LABEL": "Leírás",
+      "DESCRIPTION_PLACEHOLDER": "A probléma részletes leírása",
+      "CATEGORY_LABEL": "Kategória",
+      "CATEGORY_PLACEHOLDER": "Válasszon kategóriát",
+      "CANCEL": "Mégse",
+      "SUBMIT": "Bejelentés",
+      "VALIDATION": {
+        "TITLE_REQUIRED": "A cím megadása kötelező.",
+        "DESCRIPTION_REQUIRED": "A leírás megadása kötelező.",
+        "CATEGORY_REQUIRED": "A kategória megadása kötelező.",
+        "INVALID_VALUE": "Érvénytelen érték."
+      }
+    },
+    "EDIT_MODAL": {
+      "TITLE": "Probléma szerkesztése",
+      "TITLE_LABEL": "Cím",
+      "DESCRIPTION_LABEL": "Leírás",
+      "CATEGORY_LABEL": "Kategória",
+      "PRIORITY_LABEL": "Prioritás",
+      "STATUS_LABEL": "Állapot",
+      "SCHEDULED_REPAIR_DATE_LABEL": "Ütemezett javítás dátuma",
+      "CANCEL": "Mégse",
+      "SAVE": "Mentés",
+      "VALIDATION": {
+        "PAST_DATE": "Az ütemezett javítás dátuma nem lehet korábbi a mai napnál."
+      }
+    },
+    "VIEW_MODAL": {
+      "CATEGORY": "Kategória",
+      "PRIORITY": "Prioritás",
+      "STATUS": "Állapot",
+      "REPORTED_DATE": "Bejelentés dátuma",
+      "REPORTED_BY": "Bejelentette",
+      "DESCRIPTION": "Leírás",
+      "SCHEDULED_REPAIR_DATE": "Ütemezett javítás dátuma"
+    }
+  },
+  "ANNOUNCEMENTS": {
+    "TITLE": "Hirdetmények",
+    "DESCRIPTION": "Kövesse az épület híreit és frissítéseit.",
+    "NEW_ANNOUNCEMENT": "Új hirdetmény",
+    "EMPTY": "Még nincs hirdetmény.",
+    "DELETE_CONFIRM": "Biztosan törölni szeretné ezt a hirdetményt?",
+    "CATEGORIES": {
+      "MAINTENANCE": "Karbantartás",
+      "EVENT": "Esemény",
+      "POLICY": "Szabályzat",
+      "GENERAL": "Általános"
+    },
+    "ADD_MODAL": {
+      "TITLE": "Hirdetmény hozzáadása",
+      "TITLE_LABEL": "Cím",
+      "CONTENT_LABEL": "Tartalom",
+      "CATEGORY_LABEL": "Kategória",
+      "CANCEL": "Mégse",
+      "SAVE": "Mentés",
+      "VALIDATION": {
+        "TITLE_REQUIRED": "A cím megadása kötelező.",
+        "CONTENT_REQUIRED": "A tartalom megadása kötelező.",
+        "CATEGORY_REQUIRED": "A kategória megadása kötelező.",
+        "INVALID_VALUE": "Érvénytelen érték."
+      }
+    }
+  },
+  "DOCUMENTS": {
+    "TITLE": "Dokumentumok",
+    "DESCRIPTION": "Érje el az épület dokumentumait és fontos fájljait",
+    "ADD_DOCUMENT": "Dokumentum hozzáadása",
+    "SEARCH_PLACEHOLDER": "Dokumentumok keresése...",
+    "PREVIEW": "Előnézet",
+    "DOWNLOAD": "Letöltés",
+    "DELETE_ARIA": "Dokumentum törlése",
+    "EMPTY": "Nincs található dokumentum",
+    "DELETE_CONFIRM": "Biztosan törölni szeretné ezt a dokumentumot?",
+    "ADD_MODAL": {
+      "TITLE": "Dokumentum hozzáadása",
+      "TITLE_LABEL": "Cím",
+      "PDF_LABEL": "PDF fájl",
+      "DROPZONE_TITLE": "Húzza ide a PDF fájlt",
+      "DROPZONE_HINT": "vagy kattintson fájlválasztáshoz",
+      "NO_FILE_SELECTED": "Nincs kiválasztott fájl",
+      "FILE_HINT": "Csak PDF fájlok engedélyezettek.",
+      "CANCEL": "Mégse",
+      "SAVE": "Mentés",
+      "VALIDATION": {
+        "TITLE_REQUIRED": "A cím megadása kötelező.",
+        "PDF_REQUIRED": "PDF fájl kiválasztása kötelező.",
+        "ONLY_PDF": "Csak PDF fájlok engedélyezettek.",
+        "INVALID_VALUE": "Érvénytelen érték."
+      }
+    }
+  },
+  "BOOKINGS": {
+    "TITLE": "Közösségi helyiségfoglalások",
+    "DESCRIPTION": "Foglaljon közös helyiségeket igényeinek megfelelően",
+    "ADD_FACILITY": "Helyiség hozzáadása",
+    "NEW_BOOKING": "Új foglalás",
+    "AVAILABLE_FACILITIES": "Elérhető helyiségek",
+    "CAPACITY": "Kapacitás",
+    "PEOPLE": "fő",
+    "RESERVE_NOW": "Foglalás most",
+    "EDIT": "Szerkesztés",
+    "CANCEL": "Mégse",
+    "BOOKED_BY": "Foglalta:",
+    "EMPTY_UPCOMING": "Nincs közelgő foglalás.",
+    "EMPTY_PAST": "Nincs korábbi foglalás.",
+    "STATUSES": {
+      "ACTIVE": "Aktív",
+      "CANCELLED": "Lemondva"
+    },
+    "FILTERS": {
+      "ALL_FACILITIES": "Minden helyiség",
+      "ALL_STATUSES": "Minden állapot",
+      "UPCOMING": "Közelgő",
+      "MY_BOOKINGS": "Saját foglalások",
+      "PAST_BOOKINGS": "Korábbi foglalások",
+      "RESET": "Visszaállítás"
+    },
+    "SECTIONS": {
+      "UPCOMING_BOOKINGS": "Közelgő foglalások",
+      "MY_BOOKINGS": "Saját foglalások",
+      "PAST_BOOKINGS": "Korábbi foglalások"
+    },
+    "CREATE_MODAL": {
+      "TITLE": "Helyiség foglalása",
+      "FACILITY": "Helyiség",
+      "SELECT_FACILITY": "Válasszon helyiséget",
+      "DATE": "Dátum",
+      "AVAILABILITY": "Elérhetőség",
+      "NO_BOOKINGS_DAY": "Erre a napra nincs foglalás.",
+      "START_TIME": "Kezdési idő",
+      "END_TIME": "Befejezési idő",
+      "ATTENDEES": "Résztvevők száma",
+      "CANCEL": "Mégse",
+      "CONFIRM": "Foglalás megerősítése",
+      "VALIDATION": {
+        "SELECT_FACILITY": "Kérjük, válasszon helyiséget.",
+        "DATE_REQUIRED": "A dátum megadása kötelező.",
+        "START_REQUIRED": "A kezdési idő megadása kötelező.",
+        "END_REQUIRED": "A befejezési idő megadása kötelező.",
+        "OVERLAP": "A kiválasztott idő ütközik egy meglévő foglalással.",
+        "MAX_PERSON": "Legfeljebb {{max}} fő.",
+        "MIN_PERSON": "Legalább 1 fő szükséges.",
+        "FIELD_REQUIRED": "Ez a mező kötelező."
+      }
+    },
+    "ROOM_MODAL": {
+      "ADD_TITLE": "Helyiség hozzáadása",
+      "EDIT_TITLE": "Helyiség szerkesztése",
+      "NAME": "Név",
+      "NAME_PLACEHOLDER": "pl. Közösségi szoba",
+      "DESCRIPTION": "Leírás",
+      "DESCRIPTION_PLACEHOLDER": "A helyiség rövid leírása",
+      "CAPACITY": "Kapacitás",
+      "CANCEL": "Mégse",
+      "SAVE": "Változtatások mentése",
+      "ADD": "Helyiség hozzáadása",
+      "VALIDATION": {
+        "NAME_REQUIRED": "A név megadása kötelező.",
+        "CAPACITY_MIN": "A kapacitás legalább 1 legyen."
+      }
+    }
+  },
+  "PENDING_USERS": {
+    "TITLE": "Függőben lévő regisztrációk",
+    "DESCRIPTION": "Itt jóváhagyhatja az új lakók rendszerhozzáférését.",
+    "EMPTY": "Jelenleg nincsenek függőben lévő regisztrációk.",
+    "TABLE": {
+      "NAME": "Név",
+      "EMAIL": "E-mail",
+      "APARTMENT_NUMBER": "Lakásszám",
+      "ROLES": "Szerepkörök",
+      "OPERATIONS": "Műveletek"
+    }
+  },
+  "RESIDENTS": {
+    "TITLE": "Lakók",
+    "DESCRIPTION": "Az összes lakó adatainak megtekintése.",
+    "EMPTY": "Nincsenek lakók.",
+    "UPDATE_FAILED": "A lakó frissítése nem sikerült.",
+    "TABLE": {
+      "ARIA_LABEL": "Lakók listája",
+      "RESIDENT": "Lakó",
+      "FLATS": "Lakás(ok)",
+      "MOBILE_NUMBER": "Mobilszám",
+      "PARKING_SPACES": "Parkolóhely(ek)",
+      "STORAGE_NUMBERS": "Tárolószám(ok)",
+      "ACTIONS": "Műveletek"
+    },
+    "EDIT_MODAL": {
+      "TITLE": "Lakó szerkesztése",
+      "OPEN": "Lakó szerkesztése",
+      "ARIA_LABEL": "Lakó szerkesztése",
+      "PROFILE_PICTURE": "Profilkép",
+      "CLICK_TO_CHANGE_PROFILE_PICTURE": "Kattintson a profilkép módosításához",
+      "PROFILE_IMAGE_PREVIEW_ALT": "Profilkép előnézet",
+      "CHANGE": "Módosítás",
+      "PROFILE_IMAGE_HELP": "Kattintson a profilképre JPG, PNG, WEBP vagy GIF feltöltéséhez. A fájl a szerveren kerül mentésre.",
+      "FIRST_NAME": "Keresztnév",
+      "LAST_NAME": "Vezetéknév",
+      "EMAIL": "E-mail",
+      "MOBILE_NUMBER": "Mobilszám",
+      "FLATS": "Lakás(ok)",
+      "FLATS_PLACEHOLDER": "A12 | B04",
+      "PARKING_SPACES": "Parkolóhely(ek)",
+      "PARKING_PLACEHOLDER": "P-01 | P-02",
+      "STORAGE_NUMBERS": "Tárolószám(ok)",
+      "STORAGE_PLACEHOLDER": "S-01 | S-07",
+      "MULTI_VALUE_HELP": "Több érték esetén használja a | vagy , jelet (például: A12 | B04 vagy A12, B04).",
+      "CANCEL": "Mégse",
+      "SAVE": "Változtatások mentése"
+    }
+  }
+}

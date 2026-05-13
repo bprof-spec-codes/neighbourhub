@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { VoteAddDto } from '../../../entities/dtos/vote-add-dto.model';
 
 @Component({
@@ -17,7 +18,7 @@ export class VoteAddModalComponent implements OnChanges {
 
   protected readonly form;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.form = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
       deadline: ['', [Validators.required]]
@@ -54,9 +55,11 @@ export class VoteAddModalComponent implements OnChanges {
   protected getErrorText(controlName: 'title' | 'deadline'): string {
     const control = this.form.controls[controlName];
     if (control.errors?.['required']) {
-      return controlName === 'title' ? 'Question is required.' : 'Deadline is required.';
+      return controlName === 'title'
+        ? this.translate.instant('VOTING.ADD_MODAL.VALIDATION.QUESTION_REQUIRED')
+        : this.translate.instant('VOTING.ADD_MODAL.VALIDATION.DEADLINE_REQUIRED');
     }
-    return 'Invalid value.';
+    return this.translate.instant('VOTING.ADD_MODAL.VALIDATION.INVALID_VALUE');
   }
 
   private resetFormToDefault(): void {

@@ -2,51 +2,51 @@
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h5 class="mb-0 modal-title">{{ report.title }}</h5>
-      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+      <button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
 
     <div class="modal-body">
       <div class="mb-3">
-        <span class="detail-label">Category</span>
-        <span class="detail-value">{{ report.category }}</span>
+        <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.CATEGORY' | translate }}</span>
+        <span class="detail-value">{{ getCategoryText(report.category) }}</span>
       </div>
 
       <div class="row mb-3">
         <div class="col-4">
-          <span class="detail-label">Priority</span>
-          <span class="detail-value" [ngClass]="getPriorityClass(report.priority)">{{ report.priority }}</span>
+          <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.PRIORITY' | translate }}</span>
+          <span class="detail-value" [ngClass]="getPriorityClass(report.priority)">{{ getPriorityText(report.priority) }}</span>
         </div>
         <div class="col-4">
-          <span class="detail-label">Status</span>
+          <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.STATUS' | translate }}</span>
           <span class="detail-value" [ngClass]="getStatusClass(report.status)">{{ getStatusText(report.status) }}</span>
         </div>
         <div class="col-4">
-          <span class="detail-label">Reported Date</span>
+          <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.REPORTED_DATE' | translate }}</span>
           <span class="detail-value">{{ report.reportedDate | date:'MMM d, yyyy' }}</span>
         </div>
       </div>
 
       <div class="mb-3">
-        <span class="detail-label">Reported By</span>
+        <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.REPORTED_BY' | translate }}</span>
         <span class="detail-value">{{ report.reportedByName }}</span>
       </div>
 
       <div class="mb-3">
-        <span class="detail-label">Description</span>
+        <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.DESCRIPTION' | translate }}</span>
         <p class="detail-value detail-description mb-0">{{ report.description }}</p>
       </div>
 
       <div class="mb-3">
-        <span class="detail-label">Scheduled Repair Date</span>
+        <span class="detail-label">{{ 'ISSUES.VIEW_MODAL.SCHEDULED_REPAIR_DATE' | translate }}</span>
         <span class="detail-value" *ngIf="report.scheduledRepairDate">{{ report.scheduledRepairDate | date:'MMM d, yyyy' }}</span>
-        <span class="detail-value text-muted" *ngIf="!report.scheduledRepairDate">Not scheduled</span>
+        <span class="detail-value text-muted" *ngIf="!report.scheduledRepairDate">{{ 'ISSUES.NOT_SCHEDULED' | translate }}</span>
       </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary w-100" (click)="onClose()">Close</button>
+      <button type="button" class="btn btn-primary w-100" (click)="onClose()">{{ 'COMMON.CLOSE' | translate }}</button>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { DocumentAddDto } from '../../../entities/dtos/document-add-dto.model';
 
 @Component({
@@ -20,7 +21,7 @@ export class AddDocumentModalComponent implements OnChanges {
   protected fileTypeError = false;
   protected isDragOver = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.form = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
       file: [null as File | null, [Validators.required]]
@@ -133,21 +134,23 @@ export class AddDocumentModalComponent implements OnChanges {
   }
 
   protected getSelectedFileName(): string {
-    return this.form.controls.file.value?.name ?? 'No file selected';
+    return this.form.controls.file.value?.name ?? this.translate.instant('DOCUMENTS.ADD_MODAL.NO_FILE_SELECTED');
   }
 
   protected getErrorText(controlName: 'title' | 'file'): string {
     if (controlName === 'file' && this.fileTypeError) {
-      return 'Only PDF files are allowed.';
+      return this.translate.instant('DOCUMENTS.ADD_MODAL.VALIDATION.ONLY_PDF');
     }
 
     const control = this.form.controls[controlName];
 
     if (control.errors?.['required']) {
-      return controlName === 'title' ? 'Title is required.' : 'PDF file is required.';
+      return controlName === 'title'
+        ? this.translate.instant('DOCUMENTS.ADD_MODAL.VALIDATION.TITLE_REQUIRED')
+        : this.translate.instant('DOCUMENTS.ADD_MODAL.VALIDATION.PDF_REQUIRED');
     }
 
-    return 'Invalid value.';
+    return this.translate.instant('DOCUMENTS.ADD_MODAL.VALIDATION.INVALID_VALUE');
   }
 
   private resetFormToDefault(): void {

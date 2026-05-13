@@ -1,20 +1,20 @@
 <section class="container-fluid py-4 bookings-page ps-4 pe-4">
   <div class="d-flex align-items-center justify-content-between mb-4 page-header">
     <div>
-      <h1 class="h2 mb-1">Community Area Bookings</h1>
-      <p class="text-muted mb-0">Reserve shared facilities for your needs</p>
+      <h1 class="h2 mb-1">{{ 'BOOKINGS.TITLE' | translate }}</h1>
+      <p class="text-muted mb-0">{{ 'BOOKINGS.DESCRIPTION' | translate }}</p>
     </div>
     <div class="d-flex gap-2 page-header-actions">
       <button *ngIf="authService.isAdmin()" type="button" class="btn btn-outline-secondary px-3" (click)="openAddRoomModal()">
-        + Add Facility
+        + {{ 'BOOKINGS.ADD_FACILITY' | translate }}
       </button>
       <button type="button" class="btn btn-primary px-3" (click)="openCreateModal()">
-        + New Booking
+        + {{ 'BOOKINGS.NEW_BOOKING' | translate }}
       </button>
     </div>
   </div>
 
-  <h2 class="section-title mb-3">Available Facilities</h2>
+  <h2 class="section-title mb-3">{{ 'BOOKINGS.AVAILABLE_FACILITIES' | translate }}</h2>
 
   <ng-container *ngIf="rooms$ | async as rooms">
     <div class="facilities-grid mb-5">
@@ -25,13 +25,13 @@
             <p class="room-description text-muted mb-3">{{ room.description }}</p>
             <div class="flex-grow-1"></div>
             <hr class="my-2">
-            <p class="room-capacity mb-3">Capacity: <strong>{{ room.capacity }} people</strong></p>
+            <p class="room-capacity mb-3">{{ 'BOOKINGS.CAPACITY' | translate }}: <strong>{{ room.capacity }} {{ 'BOOKINGS.PEOPLE' | translate }}</strong></p>
             <button type="button" class="btn btn-primary w-100" (click)="openCreateModal(room.id)">
-              Reserve Now
+              {{ 'BOOKINGS.RESERVE_NOW' | translate }}
             </button>
             <div *ngIf="authService.isAdmin()" class="d-flex gap-2 mt-2 w-100">
               <button type="button" class="btn btn-sm btn-outline-secondary flex-grow-1" (click)="openEditRoomModal(room)">
-                <i class="bi bi-pencil"></i> Edit
+                <i class="bi bi-pencil"></i> {{ 'BOOKINGS.EDIT' | translate }}
               </button>
               <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteRoom(room.id)">
                 <i class="bi bi-trash"></i>
@@ -46,45 +46,45 @@
   <div class="booking-filters mb-4">
     <ng-container *ngIf="rooms$ | async as rooms">
       <select class="form-select filter-control" [(ngModel)]="filterRoomId" (ngModelChange)="onFilterChange()">
-        <option value="">All Facilities</option>
+        <option value="">{{ 'BOOKINGS.FILTERS.ALL_FACILITIES' | translate }}</option>
         <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
       </select>
     </ng-container>
     <input type="date" class="form-control filter-control" [(ngModel)]="filterDate" (ngModelChange)="onFilterChange()">
     <select class="form-select filter-control" [(ngModel)]="filterStatus" (ngModelChange)="onFilterChange()">
-      <option value="">All Statuses</option>
-      <option value="Active">Active</option>
-      <option value="Cancelled">Cancelled</option>
+      <option value="">{{ 'BOOKINGS.FILTERS.ALL_STATUSES' | translate }}</option>
+      <option value="Active">{{ 'BOOKINGS.STATUSES.ACTIVE' | translate }}</option>
+      <option value="Cancelled">{{ 'BOOKINGS.STATUSES.CANCELLED' | translate }}</option>
     </select>
     <select class="form-select filter-control" [(ngModel)]="filterPeriod" (ngModelChange)="onFilterChange()">
-      <option value="upcoming">Upcoming</option>
-      <option value="my">My Bookings</option>
-      <option value="past">Past Bookings</option>
+      <option value="upcoming">{{ 'BOOKINGS.FILTERS.UPCOMING' | translate }}</option>
+      <option value="my">{{ 'BOOKINGS.FILTERS.MY_BOOKINGS' | translate }}</option>
+      <option value="past">{{ 'BOOKINGS.FILTERS.PAST_BOOKINGS' | translate }}</option>
     </select>
-    <button type="button" class="btn btn-outline-secondary filter-reset" (click)="resetFilters()">Reset</button>
+    <button type="button" class="btn btn-outline-secondary filter-reset" (click)="resetFilters()">{{ 'BOOKINGS.FILTERS.RESET' | translate }}</button>
   </div>
 
   <h2 class="section-title mb-3">
-    {{ filterPeriod === 'past' ? 'Past Bookings' : filterPeriod === 'my' ? 'My Bookings' : 'Upcoming Bookings' }}
+    {{ filterPeriod === 'past' ? ('BOOKINGS.SECTIONS.PAST_BOOKINGS' | translate) : filterPeriod === 'my' ? ('BOOKINGS.SECTIONS.MY_BOOKINGS' | translate) : ('BOOKINGS.SECTIONS.UPCOMING_BOOKINGS' | translate) }}
   </h2>
 
   <ng-container *ngIf="filterPeriod === 'upcoming' || filterPeriod === 'my'">
-    <p *ngIf="filteredUpcoming.length === 0" class="text-muted">No upcoming bookings.</p>
+    <p *ngIf="filteredUpcoming.length === 0" class="text-muted">{{ 'BOOKINGS.EMPTY_UPCOMING' | translate }}</p>
     <div class="booking-list">
       <div *ngFor="let booking of filteredUpcoming" class="booking-card booking-card-upcoming">
         <div class="booking-card-inner">
           <div class="booking-info">
             <h6 class="booking-room">{{ booking.roomName }}</h6>
-            <p class="booking-meta text-muted mb-2">Booked by {{ booking.bookedByName }}</p>
+            <p class="booking-meta text-muted mb-2">{{ 'BOOKINGS.BOOKED_BY' | translate }} {{ booking.bookedByName }}</p>
             <div class="booking-time-row">
               <span><i class="bi bi-calendar3 me-1"></i>{{ booking.bookingDate | date:'yyyy.MM.dd' }}</span>
               <span><i class="bi bi-clock me-1"></i>{{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }}</span>
             </div>
           </div>
           <div class="booking-actions">
-            <span class="status-badge" [ngClass]="getStatusClass(booking.status)">{{ booking.status }}</span>
+            <span class="status-badge" [ngClass]="getStatusClass(booking.status)">{{ ('BOOKINGS.STATUSES.' + booking.status.toUpperCase()) | translate }}</span>
             <button *ngIf="booking.status === 'Active'" type="button" class="btn btn-sm btn-outline-danger" (click)="cancelBooking(booking.id)">
-              Cancel
+              {{ 'BOOKINGS.CANCEL' | translate }}
             </button>
           </div>
         </div>
@@ -93,20 +93,20 @@
   </ng-container>
 
   <ng-container *ngIf="filterPeriod === 'past'">
-    <p *ngIf="filteredPast.length === 0" class="text-muted">No past bookings.</p>
+    <p *ngIf="filteredPast.length === 0" class="text-muted">{{ 'BOOKINGS.EMPTY_PAST' | translate }}</p>
     <div class="booking-list">
       <div *ngFor="let booking of filteredPast" class="booking-card booking-card-past">
         <div class="booking-card-inner">
           <div class="booking-info">
             <h6 class="booking-room">{{ booking.roomName }}</h6>
-            <p class="booking-meta text-muted mb-2">Booked by {{ booking.bookedByName }}</p>
+            <p class="booking-meta text-muted mb-2">{{ 'BOOKINGS.BOOKED_BY' | translate }} {{ booking.bookedByName }}</p>
             <div class="booking-time-row">
               <span><i class="bi bi-calendar3 me-1"></i>{{ booking.bookingDate | date:'yyyy.MM.dd' }}</span>
               <span><i class="bi bi-clock me-1"></i>{{ formatTime(booking.startTime) }} - {{ formatTime(booking.endTime) }}</span>
             </div>
           </div>
           <div class="booking-actions">
-            <span class="status-badge" [ngClass]="getStatusClass(booking.status)">{{ booking.status }}</span>
+            <span class="status-badge" [ngClass]="getStatusClass(booking.status)">{{ ('BOOKINGS.STATUSES.' + booking.status.toUpperCase()) | translate }}</span>
           </div>
         </div>
       </div>
