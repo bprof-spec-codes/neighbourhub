@@ -37,4 +37,11 @@ public class AnnouncementController : ControllerBase
     {
         _announcementLogic.DeleteAnnouncementById(id);
     }
+
+    [HttpGet("carousel")]
+    [Authorize]
+    public IEnumerable<Announcement> GetCarouselAnnouncements()
+    {
+        return _announcementLogic.GetCarouselAnnouncements();
+    }
 }

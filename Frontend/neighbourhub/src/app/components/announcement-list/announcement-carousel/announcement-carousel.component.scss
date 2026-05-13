@@ -1,0 +1,85 @@
+@use "../../../../styles/colors" as *;
+
+.carousel-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $card-background-grey;
+}
+
+.carousel-card {
+  width: 90%;
+  max-width: 1100px;
+  background-color: $white;
+  border-left: 0.5rem solid $green;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 2rem $shadow-lg;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.category-maintenance { border-left-color: $orange; }
+.category-event { border-left-color: $blue; }
+.category-policy { border-left-color: $red; }
+.category-general { border-left-color: $green; }
+
+.carousel-badge {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.8rem;
+}
+
+.badge-maintenance { background-color: $orange; color: $white; }
+.badge-event { background-color: $blue; color: $white; }
+.badge-policy { background-color: $red; color: $white; }
+.badge-general { background-color: $green; color: $white; }
+
+.carousel-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: $text-strong;
+  margin: 0.5rem 0;
+}
+
+.carousel-text {
+  font-size: 1.4rem;
+  color: $dark-gray;
+  line-height: 1.8;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  line-clamp: 6;
+  overflow: hidden;
+}
+
+.carousel-date {
+  font-size: 0.95rem;
+  color: $text-muted;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $border-muted;
+  transition: background-color 0.3s;
+
+  &.active {
+    background-color: $brand-accent;
+  }
+}
+
+.carousel-empty {
+  color: $text-muted;
+  font-size: 1.2rem;
+}

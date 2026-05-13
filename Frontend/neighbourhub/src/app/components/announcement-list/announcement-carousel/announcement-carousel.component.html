@@ -1,0 +1,27 @@
+<div class="carousel-wrapper">
+  <ng-container *ngIf="currentAnnouncement; else empty">
+    <div class="carousel-card" [ngClass]="getCategoryCardClass(currentAnnouncement.category)">
+      <div class="carousel-content">
+        <span class="badge rounded-pill carousel-badge" [ngClass]="getCategoryBadgeClass(currentAnnouncement.category)">
+          {{ getCategoryText(currentAnnouncement.category) }}
+        </span>
+        <h1 class="carousel-title">{{ currentAnnouncement.title }}</h1>
+        <p class="carousel-text">{{ currentAnnouncement.content }}</p>
+        <p class="carousel-date">
+          <i class="bi bi-calendar-event me-2"></i>
+          {{ currentAnnouncement.createdDate | date: 'yyyy.MM.dd HH:mm' }}
+        </p>
+      </div>
+      <div class="carousel-dots">
+        <span class="dot" *ngFor="let a of announcements; let i = index" [class.active]="i === currentIndex"></span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #empty>
+    <div class="carousel-empty">
+      <i class="bi bi-info-circle me-2"></i>
+      No announcements available.
+    </div>
+  </ng-template>
+</div>
