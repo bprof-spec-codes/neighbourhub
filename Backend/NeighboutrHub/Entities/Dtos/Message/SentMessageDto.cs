@@ -16,5 +16,7 @@ namespace Entities.Dtos.Message
         public DateTime SentAt { get; set; }
         public bool IsRead { get; set; }
         public string? ReplyToId { get; set; }
+
+        public string? ReceiverApartmentNumber { get; set; }
     }
 }

@@ -20,7 +20,8 @@ namespace Endpoint.Controllers
         [Authorize]
         public IActionResult GetAll()
         {
-            return Ok(voteLogic.GetAll());
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            return Ok(voteLogic.GetAll(userId));
         }
 
 
@@ -28,7 +29,8 @@ namespace Endpoint.Controllers
         [Authorize]
         public IActionResult GetActive()
         {
-            return Ok(voteLogic.GetActive());
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            return Ok(voteLogic.GetActive(userId));
         }
 
 

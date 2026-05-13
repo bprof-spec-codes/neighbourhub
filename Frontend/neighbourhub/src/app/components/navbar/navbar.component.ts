@@ -38,13 +38,14 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   readonly navItems: NavItem[] = [
-    { label: 'NAVBAR.NAV_ITEMS.DASHBOARD', route: '/dashboard', iconClass: 'bi bi-grid-1x2-fill', exact: true },
-    { label: 'NAVBAR.NAV_ITEMS.VOTING', route: '/voting', iconClass: 'bi bi-check2-square' },
-    { label: 'NAVBAR.NAV_ITEMS.ISSUES', route: '/issues', iconClass: 'bi bi-exclamation-triangle-fill' },
-    { label: 'NAVBAR.NAV_ITEMS.ANNOUNCEMENTS', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
-    { label: 'NAVBAR.NAV_ITEMS.BOOKINGS', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
-    { label: 'NAVBAR.NAV_ITEMS.RESIDENTS', route: '/residents', iconClass: 'bi bi-people-fill' },
-    { label: 'NAVBAR.NAV_ITEMS.DOCUMENTS', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' }
+    { label: 'Dashboard', route: '/dashboard', iconClass: 'bi bi-grid-1x2-fill', exact: true },
+    { label: 'Voting', route: '/voting', iconClass: 'bi bi-check2-square' },
+    { label: 'Issues', route: '/issues', iconClass: 'bi bi-exclamation-triangle-fill' },
+    { label: 'Announcements', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
+    { label: 'Bookings', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
+    { label: 'Residents', route: '/residents', iconClass: 'bi bi-people-fill' },
+    { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' },
+    { label: 'Messages', route: '/messaging', iconClass: 'bi bi-envelope-fill' }
   ];
   
   toggleSidebar(): void {
