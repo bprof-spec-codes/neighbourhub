@@ -104,6 +104,19 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserLoginLogs",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LoginDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLoginLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -466,6 +479,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
+
+            migrationBuilder.DropTable(
+                name: "UserLoginLogs");
 
             migrationBuilder.DropTable(
                 name: "VoteEntries");

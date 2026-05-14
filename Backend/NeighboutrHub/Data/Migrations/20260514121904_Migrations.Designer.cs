@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20260506090938_Migrations")]
+    [Migration("20260514121904_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />
@@ -233,6 +233,23 @@ namespace Data.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Entities.Models.UserLoginLog", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("LoginDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLoginLogs");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>

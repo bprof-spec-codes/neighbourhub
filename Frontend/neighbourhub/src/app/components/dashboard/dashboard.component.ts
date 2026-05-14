@@ -9,14 +9,18 @@ import { DashboardData } from '../../entities/dtos/dashboard-data';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  public stats?: DashboardData;
+  public stats?: DashboardData; 
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
     this.dashboardService.getStats().subscribe({
       next: (data) => {
-        this.stats = data;
+        this.stats = {
+          ...data,
+          activityLabels: data.activityLabels || [],
+          weeklyActivity: data.weeklyActivity || []
+        };
       },
       error: (err) => console.error('Hiba az adatok lekérésekor', err)
     });

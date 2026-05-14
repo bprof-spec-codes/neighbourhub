@@ -12,6 +12,10 @@ namespace Entities.Dtos.Dashboard
         public int UnreadMessages { get; set; }
         public int PendingBookings { get; set; }
         public int RecentUpdates { get; set; }
-        public List<int> WeeklyActivity { get; set; } // A grafikon oszlopaihoz
+        // A grafikon értékei (pl: [5, 12, 8, 20, 15])
+        public List<int> WeeklyActivity { get; set; }
+
+        // A grafikon alatti feliratok (pl: ["Hétfő", "Kedd", ...] vagy ["05.10", "05.11", ...])
+        public List<string> ActivityLabels { get; set; }
     }
 }
