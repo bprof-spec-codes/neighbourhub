@@ -47,6 +47,12 @@
 
 .modal-footer {
   padding: 0 1.5rem 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+
+  .btn {
+    flex: 1 1 0;
+  }
 }
 
 .detail-label {

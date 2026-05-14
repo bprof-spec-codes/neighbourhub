@@ -31,7 +31,10 @@ public class ErrorReportLogic
         if (!string.IsNullOrEmpty(priority) && Enum.TryParse<ErrorPriority>(priority, true, out var p))
             query = query.Where(e => e.Priority == p);
 
-        var list = query.OrderByDescending(e => e.ReportedDate).ToList();
+        var list = query
+            .Include(e => e.Comments)
+            .OrderByDescending(e => e.ReportedDate)
+            .ToList();
         return _dtoProvider.Mapper.Map<List<ErrorReportListDto>>(list);
     }
 

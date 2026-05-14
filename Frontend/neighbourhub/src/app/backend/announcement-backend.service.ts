@@ -25,4 +25,8 @@ export class AnnouncementBackendService {
   public addAnnouncement(announcementToAdd: AnnouncementAddDto): Observable<Announcement> {
     return this.http.post<Announcement>(`${this.baseApiUrl}/Announcement`, announcementToAdd);
   }
+
+  public getCarouselAnnouncements(): Observable<Announcement[]> {
+    return this.http.get<Announcement[]>(`${this.baseApiUrl}/Announcement/carousel`);
+  }
 }

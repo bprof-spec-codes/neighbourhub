@@ -6,6 +6,7 @@ export interface ErrorReportListItem {
   status: string;
   scheduledRepairDate: string | null;
   reportedById: string;
+  commentCount: number;
 }
 
 export interface ErrorReportDetail {

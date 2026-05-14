@@ -1,0 +1,48 @@
+<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0 modal-title">Comments</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <ng-container *ngIf="comments$ | async as comments">
+        <p *ngIf="comments.length === 0" class="text-muted no-comments">No comments yet.</p>
+        <div class="comment-list">
+          <div *ngFor="let comment of comments" class="comment-item">
+            <div class="comment-meta">
+              <span class="comment-author">{{ comment.authorName }}</span>
+              <span class="comment-date">{{ comment.createdAt | date:'yyyy.MM.dd HH:mm' }}</span>
+            </div>
+            <div class="comment-content-row">
+              <p class="comment-content mb-0">{{ comment.content }}</p>
+              <button
+                *ngIf="canDelete(comment.authorId)"
+                type="button"
+                class="btn btn-sm btn-link text-danger delete-btn"
+                (click)="deleteComment(comment.id)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="modal-footer">
+      <textarea
+        class="form-control mb-2"
+        rows="3"
+        placeholder="Write a comment..."
+        [(ngModel)]="newContent"
+        maxlength="1000"
+      ></textarea>
+      <button type="button" class="btn btn-primary w-100" [disabled]="!newContent.trim()" (click)="submit()">
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace Entities.Models
         public string LastName { get; set; } = string.Empty;
 
         [StringLength(2048)]
-        public string? ProfileImageUrl { get; set; }
+        [Column("ProfileImageUrl")]
+        public string? ProfileImagePath { get; set; }
 
         [StringLength(50)]
         public List<string> Storage { get; set; } = new List<string>();
