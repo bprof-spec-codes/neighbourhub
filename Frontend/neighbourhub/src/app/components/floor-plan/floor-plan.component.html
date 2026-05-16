@@ -1,0 +1,60 @@
+<section class="container-fluid py-4 ps-5 pe-5 floor-plan-page">
+	<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+		<div>
+			<h1 class="h2 mb-1">Floor Plans</h1>
+		</div>
+
+		<div class="alert alert-light border mb-0 py-2 px-3" *ngIf="isLoading">
+			Loading floor plans...
+		</div>
+	</div>
+
+	<div class="alert alert-danger" *ngIf="errorMessage">
+		{{ errorMessage }}
+	</div>
+
+	<div class="alert alert-light border" *ngIf="!isLoading && floorPlans.length === 0 && !errorMessage" role="status">
+		<i class="bi bi-info-circle-fill me-2"></i>
+		No floor plans found.
+	</div>
+
+	<div class="floor-plan-list" *ngIf="floorPlans.length > 0">
+		<section class="floor-plan-item" *ngFor="let floorPlan of floorPlans; trackBy: trackByFloorPlanId">
+			<h2 class="h5 mb-3">Floor {{ floorPlan.floor }}</h2>
+
+			<div class="floor-plan-canvas" [class.floor-plan-canvas--missing-image]="!floorPlan.imageObjectUrl">
+				<ng-container *ngIf="floorPlan.imageObjectUrl; else missingImage">
+					<div class="floor-plan-image-wrap">
+						<img [src]="floorPlan.imageObjectUrl" [alt]="'Floor plan for floor ' + floorPlan.floor" />
+
+						<div
+							class="pin-point"
+							role="button"
+							tabindex="0"
+							(click)="togglePinPoint(pinPoint.id)"
+							*ngFor="let pinPoint of floorPlan.pinPoints; trackBy: trackByPinPointId"
+							[style.left.%]="pinPoint.width"
+							[style.top.%]="pinPoint.height"
+							[title]="pinPoint.title"
+							[class.pin-point--active]="isPinPointActive(pinPoint.id)"
+						>
+							<span class="pin-point__dot"></span>
+							<div class="pin-point__label" *ngIf="isPinPointActive(pinPoint.id)">
+								<span class="pin-point__label-text">{{ pinPoint.title }}</span>
+								<button type="button" class="pin-point__close" (click)="closePinPoint($event)" aria-label="Close pinpoint">
+									<i class="bi bi-x"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+
+				<ng-template #missingImage>
+					<div class="floor-plan-canvas__placeholder">
+						The image could not be loaded.
+					</div>
+				</ng-template>
+			</div>
+		</section>
+	</div>
+</section>

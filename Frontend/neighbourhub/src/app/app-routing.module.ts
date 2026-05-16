@@ -16,6 +16,7 @@ import { adminGuard } from './services/guards/admin.guard';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { AnnouncementCarouselComponent } from './components/announcement-list/announcement-carousel/announcement-carousel.component';
+import { FloorPlanComponent } from './components/floor-plan/floor-plan.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'pendingUsers', component: PendingUsersComponent, canActivate: [authGuard, adminGuard] },
       { path: 'messaging', component: MessagingComponent, canActivate: [authGuard] },
       { path: 'bookings', component: BookingsComponent, canActivate: [authGuard] },
+      { path: 'floor-plans', component: FloorPlanComponent, canActivate: [authGuard] },
     ]
   },
   { path: 'display', component:AnnouncementCarouselComponent, canActivate: [authGuard]},

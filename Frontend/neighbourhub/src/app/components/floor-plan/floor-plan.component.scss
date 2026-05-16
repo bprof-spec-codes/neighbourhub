@@ -1,0 +1,136 @@
+.floor-plan-page {
+	color: #212529;
+}
+
+.floor-plan-list {
+	display: grid;
+	gap: 2rem;
+}
+
+.floor-plan-item {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.floor-plan-canvas {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	background: #f8f9fa;
+	padding: 0;
+}
+
+.floor-plan-image-wrap {
+	position: relative;
+	display: inline-block;
+	max-width: 100%;
+	line-height: 0;
+
+	img {
+		display: block;
+		max-width: 100%;
+		width: auto;
+		height: auto;
+		max-height: clamp(280px, 60vh, 520px);
+	}
+}
+
+.floor-plan-canvas--missing-image {
+	min-height: 18rem;
+}
+
+.floor-plan-canvas__placeholder {
+	display: grid;
+	place-items: center;
+	min-height: 18rem;
+	color: #6c757d;
+	font-weight: 500;
+}
+
+.pin-point {
+	position: absolute;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	width: 0;
+	height: 0;
+	overflow: visible;
+	z-index: 2;
+}
+
+.pin-point__dot {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform: translate(-50%, -50%);
+	width: 0.9rem;
+	height: 0.9rem;
+	border-radius: 50%;
+	background: #dc3545;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.18);
+}
+
+.pin-point__label {
+	position: absolute;
+	left: 50%;
+	top: -1.15rem;
+	transform: translate(-50%, -100%);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	width: max-content;
+	max-width: none;
+	padding: 0.34rem 0.75rem 0.34rem 0.85rem;
+	border-radius: 0.5rem;
+	background: rgba(33, 37, 41, 0.92);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+	color: #fff;
+	font-size: 0.78rem;
+	font-weight: 600;
+	line-height: 1.2;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.pin-point--active .pin-point__label {
+	opacity: 1;
+	transform: translate(-50%, -100%);
+	pointer-events: auto;
+}
+
+.pin-point__label-text {
+	display: inline-block;
+}
+
+.pin-point__close {
+	border: 0;
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+	width: 1.1rem;
+	height: 1.1rem;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	flex-shrink: 0;
+	line-height: 1;
+	cursor: pointer;
+
+	&:focus,
+	&:focus-visible,
+	&:active {
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.pin-point__label {
+		display: none;
+	}
+}
