@@ -20,6 +20,15 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   protected isLoading = false;
   protected errorMessage = '';
   protected activePinPointId: string | null = null;
+  protected placingPinPointFloorPlanId: string | null = null;
+  protected isAddPinPointModalOpen = false;
+  protected addPinPointTitle = '';
+
+  protected pendingPinPointPlacement: {
+    floorPlanId: string;
+    latitude: number;
+    longitude: number;
+  } | null = null;
 
   private loadSubscription?: Subscription;
   private readonly createdObjectUrls: string[] = [];
@@ -46,17 +55,89 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
     return pinPoint.id;
   }
 
+  protected isPlacingPinPointForFloorPlan(floorPlanId: string): boolean {
+    return this.placingPinPointFloorPlanId === floorPlanId;
+  }
+
+  protected togglePinPointPlacement(floorPlanId: string, event?: MouseEvent): void {
+    event?.stopPropagation();
+    this.activePinPointId = null;
+    this.placingPinPointFloorPlanId = this.placingPinPointFloorPlanId === floorPlanId ? null : floorPlanId;
+  }
+
+  protected onFloorPlanImageClick(floorPlan: FloorPlanViewModel, event: MouseEvent): void {
+    if (!this.isPlacingPinPointForFloorPlan(floorPlan.id)) {
+      return;
+    }
+
+    const target = event.currentTarget;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const rect = target.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) {
+      return;
+    }
+
+    const latitude = Number((((event.clientX - rect.left) / rect.width) * 100).toFixed(2));
+    const longitude = Number((((event.clientY - rect.top) / rect.height) * 100).toFixed(2));
+
+    this.pendingPinPointPlacement = {
+      floorPlanId: floorPlan.id,
+      latitude,
+      longitude
+    };
+    this.addPinPointTitle = '';
+    this.isAddPinPointModalOpen = true;
+  }
+
   protected isPinPointActive(pinPointId: string): boolean {
     return this.activePinPointId === pinPointId;
   }
 
-  protected togglePinPoint(pinPointId: string): void {
+  protected togglePinPoint(pinPointId: string, event?: MouseEvent): void {
+    event?.stopPropagation();
     this.activePinPointId = this.activePinPointId === pinPointId ? null : pinPointId;
   }
 
   protected closePinPoint(event?: MouseEvent): void {
     event?.stopPropagation();
     this.activePinPointId = null;
+  }
+
+  protected closeAddPinPointModal(): void {
+    this.isAddPinPointModalOpen = false;
+    this.addPinPointTitle = '';
+    this.pendingPinPointPlacement = null;
+  }
+
+  protected savePinPoint(): void {
+    if (!this.pendingPinPointPlacement) {
+      return;
+    }
+
+    const title = this.addPinPointTitle.trim();
+    if (!title) {
+      return;
+    }
+
+    this.floorPlanBackendService.addPinPoint({
+      floorPlanId: this.pendingPinPointPlacement.floorPlanId,
+      title,
+      latitude: this.pendingPinPointPlacement.latitude,
+      longitude: this.pendingPinPointPlacement.longitude
+    }).subscribe({
+      next: () => {
+        this.closeAddPinPointModal();
+        this.placingPinPointFloorPlanId = null;
+        this.activePinPointId = null;
+        this.loadFloorPlans();
+      },
+      error: (error) => {
+        console.error(`Failed to add pin point to floor plan ${this.pendingPinPointPlacement?.floorPlanId}`, error);
+      }
+    });
   }
 
   protected deletePinPoint(pinPointId: string, event?: MouseEvent): void {
@@ -84,6 +165,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorMessage = '';
     this.revokeCreatedObjectUrls();
+    this.loadSubscription?.unsubscribe();
 
     this.loadSubscription = this.floorPlanBackendService.getFloorPlans().pipe(
       switchMap((floorPlans) => {
