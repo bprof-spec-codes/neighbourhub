@@ -21,6 +21,7 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<FloorPlan> FloorPlans { get; set; }
     public DbSet<PinPoint> PinPoints { get; set; }
+    public DbSet<ErrorReportComment> ErrorReportComments { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
@@ -88,5 +89,21 @@ public class RepositoryContext : IdentityDbContext
         builder.Entity<Booking>()
             .Property(b => b.Status)
             .HasConversion<string>();
+
+        builder.Entity<ErrorReportComment>()
+            .HasOne(c => c.ErrorReport)
+            .WithMany(r => r.Comments)
+            .HasForeignKey(c => c.ErrorReportId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<ErrorReportComment>()
+            .HasOne(c => c.Author)
+            .WithMany()
+            .HasForeignKey(c => c.AuthorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<ErrorReportComment>()
+            .Property(c => c.Content)
+            .HasMaxLength(1000);
     }
 }

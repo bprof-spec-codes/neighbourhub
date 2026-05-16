@@ -9,5 +9,6 @@ namespace Entities.Dtos.ErrorReport
         public string Status { get; set; } = string.Empty;
         public DateTime? ScheduledRepairDate { get; set; }
         public string ReportedById { get; set; } = string.Empty;
+        public int CommentCount { get; set; }
     }
 }

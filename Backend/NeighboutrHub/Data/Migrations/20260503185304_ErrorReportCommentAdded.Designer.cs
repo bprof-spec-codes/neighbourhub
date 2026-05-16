@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20260503185304_ErrorReportCommentAdded")]
+    partial class ErrorReportCommentAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Entities.Helpers.PinPoint", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FloorPlanId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Width")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FloorPlanId");
-
-                    b.ToTable("PinPoints");
-                });
 
             modelBuilder.Entity("Entities.Models.Announcement", b =>
                 {
@@ -204,23 +182,6 @@ namespace Data.Migrations
                     b.HasIndex("ReportedById");
 
                     b.ToTable("ErrorReports");
-                });
-
-            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Floor")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FloorPlans");
                 });
 
             modelBuilder.Entity("Entities.Models.ErrorReportComment", b =>
@@ -592,10 +553,9 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("ProfileImagePath")
+                    b.Property<string>("ProfileImageUrl")
                         .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)")
-                        .HasColumnName("ProfileImageUrl");
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<int>("RequestedRole")
                         .HasColumnType("int");
@@ -606,13 +566,6 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasDiscriminator().HasValue("AppUser");
-                });
-
-            modelBuilder.Entity("Entities.Helpers.PinPoint", b =>
-                {
-                    b.HasOne("Entities.Models.FloorPlan", null)
-                        .WithMany("PinPoints")
-                        .HasForeignKey("FloorPlanId");
                 });
 
             modelBuilder.Entity("Entities.Models.Booking", b =>
@@ -769,11 +722,6 @@ namespace Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
-                {
-                    b.Navigation("PinPoints");
                 });
 
             modelBuilder.Entity("Entities.Models.ErrorReport", b =>
