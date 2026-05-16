@@ -21,6 +21,7 @@ public class FloorPlanController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UploadDocument([FromForm] FloorPlanUploadDto request)
     {
         var floor = request.Floor;
@@ -50,24 +51,28 @@ public class FloorPlanController : ControllerBase
     }
 
     [HttpPost("addPinPoint")]
+    [Authorize(Roles = "Admin")]
     public void AddPinPoint([FromBody] PinPointAddDto dto)
     {
         _floorPlanLogic.AddPinPoint(dto);
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public void DeletePinPoint(string id)
     {
         _floorPlanLogic.RemovePinPoint(id);
     }
 
     [HttpGet]
+    [Authorize]
     public List<FloorPlan> GetFloorPlans()
     {
         return _floorPlanLogic.GetFloorPlans();
     }
 
     [HttpGet("{id}/image")]
+    [Authorize]
     public IActionResult GetFloorPlanImage(string id)
     {
         try
