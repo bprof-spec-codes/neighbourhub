@@ -30,11 +30,15 @@ export class FloorPlanBackendService {
     return this.http.post<void>(`${this.baseApiUrl}/FloorPlan`, formData);
   }
 
+  public deleteFloorPlan(floorPlanId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseApiUrl}/FloorPlan/${floorPlanId}`);
+  }
+
   public addPinPoint(dto: { latitude: number; longitude: number; title: string; floorPlanId: string }): Observable<void> {
     return this.http.post<void>(`${this.baseApiUrl}/FloorPlan/addPinPoint`, dto);
   }
 
   public deletePinPoint(pinPointId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseApiUrl}/FloorPlan/${pinPointId}`);
+    return this.http.delete<void>(`${this.baseApiUrl}/FloorPlan/pinpoint/${pinPointId}`);
   }
 }

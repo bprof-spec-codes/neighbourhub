@@ -94,4 +94,22 @@ public class FloorPlanLogic
     {
         return _floorPlanRepository.GetAll().Include(x => x.PinPoints).ToList();
     }
+
+    public void DeleteFloorPlan(string id)
+    {
+        var floorPlan = _floorPlanRepository.GetAll().Include(x => x.PinPoints).FirstOrDefault(fp => fp.Id == id);
+        if (floorPlan == null)
+            throw new Exception("No floor plan with that id");
+
+        if (floorPlan.PinPoints.Count > 0)
+        {
+            _pinPointRepository.DeleteRange(floorPlan.PinPoints);
+        }
+
+        var path = Path.Combine(_fileStorage.StoragePath, floorPlan.ImageUrl);
+        if (File.Exists(path))
+            File.Delete(path);
+
+        _floorPlanRepository.DeleteById(id);
+    }
 }

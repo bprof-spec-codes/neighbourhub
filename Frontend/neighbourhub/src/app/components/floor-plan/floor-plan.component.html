@@ -30,15 +30,27 @@
 			<div class="floor-plan-item__header mb-3">
 				<h2 class="h5 mb-0">Floor {{ floorPlan.floor }}</h2>
 
-				<button
-					*ngIf="isAdmin()"
-					type="button"
-					class="btn btn-sm btn-outline-primary floor-plan-add-button"
-					(click)="togglePinPointPlacement(floorPlan.id, $event)"
-				>
-					<i class="bi bi-plus-lg me-1"></i>
+				<div class="floor-plan-item__actions" *ngIf="isAdmin()">
+					<button
+						type="button"
+						class="btn btn-sm btn-outline-primary floor-plan-add-button"
+						(click)="togglePinPointPlacement(floorPlan.id, $event)"
+					>
+						<i class="bi bi-plus-lg me-1"></i>
 						{{ isPlacingPinPointForFloorPlan(floorPlan.id) ? 'Cancel add' : 'Add Pinpoint' }}
-				</button>
+					</button>
+
+					<button
+						type="button"
+						class="btn btn-sm btn-outline-danger floor-plan-delete-button"
+						(click)="deleteFloorPlan(floorPlan.id, $event)"
+						aria-label="Delete floor plan"
+						title="Delete floor plan"
+					>
+						<i class="bi bi-trash me-1"></i>
+						Delete
+					</button>
+				</div>
 			</div>
 
 			<div class="floor-plan-canvas" [class.floor-plan-canvas--missing-image]="!floorPlan.imageObjectUrl">
@@ -65,11 +77,11 @@
 							<div class="pin-point__label" *ngIf="isPinPointActive(pinPoint.id)">
 								<span class="pin-point__label-text">{{ pinPoint.title }}</span>
 								<div class="pin-point__label-actions">
-									<button type="button" class="pin-point__close" (click)="closePinPoint($event)" aria-label="Close pinpoint">
-										<i class="bi bi-x"></i>
-									</button>
 									<button *ngIf="isAdmin()" type="button" class="pin-point__delete" (click)="deletePinPoint(pinPoint.id, $event)" aria-label="Delete pinpoint" title="Delete pinpoint">
 										<i class="bi bi-trash"></i>
+									</button>
+									<button type="button" class="pin-point__close" (click)="closePinPoint($event)" aria-label="Close pinpoint">
+										<i class="bi bi-x"></i>
 									</button>
 								</div>
 							</div>

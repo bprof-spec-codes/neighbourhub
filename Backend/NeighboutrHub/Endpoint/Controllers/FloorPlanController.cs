@@ -27,9 +27,6 @@ public class FloorPlanController : ControllerBase
         var floor = request.Floor;
         var file = request.Image;
 
-        if (floor == null)
-            return BadRequest("Floor is required");
-
         if (file == null)
             return BadRequest("No file uploaded");
         
@@ -57,7 +54,7 @@ public class FloorPlanController : ControllerBase
         _floorPlanLogic.AddPinPoint(dto);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("pinpoint/{id}")]
     [Authorize(Roles = "Admin")]
     public void DeletePinPoint(string id)
     {
@@ -100,4 +97,12 @@ public class FloorPlanController : ControllerBase
             return NotFound(ex.Message);
         }
     }
+
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
+    public void DeleteFloorPlan(string id)
+    {        
+        _floorPlanLogic.DeleteFloorPlan(id);
+    }
+
 }

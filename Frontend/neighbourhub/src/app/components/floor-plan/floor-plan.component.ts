@@ -84,6 +84,24 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
     this.addFloorPlanImageFileName = '';
   }
 
+  protected deleteFloorPlan(floorPlanId: string, event?: MouseEvent): void {
+    event?.stopPropagation();
+
+    this.floorPlanBackendService.deleteFloorPlan(floorPlanId).subscribe({
+      next: () => {
+        if (this.placingPinPointFloorPlanId === floorPlanId) {
+          this.placingPinPointFloorPlanId = null;
+        }
+
+        this.activePinPointId = null;
+        this.loadFloorPlans();
+      },
+      error: (error) => {
+        console.error(`Failed to delete floor plan ${floorPlanId}`, error);
+      }
+    });
+  }
+
   protected onAddFloorPlanFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;

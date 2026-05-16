@@ -27,7 +27,18 @@
 	padding-left: 0.2rem;
 }
 
+.floor-plan-item__actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
 .floor-plan-add-button {
+	white-space: nowrap;
+}
+
+.floor-plan-delete-button {
 	white-space: nowrap;
 }
 
@@ -286,15 +297,15 @@
 	line-height: 1;
 	cursor: pointer;
 
+	&:hover {
+		background: #fecaca;
+	}
+
 	&:focus,
 	&:focus-visible,
 	&:active {
 		outline: none;
 		box-shadow: none;
-	}
-
-	&:hover {
-		background: #fecaca;
 	}
 }
 
