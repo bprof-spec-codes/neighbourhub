@@ -34,7 +34,7 @@ export class VoteService {
       next: () => this.loadVotes(),
       error: (err) => console.error('Failed to add vote', err)
     });
-  }
+}
 
   public castVote(voteId: string, option: number): void {
     this.voteBackendService.castVote(voteId, option).pipe(untilDestroyed(this)).subscribe({

@@ -36,6 +36,7 @@ namespace Logic.Logic
                 Title = vote.Title,
                 Deadline = vote.Deadline,
                 IsActive = vote.IsActive,
+                CreatedByUserId = vote.CreatedByUserId,
                 YesCount = vote.Entries.Count(e => e.Option == VoteOption.Yes),
                 NoCount = vote.Entries.Count(e => e.Option == VoteOption.No),
                 AbstainCount = vote.Entries.Count(e => e.Option == VoteOption.Abstain),
@@ -78,8 +79,15 @@ namespace Logic.Logic
             voteRepository.Add(vote);
             return ToDto(vote);
         }
-        public void Delete(string id)
+        public void Delete(string id, string userId, bool isAdmin)
         {
+            var vote = voteRepository.GetAll().FirstOrDefault(v => v.Id == id);
+            if (vote == null)
+                throw new ArgumentException("A szavazat nem található.");
+
+            if (!isAdmin && vote.CreatedByUserId != userId)
+                throw new UnauthorizedAccessException("Nincs jogosultságod törölni ezt a szavazást.");
+
             var entries = voteEntryRepository.GetAll()
                 .Where(e => e.VoteId == id)
                 .ToList();
