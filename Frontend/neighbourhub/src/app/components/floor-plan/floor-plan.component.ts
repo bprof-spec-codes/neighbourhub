@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { PinPointAddDto } from '../../entities/dtos/pin-point-add-dto.model';
 import { FloorPlanService, FloorPlanViewModel } from '../../services/floor-plan.service';
 import { PinPoint } from '../../entities/models/pin-point.model';
 
@@ -181,12 +182,14 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.floorPlanService.addPinPoint({
-      floorPlanId: this.pendingPinPointPlacement.floorPlanId,
-      title,
-      latitude: this.pendingPinPointPlacement.latitude,
-      longitude: this.pendingPinPointPlacement.longitude
-    }).subscribe({
+    const pinPointAddDto = new PinPointAddDto(
+    this.pendingPinPointPlacement.latitude,
+    this.pendingPinPointPlacement.longitude,
+    title,
+    this.pendingPinPointPlacement.floorPlanId
+    );
+
+    this.floorPlanService.addPinPoint(pinPointAddDto).subscribe({
       next: () => {
         this.closeAddPinPointModal();
         this.placingPinPointFloorPlanId = null;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { FloorPlanBackendService } from '../backend/floor-plan-backend.service';
+import { PinPointAddDto } from '../entities/dtos/pin-point-add-dto.model';
 import { FloorPlan } from '../entities/models/floor-plan.model';
 import { PinPoint } from '../entities/models/pin-point.model';
 
@@ -9,7 +9,6 @@ export type FloorPlanViewModel = FloorPlan & {
 	imageObjectUrl: string | null;
 };
 
-@UntilDestroy()
 @Injectable({
 	providedIn: 'root'
 })
@@ -22,7 +21,6 @@ export class FloorPlanService {
 		this.revokeCreatedObjectUrls();
 
 		return this.floorPlanBackendService.getFloorPlans().pipe(
-			map((floorPlans) => [...floorPlans].sort((left, right) => left.floor - right.floor)),
 			switchMap((floorPlans) => {
 				if (floorPlans.length === 0) {
 					return of([] as FloorPlanViewModel[]);
@@ -41,7 +39,7 @@ export class FloorPlanService {
 		return this.floorPlanBackendService.deleteFloorPlan(floorPlanId);
 	}
 
-	public addPinPoint(dto: { latitude: number; longitude: number; title: string; floorPlanId: string }): Observable<void> {
+	public addPinPoint(dto: PinPointAddDto): Observable<void> {
 		return this.floorPlanBackendService.addPinPoint(dto);
 	}
 
