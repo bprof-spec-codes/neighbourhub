@@ -33,7 +33,7 @@
 				<div class="floor-plan-item__actions" *ngIf="isAdmin()">
 					<button
 						type="button"
-						class="btn btn-sm btn-outline-primary floor-plan-add-button"
+							class="btn btn-sm btn-success floor-plan-add-button"
 						(click)="togglePinPointPlacement(floorPlan.id, $event)"
 					>
 						<i class="bi bi-plus-lg me-1"></i>
@@ -42,7 +42,7 @@
 
 					<button
 						type="button"
-						class="btn btn-sm btn-outline-danger floor-plan-delete-button"
+							class="btn btn-sm btn-danger floor-plan-delete-button"
 						(click)="deleteFloorPlan(floorPlan.id, $event)"
 						aria-label="Delete floor plan"
 						title="Delete floor plan"
@@ -56,10 +56,6 @@
 			<div class="floor-plan-canvas" [class.floor-plan-canvas--missing-image]="!floorPlan.imageObjectUrl">
 				<ng-container *ngIf="floorPlan.imageObjectUrl; else missingImage">
 					<div class="floor-plan-image-wrap" [class.floor-plan-image-wrap--placing]="isPlacingPinPointForFloorPlan(floorPlan.id)" (click)="onFloorPlanImageClick(floorPlan, $event)">
-						<div class="floor-plan-placement-hint" *ngIf="isPlacingPinPointForFloorPlan(floorPlan.id) && isAdmin()">
-							Click on the image to place a pinpoint
-						</div>
-
 						<img [src]="floorPlan.imageObjectUrl" [alt]="'Floor plan for floor ' + floorPlan.floor" />
 
 						<div

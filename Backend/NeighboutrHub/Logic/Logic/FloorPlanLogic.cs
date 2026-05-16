@@ -92,7 +92,10 @@ public class FloorPlanLogic
 
     public List<FloorPlan> GetFloorPlans()
     {
-        return _floorPlanRepository.GetAll().Include(x => x.PinPoints).ToList();
+        return _floorPlanRepository.GetAll()
+            .Include(x => x.PinPoints)
+            .OrderBy(x => x.Floor)
+            .ToList();
     }
 
     public void DeleteFloorPlan(string id)

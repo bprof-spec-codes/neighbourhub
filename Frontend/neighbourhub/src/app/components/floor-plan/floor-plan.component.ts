@@ -233,6 +233,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
     this.loadSubscription?.unsubscribe();
 
     this.loadSubscription = this.floorPlanBackendService.getFloorPlans().pipe(
+      map((floorPlans) => [...floorPlans].sort((left, right) => left.floor - right.floor)),
       switchMap((floorPlans) => {
         if (floorPlans.length === 0) {
           return of([] as FloorPlanViewModel[]);
