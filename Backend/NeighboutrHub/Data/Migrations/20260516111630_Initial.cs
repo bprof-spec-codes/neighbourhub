@@ -337,7 +337,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PinPoint",
+                name: "PinPoints",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -348,12 +348,39 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PinPoint", x => x.Id);
+                    table.PrimaryKey("PK_PinPoints", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PinPoint_FloorPlans_FloorPlanId",
+                        name: "FK_PinPoints_FloorPlans_FloorPlanId",
                         column: x => x.FloorPlanId,
                         principalTable: "FloorPlans",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ErrorReportComments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ErrorReportId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ErrorReportComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ErrorReportComments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ErrorReportComments_ErrorReports_ErrorReportId",
+                        column: x => x.ErrorReportId,
+                        principalTable: "ErrorReports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -432,6 +459,16 @@ namespace Data.Migrations
                 column: "CommunityRoomId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ErrorReportComments_AuthorId",
+                table: "ErrorReportComments",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ErrorReportComments_ErrorReportId",
+                table: "ErrorReportComments",
+                column: "ErrorReportId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ErrorReports_ReportedById",
                 table: "ErrorReports",
                 column: "ReportedById");
@@ -452,8 +489,8 @@ namespace Data.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PinPoint_FloorPlanId",
-                table: "PinPoint",
+                name: "IX_PinPoints_FloorPlanId",
+                table: "PinPoints",
                 column: "FloorPlanId");
 
             migrationBuilder.CreateIndex(
@@ -500,13 +537,13 @@ namespace Data.Migrations
                 name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "ErrorReports");
+                name: "ErrorReportComments");
 
             migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "PinPoint");
+                name: "PinPoints");
 
             migrationBuilder.DropTable(
                 name: "VoteEntries");
@@ -516,6 +553,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CommunityRooms");
+
+            migrationBuilder.DropTable(
+                name: "ErrorReports");
 
             migrationBuilder.DropTable(
                 name: "FloorPlans");

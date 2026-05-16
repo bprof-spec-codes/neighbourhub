@@ -206,23 +206,6 @@ namespace Data.Migrations
                     b.ToTable("ErrorReports");
                 });
 
-            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Floor")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FloorPlans");
-                });
-
             modelBuilder.Entity("Entities.Models.ErrorReportComment", b =>
                 {
                     b.Property<string>("Id")
@@ -251,6 +234,23 @@ namespace Data.Migrations
                     b.HasIndex("ErrorReportId");
 
                     b.ToTable("ErrorReportComments");
+                });
+
+            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FloorPlans");
                 });
 
             modelBuilder.Entity("Entities.Models.Message", b =>
@@ -771,14 +771,14 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
-                {
-                    b.Navigation("PinPoints");
-                });
-
             modelBuilder.Entity("Entities.Models.ErrorReport", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
+                {
+                    b.Navigation("PinPoints");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>
