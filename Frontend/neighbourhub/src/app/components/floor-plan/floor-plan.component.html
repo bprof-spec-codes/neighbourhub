@@ -41,9 +41,12 @@
 							<span class="pin-point__dot"></span>
 							<div class="pin-point__label" *ngIf="isPinPointActive(pinPoint.id)">
 								<span class="pin-point__label-text">{{ pinPoint.title }}</span>
-								<button type="button" class="pin-point__close" (click)="closePinPoint($event)" aria-label="Close pinpoint">
+									<button type="button" class="pin-point__close" (click)="closePinPoint($event)" aria-label="Close pinpoint">
 									<i class="bi bi-x"></i>
 								</button>
+									<button *ngIf="isAdmin()" type="button" class="pin-point__delete" (click)="deletePinPoint(pinPoint.id, $event)" aria-label="Delete pinpoint" title="Delete pinpoint">
+										<i class="bi bi-trash"></i>
+									</button>
 							</div>
 						</div>
 					</div>

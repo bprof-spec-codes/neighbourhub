@@ -21,4 +21,8 @@ export class FloorPlanBackendService {
       responseType: 'blob'
     });
   }
+
+  public deletePinPoint(pinPointId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseApiUrl}/FloorPlan/${pinPointId}`);
+  }
 }

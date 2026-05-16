@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { catchError, forkJoin, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { FloorPlanBackendService } from '../../backend/floor-plan-backend.service';
+import { AuthService } from '../../services/auth.service';
 import { FloorPlan } from '../../entities/models/floor-plan.model';
 import { PinPoint } from '../../entities/models/pin-point.model';
 
@@ -23,7 +24,10 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   private loadSubscription?: Subscription;
   private readonly createdObjectUrls: string[] = [];
 
-  constructor(private floorPlanBackendService: FloorPlanBackendService) {}
+  constructor(
+    private floorPlanBackendService: FloorPlanBackendService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadFloorPlans();
@@ -53,6 +57,27 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   protected closePinPoint(event?: MouseEvent): void {
     event?.stopPropagation();
     this.activePinPointId = null;
+  }
+
+  protected deletePinPoint(pinPointId: string, event?: MouseEvent): void {
+    event?.stopPropagation();
+
+    this.floorPlanBackendService.deletePinPoint(pinPointId).subscribe({
+      next: () => {
+        if (this.activePinPointId === pinPointId) {
+          this.activePinPointId = null;
+        }
+
+        this.loadFloorPlans();
+      },
+      error: (error) => {
+        console.error(`Failed to delete pin point ${pinPointId}`, error);
+      }
+    });
+  }
+
+  protected isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 
   private loadFloorPlans(): void {
