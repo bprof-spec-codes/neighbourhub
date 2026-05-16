@@ -1,3 +1,4 @@
+using System.IO;
 using Data;
 using Entities.Dtos.FloorPlan;
 using Entities.Helpers;
@@ -18,6 +19,20 @@ public class FloorPlanLogic
         _fileStorage = fileStorage.Value;
         _floorPlanRepository = floorPlanRepository;
         _pinPointRepository = pinPointRepository;
+    }
+
+    public DocumentDownloadResultDto GetFloorPlanImage(string id)
+    {
+        var floorPlan = _floorPlanRepository.GetAll().FirstOrDefault(fp => fp.Id == id);
+        if (floorPlan == null)
+            throw new FileNotFoundException("Floor plan not found");
+
+        var path = Path.Combine(_fileStorage.StoragePath, floorPlan.ImageUrl);
+        if (!File.Exists(path))
+            throw new FileNotFoundException("File not found on disk");
+
+        var fileName = Path.GetFileName(path);
+        return new DocumentDownloadResultDto(File.ReadAllBytes(path), fileName);
     }
 
     public async Task UploadFloorImageAsync((Stream fileStream, string fileName, int floor) file)
@@ -73,5 +88,10 @@ public class FloorPlanLogic
         _pinPointRepository.DeleteById(pinPointId);
 
         _floorPlanRepository.Update(floorPlan);
+    }
+
+    public List<FloorPlan> GetFloorPlans()
+    {
+        return _floorPlanRepository.GetAll().Include(x => x.PinPoints).ToList();
     }
 }

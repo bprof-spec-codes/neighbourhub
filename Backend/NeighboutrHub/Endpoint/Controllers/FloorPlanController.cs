@@ -1,8 +1,11 @@
 using Endpoint.Dtos;
 using Entities.Dtos.FloorPlan;
 using Entities.Helpers;
+using Entities.Models;
 using Logic.Logic;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Endpoint.Controllers;
 
@@ -56,5 +59,40 @@ public class FloorPlanController : ControllerBase
     public void DeletePinPoint(string id)
     {
         _floorPlanLogic.RemovePinPoint(id);
+    }
+
+    [HttpGet]
+    public List<FloorPlan> GetFloorPlans()
+    {
+        return _floorPlanLogic.GetFloorPlans();
+    }
+
+    [HttpGet("{id}/image")]
+    public IActionResult GetFloorPlanImage(string id)
+    {
+        try
+        {
+            var document = _floorPlanLogic.GetFloorPlanImage(id);
+
+            var ext = Path.GetExtension(document.FileName).ToLowerInvariant();
+            var contentType = ext switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                _ => "application/octet-stream"
+            };
+
+            Response.Headers["Content-Disposition"] = $"inline; filename=\"{document.FileName}\"";
+            var fileResult = new FileContentResult(document.Content, contentType)
+            {
+                EnableRangeProcessing = true
+            };
+
+            return fileResult;
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 }
