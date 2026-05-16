@@ -1,13 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { catchError, forkJoin, map, Observable, of, Subscription, switchMap } from 'rxjs';
-import { FloorPlanBackendService } from '../../backend/floor-plan-backend.service';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { FloorPlan } from '../../entities/models/floor-plan.model';
+import { FloorPlanService, FloorPlanViewModel } from '../../services/floor-plan.service';
 import { PinPoint } from '../../entities/models/pin-point.model';
-
-type FloorPlanViewModel = FloorPlan & {
-  imageObjectUrl: string | null;
-};
 
 @Component({
   selector: 'app-floor-plan',
@@ -36,10 +31,9 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   } | null = null;
 
   private loadSubscription?: Subscription;
-  private readonly createdObjectUrls: string[] = [];
 
   constructor(
-    private floorPlanBackendService: FloorPlanBackendService,
+    private floorPlanService: FloorPlanService,
     private authService: AuthService
   ) {}
 
@@ -49,7 +43,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.loadSubscription?.unsubscribe();
-    this.revokeCreatedObjectUrls();
+    this.floorPlanService.dispose();
   }
 
   protected trackByFloorPlanId(_: number, floorPlan: FloorPlanViewModel): string {
@@ -87,7 +81,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   protected deleteFloorPlan(floorPlanId: string, event?: MouseEvent): void {
     event?.stopPropagation();
 
-    this.floorPlanBackendService.deleteFloorPlan(floorPlanId).subscribe({
+    this.floorPlanService.deleteFloorPlan(floorPlanId).subscribe({
       next: () => {
         if (this.placingPinPointFloorPlanId === floorPlanId) {
           this.placingPinPointFloorPlanId = null;
@@ -117,7 +111,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
 
     this.isUploadingFloorPlan = true;
 
-    this.floorPlanBackendService.uploadFloorPlan(this.addFloorPlanNumber, this.addFloorPlanImageFile).subscribe({
+    this.floorPlanService.uploadFloorPlan(this.addFloorPlanNumber, this.addFloorPlanImageFile).subscribe({
       next: () => {
         this.isUploadingFloorPlan = false;
         this.closeAddFloorPlanModal();
@@ -187,7 +181,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.floorPlanBackendService.addPinPoint({
+    this.floorPlanService.addPinPoint({
       floorPlanId: this.pendingPinPointPlacement.floorPlanId,
       title,
       latitude: this.pendingPinPointPlacement.latitude,
@@ -208,7 +202,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   protected deletePinPoint(pinPointId: string, event?: MouseEvent): void {
     event?.stopPropagation();
 
-    this.floorPlanBackendService.deletePinPoint(pinPointId).subscribe({
+    this.floorPlanService.deletePinPoint(pinPointId).subscribe({
       next: () => {
         if (this.activePinPointId === pinPointId) {
           this.activePinPointId = null;
@@ -229,19 +223,9 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   private loadFloorPlans(): void {
     this.isLoading = true;
     this.errorMessage = '';
-    this.revokeCreatedObjectUrls();
     this.loadSubscription?.unsubscribe();
 
-    this.loadSubscription = this.floorPlanBackendService.getFloorPlans().pipe(
-      map((floorPlans) => [...floorPlans].sort((left, right) => left.floor - right.floor)),
-      switchMap((floorPlans) => {
-        if (floorPlans.length === 0) {
-          return of([] as FloorPlanViewModel[]);
-        }
-
-        return forkJoin(floorPlans.map((floorPlan) => this.loadFloorPlanImage(floorPlan)));
-      })
-    ).subscribe({
+    this.loadSubscription = this.floorPlanService.loadFloorPlans().subscribe({
       next: (floorPlans) => {
         this.floorPlans = floorPlans;
         this.isLoading = false;
@@ -252,35 +236,5 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     });
-  }
-
-  private loadFloorPlanImage(floorPlan: FloorPlan): Observable<FloorPlanViewModel> {
-    return this.floorPlanBackendService.getFloorPlanImage(floorPlan.id).pipe(
-      map((blob) => ({
-        ...floorPlan,
-        imageObjectUrl: this.createObjectUrl(blob)
-      })),
-      catchError((error) => {
-        console.error(`Failed to load floor plan image for floor plan ${floorPlan.id}`, error);
-        return of({
-          ...floorPlan,
-          imageObjectUrl: null
-        });
-      })
-    );
-  }
-
-  private createObjectUrl(blob: Blob): string {
-    const objectUrl = window.URL.createObjectURL(blob);
-    this.createdObjectUrls.push(objectUrl);
-    return objectUrl;
-  }
-
-  private revokeCreatedObjectUrls(): void {
-    for (const objectUrl of this.createdObjectUrls) {
-      window.URL.revokeObjectURL(objectUrl);
-    }
-
-    this.createdObjectUrls.length = 0;
   }
 }
