@@ -19,9 +19,14 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
   protected floorPlans: FloorPlanViewModel[] = [];
   protected isLoading = false;
   protected errorMessage = '';
+  protected isUploadingFloorPlan = false;
   protected activePinPointId: string | null = null;
   protected placingPinPointFloorPlanId: string | null = null;
+  protected isAddFloorPlanModalOpen = false;
   protected isAddPinPointModalOpen = false;
+  protected addFloorPlanNumber: number | null = null;
+  protected addFloorPlanImageFile: File | null = null;
+  protected addFloorPlanImageFileName = '';
   protected addPinPointTitle = '';
 
   protected pendingPinPointPlacement: {
@@ -63,6 +68,48 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
     event?.stopPropagation();
     this.activePinPointId = null;
     this.placingPinPointFloorPlanId = this.placingPinPointFloorPlanId === floorPlanId ? null : floorPlanId;
+  }
+
+  protected openAddFloorPlanModal(): void {
+    this.isAddFloorPlanModalOpen = true;
+    this.addFloorPlanNumber = null;
+    this.addFloorPlanImageFile = null;
+    this.addFloorPlanImageFileName = '';
+  }
+
+  protected closeAddFloorPlanModal(): void {
+    this.isAddFloorPlanModalOpen = false;
+    this.addFloorPlanNumber = null;
+    this.addFloorPlanImageFile = null;
+    this.addFloorPlanImageFileName = '';
+  }
+
+  protected onAddFloorPlanFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+
+    this.addFloorPlanImageFile = file;
+    this.addFloorPlanImageFileName = file?.name ?? '';
+  }
+
+  protected saveFloorPlan(): void {
+    if (!this.isAdmin() || this.addFloorPlanNumber === null || !this.addFloorPlanImageFile) {
+      return;
+    }
+
+    this.isUploadingFloorPlan = true;
+
+    this.floorPlanBackendService.uploadFloorPlan(this.addFloorPlanNumber, this.addFloorPlanImageFile).subscribe({
+      next: () => {
+        this.isUploadingFloorPlan = false;
+        this.closeAddFloorPlanModal();
+        this.loadFloorPlans();
+      },
+      error: (error) => {
+        this.isUploadingFloorPlan = false;
+        console.error('Failed to upload floor plan', error);
+      }
+    });
   }
 
   protected onFloorPlanImageClick(floorPlan: FloorPlanViewModel, event: MouseEvent): void {
@@ -182,7 +229,7 @@ export class FloorPlanComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Failed to load floor plans', error);
-        this.errorMessage = 'A floor planok betoltese nem sikerult.';
+        this.errorMessage = 'Failed to load floor plans.';
         this.isLoading = false;
       }
     });

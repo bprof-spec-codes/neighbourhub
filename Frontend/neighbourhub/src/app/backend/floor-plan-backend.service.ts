@@ -22,6 +22,14 @@ export class FloorPlanBackendService {
     });
   }
 
+  public uploadFloorPlan(floor: number, image: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('Floor', floor.toString());
+    formData.append('Image', image);
+
+    return this.http.post<void>(`${this.baseApiUrl}/FloorPlan`, formData);
+  }
+
   public addPinPoint(dto: { latitude: number; longitude: number; title: string; floorPlanId: string }): Observable<void> {
     return this.http.post<void>(`${this.baseApiUrl}/FloorPlan/addPinPoint`, dto);
   }

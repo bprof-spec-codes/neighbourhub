@@ -33,6 +33,16 @@
 	padding: 1rem;
 }
 
+.pinpoint-modal-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.5);
+	z-index: 1100;
+	display: grid;
+	place-items: center;
+	padding: 1rem;
+}
+
 .pinpoint-modal {
 	width: min(100%, 460px);
 	background: #fff;
