@@ -37,7 +37,6 @@ import { AnnouncementCarouselComponent } from './components/announcement-list/an
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     IssuesComponent,
     IssueCreateModalComponent,
     IssueViewModalComponent,
@@ -61,8 +60,9 @@ import { AnnouncementCarouselComponent } from './components/announcement-list/an
     PendingUsersComponent,
     MessagingComponent,
     MessageNewModalComponent,
+    DashboardComponent,
     MessageViewModalComponent,
-    IssueCommentModalComponent
+    IssueCommentModalComponent,
     AnnouncementCarouselComponent
   ],
   imports: [

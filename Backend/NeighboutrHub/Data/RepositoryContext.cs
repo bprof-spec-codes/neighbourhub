@@ -19,6 +19,7 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<CommunityRoom> CommunityRooms { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<ErrorReportComment> ErrorReportComments { get; set; }
+    public DbSet<UserLoginLog> UserLoginLogs { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
