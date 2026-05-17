@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
-MinimumVisualStudioVersion = 10.0.40219.1
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Endpoint", "Endpoint\Endpoint.csproj", "{094947C0-89B7-42FB-8D63-7CC2E67DDA20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{FDBE1E62-0703-4BA2-9CAE-A4A09C67C86F}"
@@ -40,10 +38,5 @@ Global
 		{BFE25782-E4C9-4CCB-BB63-AD781DCDB74F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFE25782-E4C9-4CCB-BB63-AD781DCDB74F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A6BCE118-403F-4351-AA48-B0D993456D82}
-	EndGlobalSection
+	
 EndGlobal
