@@ -60,9 +60,9 @@ import { AnnouncementCarouselComponent } from './components/announcement-list/an
     PendingUsersComponent,
     MessagingComponent,
     MessageNewModalComponent,
-    DashboardComponent
+    DashboardComponent,
     MessageViewModalComponent,
-    IssueCommentModalComponent
+    IssueCommentModalComponent,
     AnnouncementCarouselComponent
   ],
   imports: [

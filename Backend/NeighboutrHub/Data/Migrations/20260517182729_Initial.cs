@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -337,6 +337,33 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ErrorReportComments",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ErrorReportId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ErrorReportComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ErrorReportComments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ErrorReportComments_ErrorReports_ErrorReportId",
+                        column: x => x.ErrorReportId,
+                        principalTable: "ErrorReports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VoteEntries",
                 columns: table => new
                 {
@@ -412,6 +439,16 @@ namespace Data.Migrations
                 column: "CommunityRoomId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ErrorReportComments_AuthorId",
+                table: "ErrorReportComments",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ErrorReportComments_ErrorReportId",
+                table: "ErrorReportComments",
+                column: "ErrorReportId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ErrorReports_ReportedById",
                 table: "ErrorReports",
                 column: "ReportedById");
@@ -475,7 +512,7 @@ namespace Data.Migrations
                 name: "Documents");
 
             migrationBuilder.DropTable(
-                name: "ErrorReports");
+                name: "ErrorReportComments");
 
             migrationBuilder.DropTable(
                 name: "Messages");
@@ -491,6 +528,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CommunityRooms");
+
+            migrationBuilder.DropTable(
+                name: "ErrorReports");
 
             migrationBuilder.DropTable(
                 name: "Votes");
