@@ -102,6 +102,7 @@ public class Program
         builder.Services.AddTransient<BookingLogic>();
         builder.Services.AddTransient<FloorPlanLogic>();
         builder.Services.AddTransient<ErrorReportCommentLogic>();
+        builder.Services.AddTransient<DashboardLogic>();
 
         builder.Services.AddControllers()
             .AddJsonOptions(options =>

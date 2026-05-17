@@ -38,7 +38,6 @@ import { FloorPlanComponent } from './components/floor-plan/floor-plan.component
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     IssuesComponent,
     IssueCreateModalComponent,
     IssueViewModalComponent,
@@ -62,6 +61,7 @@ import { FloorPlanComponent } from './components/floor-plan/floor-plan.component
     PendingUsersComponent,
     MessagingComponent,
     MessageNewModalComponent,
+    DashboardComponent,
     MessageViewModalComponent,
     IssueCommentModalComponent,
     AnnouncementCarouselComponent,

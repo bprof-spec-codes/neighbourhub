@@ -304,6 +304,23 @@ namespace Data.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("Entities.Models.UserLoginLog", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("LoginDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLoginLogs");
+                });
+
             modelBuilder.Entity("Entities.Models.Vote", b =>
                 {
                     b.Property<string>("Id")

@@ -22,6 +22,7 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<FloorPlan> FloorPlans { get; set; }
     public DbSet<PinPoint> PinPoints { get; set; }
     public DbSet<ErrorReportComment> ErrorReportComments { get; set; }
+    public DbSet<UserLoginLog> UserLoginLogs { get; set; }
 
     public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {

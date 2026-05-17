@@ -6,6 +6,7 @@ export class Vote {
         public yesCount: number,
         public noCount: number,
         public abstainCount: number,
-        public hasVoted: boolean
+        public hasVoted: boolean,
+        public createdByUserId: string
     ) {}
 }

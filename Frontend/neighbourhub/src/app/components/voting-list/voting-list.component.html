@@ -45,11 +45,11 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="text-muted small">
                     <i class="bi bi-calendar-event me-1"></i>
-                    {{ vote.deadline | date: 'MMM d, y' }}
+                    {{ vote.deadline | date: 'd MMM y, HH:mm' }}
                   </span>
                   <div class="d-flex gap-2">
                     <button class="btn btn-primary btn-sm" *ngIf="!vote.hasVoted" (click)="openVoteModal(vote.id)">Vote</button>
-                    <button class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(vote.id)">Delete</button>
+                    <button class="btn btn-outline-danger btn-sm" *ngIf="isAdmin || vote.createdByUserId === currentUserId" (click)="openDeleteModal(vote.id)">Delete</button>
                   </div>
                 </div>
               </div>
@@ -87,9 +87,9 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="text-muted small">
                     <i class="bi bi-calendar-event me-1"></i>
-                    {{ vote.deadline | date: 'MMM d, y' }}
+                    {{ vote.deadline | date: 'd MMM y, HH:mm' }}
                   </span>
-                  <button class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(vote.id)">Delete</button>
+                  <button class="btn btn-outline-danger btn-sm" *ngIf="isAdmin || vote.createdByUserId === currentUserId" (click)="openDeleteModal(vote.id)">Delete</button>
                 </div>
               </div>
             </article>

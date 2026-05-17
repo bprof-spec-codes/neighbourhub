@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnnouncementListComponent } from './components/announcement-list/announcement-list.component';
 import { VotingListComponent } from './components/voting-list/voting-list.component';
 import { LoginComponent } from './components/login/login.component';
@@ -16,6 +15,7 @@ import { adminGuard } from './services/guards/admin.guard';
 import { MessagingComponent } from './components/messaging/messaging.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { AnnouncementCarouselComponent } from './components/announcement-list/announcement-carousel/announcement-carousel.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FloorPlanComponent } from './components/floor-plan/floor-plan.component';
 
 const routes: Routes = [
