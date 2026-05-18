@@ -14,7 +14,10 @@ import { LoginResult } from '../entities/dtos/login-result';
 export class AuthService {
   private storageKey = environment.storageKey;
 
-  constructor(private authBackendService: AuthBackendService, private router: Router) {}
+  constructor(
+    private authBackendService: AuthBackendService,
+    private router: Router,
+  ) {}
 
   public login(dto: LoginDto): Observable<LoginResult> {
     return this.authBackendService.login(dto);
@@ -28,10 +31,12 @@ export class AuthService {
     return localStorage.getItem(this.storageKey);
   }
 
-   logout() {
-     localStorage.removeItem(this.storageKey);
-     this.router.navigate(['/login']);
-   }
+  logout() {
+    localStorage.removeItem(this.storageKey);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
+  }
 
   isLoggedIn(): boolean {
     const token = this.getToken();
@@ -59,7 +64,7 @@ export class AuthService {
       return null;
     }
   }
-  
+
   getUserId(): string | null {
     const token = this.getToken();
     if (!token) return null;
@@ -96,35 +101,12 @@ export class AuthService {
     );
   }
 
-  // getRoles(): string[] {
-  //   const token = this.getToken();
-  //   if (!token) return [];
-
-  //   const payload = this.getPayload(token);
-  //   if (!payload) return [];
-
-  //   // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
-  //   const roles: string[] = [];
-
-  //   for (const key in payload) {
-  //     if (key.endsWith('/role')) {
-  //       const value = (payload as any)[key];
-  //       if (Array.isArray(value)) {
-  //         roles.push(...value);
-  //       } else {
-  //         roles.push(value);
-  //       }
-  //     }
-  //   }
-  //   return roles;
-  // }
-
   getRoles(): string[] {
-  const token = this.getToken();
-  if (!token) return [];
+    const token = this.getToken();
+    if (!token) return [];
 
-  const payload = this.decodePayload(token);
-  if (!payload) return [];
+    const payload = this.decodePayload(token);
+    if (!payload) return [];
 
     // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
     const roles: string[] = [];
@@ -146,9 +128,8 @@ export class AuthService {
     return this.getRoles().includes('Admin');
     console.log(this.getRoles());
   }
-  
+
   register(dto: RegisterDto): Observable<any> {
-    
     return this.authBackendService.register(dto);
   }
 }
