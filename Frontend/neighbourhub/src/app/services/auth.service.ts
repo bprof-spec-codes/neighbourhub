@@ -30,7 +30,8 @@ export class AuthService {
 
    logout() {
      localStorage.removeItem(this.storageKey);
-     this.router.navigate(['/login']);
+     this.router.navigate(['/login']).then(() => {
+    window.location.reload();});
    }
 
   isLoggedIn(): boolean {
@@ -96,28 +97,6 @@ export class AuthService {
     );
   }
 
-  // getRoles(): string[] {
-  //   const token = this.getToken();
-  //   if (!token) return [];
-
-  //   const payload = this.getPayload(token);
-  //   if (!payload) return [];
-
-  //   // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
-  //   const roles: string[] = [];
-
-  //   for (const key in payload) {
-  //     if (key.endsWith('/role')) {
-  //       const value = (payload as any)[key];
-  //       if (Array.isArray(value)) {
-  //         roles.push(...value);
-  //       } else {
-  //         roles.push(value);
-  //       }
-  //     }
-  //   }
-  //   return roles;
-  // }
 
   getRoles(): string[] {
   const token = this.getToken();
