@@ -104,6 +104,19 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FloorPlans",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Floor = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FloorPlans", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserLoginLogs",
                 columns: table => new
                 {
@@ -337,6 +350,26 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PinPoints",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Width = table.Column<double>(type: "float", nullable: false),
+                    Height = table.Column<double>(type: "float", nullable: false),
+                    FloorPlanId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PinPoints", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PinPoints_FloorPlans_FloorPlanId",
+                        column: x => x.FloorPlanId,
+                        principalTable: "FloorPlans",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ErrorReportComments",
                 columns: table => new
                 {
@@ -469,6 +502,11 @@ namespace Data.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PinPoints_FloorPlanId",
+                table: "PinPoints",
+                column: "FloorPlanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VoteEntries_UserId",
                 table: "VoteEntries",
                 column: "UserId");
@@ -518,6 +556,9 @@ namespace Data.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
+                name: "PinPoints");
+
+            migrationBuilder.DropTable(
                 name: "UserLoginLogs");
 
             migrationBuilder.DropTable(
@@ -531,6 +572,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ErrorReports");
+
+            migrationBuilder.DropTable(
+                name: "FloorPlans");
 
             migrationBuilder.DropTable(
                 name: "Votes");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20260517182729_Initial")]
+    [Migration("20260517205041_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,6 +24,31 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Entities.Helpers.PinPoint", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FloorPlanId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FloorPlanId");
+
+                    b.ToTable("PinPoints");
+                });
 
             modelBuilder.Entity("Entities.Models.Announcement", b =>
                 {
@@ -212,6 +237,23 @@ namespace Data.Migrations
                     b.HasIndex("ErrorReportId");
 
                     b.ToTable("ErrorReportComments");
+                });
+
+            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FloorPlans");
                 });
 
             modelBuilder.Entity("Entities.Models.Message", b =>
@@ -586,6 +628,13 @@ namespace Data.Migrations
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
+            modelBuilder.Entity("Entities.Helpers.PinPoint", b =>
+                {
+                    b.HasOne("Entities.Models.FloorPlan", null)
+                        .WithMany("PinPoints")
+                        .HasForeignKey("FloorPlanId");
+                });
+
             modelBuilder.Entity("Entities.Models.Booking", b =>
                 {
                     b.HasOne("Entities.Models.AppUser", "BookedBy")
@@ -745,6 +794,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Entities.Models.ErrorReport", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
+                {
+                    b.Navigation("PinPoints");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>

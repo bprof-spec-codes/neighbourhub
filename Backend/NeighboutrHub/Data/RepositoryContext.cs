@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
+using Entities.Helpers;
 
 namespace Data;
 
@@ -18,6 +19,8 @@ public class RepositoryContext : IdentityDbContext
     public DbSet<Message> Messages { get; set; }
     public DbSet<CommunityRoom> CommunityRooms { get; set; }
     public DbSet<Booking> Bookings { get; set; }
+    public DbSet<FloorPlan> FloorPlans { get; set; }
+    public DbSet<PinPoint> PinPoints { get; set; }
     public DbSet<ErrorReportComment> ErrorReportComments { get; set; }
     public DbSet<UserLoginLog> UserLoginLogs { get; set; }
 
