@@ -14,7 +14,10 @@ import { LoginResult } from '../entities/dtos/login-result';
 export class AuthService {
   private storageKey = environment.storageKey;
 
-  constructor(private authBackendService: AuthBackendService, private router: Router) {}
+  constructor(
+    private authBackendService: AuthBackendService,
+    private router: Router,
+  ) {}
 
   public login(dto: LoginDto): Observable<LoginResult> {
     return this.authBackendService.login(dto);
@@ -28,11 +31,12 @@ export class AuthService {
     return localStorage.getItem(this.storageKey);
   }
 
-   logout() {
-     localStorage.removeItem(this.storageKey);
-     this.router.navigate(['/login']).then(() => {
-    window.location.reload();});
-   }
+  logout() {
+    localStorage.removeItem(this.storageKey);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
+  }
 
   isLoggedIn(): boolean {
     const token = this.getToken();
@@ -60,7 +64,7 @@ export class AuthService {
       return null;
     }
   }
-  
+
   getUserId(): string | null {
     const token = this.getToken();
     if (!token) return null;
@@ -97,13 +101,12 @@ export class AuthService {
     );
   }
 
-
   getRoles(): string[] {
-  const token = this.getToken();
-  if (!token) return [];
+    const token = this.getToken();
+    if (!token) return [];
 
-  const payload = this.decodePayload(token);
-  if (!payload) return [];
+    const payload = this.decodePayload(token);
+    if (!payload) return [];
 
     // minden kulcsot végignézünk, és ami role, azt összegyűjtjük
     const roles: string[] = [];
@@ -125,9 +128,8 @@ export class AuthService {
     return this.getRoles().includes('Admin');
     console.log(this.getRoles());
   }
-  
+
   register(dto: RegisterDto): Observable<any> {
-    
     return this.authBackendService.register(dto);
   }
 }
