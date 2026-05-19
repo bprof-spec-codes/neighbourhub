@@ -3,7 +3,7 @@
 .sidebar {
 	width: 280px;
     max-width: 280px;
-	min-height: 100vh;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -98,6 +98,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.4rem;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .nav-link-item {
