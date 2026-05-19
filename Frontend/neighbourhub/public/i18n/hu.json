@@ -52,6 +52,39 @@
     },
     "LOADING": { "TEXT": "Az irányítópult adatai töltődnek..." }
   },
+  "FLOOR_PLANS": {
+    "TITLE": "Alaprajzok",
+    "UPLOAD": "Alaprajz feltöltése",
+    "LOADING": "Alaprajzok betöltése...",
+    "EMPTY": "Nincs található alaprajz.",
+    "FLOOR": "{{floor}}. emelet",
+    "CANCEL_ADD": "Hozzáadás megszakítása",
+    "ADD_PINPOINT": "Pont hozzáadása",
+    "DELETE_FLOOR_PLAN": "Alaprajz törlése",
+    "DELETE_PINPOINT": "Pont törlése",
+    "CLOSE_PINPOINT": "Pont bezárása",
+    "IMAGE_LOAD_ERROR": "A képet nem lehet betölteni.",
+    "PINPOINT": {
+      "NEW": "Új pont",
+      "ADD_TITLE": "Pont szöveg hozzáadása",
+      "NAME_LABEL": "Pont neve",
+      "PLACEHOLDER": "Írja be a pont nevét",
+      "POSITION": "Pozíció: {{lat}}% / {{lng}}%",
+      "CANCEL": "Mégse",
+      "SAVE": "Pont mentése"
+    },
+    "FLOOR_PLAN_MODAL": {
+      "NEW": "Új alaprajz",
+      "UPLOAD_TITLE": "Alaprajz feltöltése",
+      "FLOOR_NUMBER_LABEL": "Emelet száma",
+      "FLOOR_NUMBER_PLACEHOLDER": "Adja meg az emelet számát",
+      "FLOOR_IMAGE_LABEL": "Alaprajz képe",
+      "SELECTED_FILE": "Kiválasztott fájl: {{filename}}",
+      "CANCEL": "Mégse",
+      "SAVE": "Alaprajz mentése",
+      "UPLOADING": "Feltöltés..."
+    }
+  },
   "DELETE_MODAL": {
     "TITLE": "Törlés megerősítése",
     "CANCEL": "Mégse",

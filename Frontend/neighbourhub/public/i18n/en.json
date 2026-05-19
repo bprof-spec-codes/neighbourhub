@@ -52,6 +52,39 @@
     },
     "LOADING": { "TEXT": "Loading your dashboard data..." }
   },
+  "FLOOR_PLANS": {
+    "TITLE": "Floor Plans",
+    "UPLOAD": "Upload floor plan",
+    "LOADING": "Loading floor plans...",
+    "EMPTY": "No floor plans found.",
+    "FLOOR": "Floor {{floor}}",
+    "CANCEL_ADD": "Cancel add",
+    "ADD_PINPOINT": "Add Pinpoint",
+    "DELETE_FLOOR_PLAN": "Delete floor plan",
+    "DELETE_PINPOINT": "Delete pinpoint",
+    "CLOSE_PINPOINT": "Close pinpoint",
+    "IMAGE_LOAD_ERROR": "The image could not be loaded.",
+    "PINPOINT": {
+      "NEW": "New pinpoint",
+      "ADD_TITLE": "Add pinpoint text",
+      "NAME_LABEL": "Pinpoint name",
+      "PLACEHOLDER": "Enter pinpoint text",
+      "POSITION": "Position: {{lat}}% / {{lng}}%",
+      "CANCEL": "Cancel",
+      "SAVE": "Save pinpoint"
+    },
+    "FLOOR_PLAN_MODAL": {
+      "NEW": "New floor plan",
+      "UPLOAD_TITLE": "Upload floor plan",
+      "FLOOR_NUMBER_LABEL": "Floor number",
+      "FLOOR_NUMBER_PLACEHOLDER": "Enter floor number",
+      "FLOOR_IMAGE_LABEL": "Floor image",
+      "SELECTED_FILE": "Selected file: {{filename}}",
+      "CANCEL": "Cancel",
+      "SAVE": "Save floor plan",
+      "UPLOADING": "Uploading..."
+    }
+  },
   "DELETE_MODAL": {
     "TITLE": "Confirm Delete",
     "CANCEL": "Cancel",
