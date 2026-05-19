@@ -29,7 +29,28 @@
     "CLOSE": "Bezárás"
   },
   "DASHBOARD": {
-    "PLACEHOLDER": "Dashboard működik!"
+    "PLACEHOLDER": "Dashboard működik!",
+    "HERO": {
+      "TITLE": "Üdv a NeighbourHubban, {{name}}! 👋",
+      "DESCRIPTION": "Digitális segítőd a zökkenőmentes ingatlankezeléshez. Maradj naprakész a közleményekkel, vegyél részt közösségi szavazásokon, és kövesd nyomon a karbantartási kéréseket — mindezt egy helyen."
+    },
+    "STATS": {
+      "ACTIVE_VOTES": "Aktív szavazások",
+      "UNREAD_MESSAGES": "Olvasatlan üzenetek",
+      "PENDING_BOOKINGS": "Függőben lévő foglalások",
+      "RECENT_UPDATES": "Legutóbbi frissítések"
+    },
+    "WEEKLY_OVERVIEW": {
+      "TITLE": "Heti aktivitás áttekintése",
+      "ACTIVITY_POINTS": "{{count}} aktivitás pont"
+    },
+    "INFO": {
+      "TITLE": "Miért NeighbourHub?",
+      "ITEM1": { "TITLE": "Valós idejű értesítések:", "DESCRIPTION": "Sosem maradsz le egy karbantartásról vagy közösségi találkozóról." },
+      "ITEM2": { "TITLE": "Digitális archívum:", "DESCRIPTION": "Bármikor elérheted az épület szabályait, tanúsítványait és jegyzőkönyveit." },
+      "ITEM3": { "TITLE": "Gyors támogatás:", "DESCRIPTION": "Jelents hibát két kattintással." }
+    },
+    "LOADING": { "TEXT": "Az irányítópult adatai töltődnek..." }
   },
   "DELETE_MODAL": {
     "TITLE": "Törlés megerősítése",

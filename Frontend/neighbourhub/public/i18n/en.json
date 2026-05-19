@@ -29,7 +29,28 @@
     "CLOSE": "Close"
   },
   "DASHBOARD": {
-    "PLACEHOLDER": "Dashboard works!"
+    "PLACEHOLDER": "Dashboard works!",
+    "HERO": {
+      "TITLE": "Welcome to NeighbourHub, {{name}}! 👋",
+      "DESCRIPTION": "Your digital companion for seamless property management. Stay updated with announcements, participate in community voting, and track maintenance requests — all in one place."
+    },
+    "STATS": {
+      "ACTIVE_VOTES": "Active Votes",
+      "UNREAD_MESSAGES": "Unread Messages",
+      "PENDING_BOOKINGS": "Pending Bookings",
+      "RECENT_UPDATES": "Recent Updates"
+    },
+    "WEEKLY_OVERVIEW": {
+      "TITLE": "Weekly Activity Overview",
+      "ACTIVITY_POINTS": "{{count}} activity points"
+    },
+    "INFO": {
+      "TITLE": "Why NeighbourHub?",
+      "ITEM1": { "TITLE": "Real-time Alerts:", "DESCRIPTION": "Never miss a utility maintenance or building meeting." },
+      "ITEM2": { "TITLE": "Digital Archive:", "DESCRIPTION": "Access all building rules, certificates, and meeting minutes anytime." },
+      "ITEM3": { "TITLE": "Quick Support:", "DESCRIPTION": "Report the error in just two clicks." }
+    },
+    "LOADING": { "TEXT": "Loading your dashboard data..." }
   },
   "DELETE_MODAL": {
     "TITLE": "Confirm Delete",
