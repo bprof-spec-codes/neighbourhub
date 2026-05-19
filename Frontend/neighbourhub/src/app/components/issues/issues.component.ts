@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { ErrorReportService } from '../../services/error-report.service';
 import { AuthService } from '../../services/auth.service';
 import { ErrorReportListItem, ErrorReportDetail, ErrorReportSummary } from '../../entities/models/error-report.model';
@@ -29,7 +30,8 @@ export class IssuesComponent implements OnInit {
 
   constructor(
     private errorReportService: ErrorReportService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
   public ngOnInit(): void {
@@ -124,6 +126,14 @@ export class IssuesComponent implements OnInit {
     }
   }
 
+  protected getCategoryText(category: string): string {
+    return this.translate.instant(`ISSUES.CATEGORIES.${category.toUpperCase()}`);
+  }
+
+  protected getPriorityText(priority: string): string {
+    return this.translate.instant(`ISSUES.PRIORITIES.${priority.toUpperCase()}`);
+  }
+
   protected getStatusClass(status: string): string {
     switch (status) {
       case 'Open': return 'status-open';
@@ -134,6 +144,6 @@ export class IssuesComponent implements OnInit {
   }
 
   protected getStatusText(status: string): string {
-    return status === 'InProgress' ? 'In Progress' : status;
+    return this.translate.instant(`ISSUES.STATUSES.${status.toUpperCase()}`);
   }
 }

@@ -1,7 +1,7 @@
 <div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h5 class="mb-0 modal-title">Comments</h5>
+      <h5 class="mb-0 modal-title">{{ 'ISSUES.COMMENT_MODAL.TITLE' | translate }}</h5>
       <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
@@ -9,7 +9,7 @@
 
     <div class="modal-body">
       <ng-container *ngIf="comments$ | async as comments">
-        <p *ngIf="comments.length === 0" class="text-muted no-comments">No comments yet.</p>
+        <p *ngIf="comments.length === 0" class="text-muted no-comments">{{ 'ISSUES.COMMENT_MODAL.NO_COMMENTS' | translate }}</p>
         <div class="comment-list">
           <div *ngFor="let comment of comments" class="comment-item">
             <div class="comment-meta">
@@ -36,12 +36,12 @@
       <textarea
         class="form-control mb-2"
         rows="3"
-        placeholder="Write a comment..."
+        [placeholder]="'ISSUES.COMMENT_MODAL.PLACEHOLDER' | translate"
         [(ngModel)]="newContent"
         maxlength="1000"
       ></textarea>
       <button type="button" class="btn btn-primary w-100" [disabled]="!newContent.trim()" (click)="submit()">
-        Submit
+        {{ 'ISSUES.COMMENT_MODAL.SUBMIT' | translate }}
       </button>
     </div>
   </div>

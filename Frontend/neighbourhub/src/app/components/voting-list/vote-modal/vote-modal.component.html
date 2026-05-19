@@ -1,29 +1,29 @@
 <div *ngIf="isOpen" class="vote-modal-overlay" (click)="onClose()">
   <div class="vote-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="vote-modal-header">
-      <h5 class="mb-0">Cast Your Vote</h5>
-      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+      <h5 class="mb-0">{{ 'VOTING.VOTE_MODAL.TITLE' | translate }}</h5>
+      <button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
 
     <div class="vote-modal-body">
-      <p class="text-muted mb-4">Choose your vote option:</p>
+      <p class="text-muted mb-4">{{ 'VOTING.VOTE_MODAL.DESCRIPTION' | translate }}</p>
       <div class="d-flex gap-3 justify-content-center">
         <button class="btn btn-success px-4" (click)="onVote(VoteOption.Yes)">
-          <i class="bi bi-hand-thumbs-up me-2"></i>Yes
+          <i class="bi bi-hand-thumbs-up me-2"></i>{{ 'VOTING.YES' | translate }}
         </button>
         <button class="btn btn-danger px-4" (click)="onVote(VoteOption.No)">
-          <i class="bi bi-hand-thumbs-down me-2"></i>No
+          <i class="bi bi-hand-thumbs-down me-2"></i>{{ 'VOTING.NO' | translate }}
         </button>
         <button class="btn btn-secondary px-4" (click)="onVote(VoteOption.Abstain)">
-          <i class="bi bi-dash-circle me-2"></i>Abstain
+          <i class="bi bi-dash-circle me-2"></i>{{ 'VOTING.ABSTAIN' | translate }}
         </button>
       </div>
     </div>
 
     <div class="vote-modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="onClose()">{{ 'VOTING.VOTE_MODAL.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>
