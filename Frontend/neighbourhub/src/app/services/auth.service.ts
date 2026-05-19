@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { JwtPayload } from '../entities/models/jwt-payload';
 import { RegisterDto } from '../entities/dtos/register-dto';
 import { AuthBackendService } from '../backend/auth-backend.service';
