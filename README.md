@@ -70,40 +70,40 @@ Runs at: `http://localhost:4200/`
 ## 🔌 API Function List (excerpt)
 
 | Endpoint | Method | Description |
-|---|---|---|
+| :--- | :--- | :--- |
+| `/api/Announcement` | **POST** | Create a new announcement |
+| `/api/Announcement` | **GET** | List announcements |
+| `/api/Announcement/{id}` | **DELETE** | Delete announcement |
+| `/api/Booking` | **GET** | List bookings |
+| `/api/Booking` | **POST** | Create a new booking |
+| `/api/Booking/availability` | **GET** | List bookings availability |
+| `/api/Booking/my` | **GET** | List user own bookings |
+| `/api/Booking/{id}/cancel` | **PUT** | Cancel a booking |
+| `/api/CommunityRoom` | **GET** | List communityrooms |
+| `/api/CommunityRoom` | **POST** | Create a new community room |
+| `/api/CommunityRoom/{id}` | **PUT** | Update communityroom |
+| `/api/CommunityRoom/{id}` | **DELETE** | Delete communityroom |
+| `/api/Dashboard` | **GET** | List statistics |
+| `/api/Document` | **POST** | Download a document |
+| `/api/Document` | **GET** | List documents |
+| `/api/ErrorReport` | **GET** | List error reports |
+| `/api/ErrorReport` | **POST** | Submit a new error report |
+| `/api/FloorPlan` | **POST** | Create a new floor plan |
+| `/api/FloorPlan` | **GET** | List floor plans |
+| `/api/Message/sent` | **GET** | List the sent messages |
+| `/api/Message` | **POST** | Send a new message |
+| `/api/Message/{id}` | **DELETE** | Delete message |
+| `/api/Message/recipients` | **GET** | List the recipients messages |
+| `/api/User/Register` | **POST** | User registration |
+| `/api/User/Login` | **POST** | User login |
+| `/api/User/Pendingusers` | **GET** | List pending users |
+| `/api/User/Pendingusers` | **POST** | Approve pending user |
+| `/api/User/Residents` | **GET** | List residents |
+| `/api/Vote` | **GET** | List votes |
+| `/api/Vote` | **POST** | Create a new vote |
+| `/api/Vote/{id}` | **DELETE** | Delete votes |
 
-
-| `/api/Announcement` | POST | Create a new announcement |
-| `/api/Announcement` | GET | List announcements |
-| `/api/Announcement/{id}` | DELETE | Delete announcement |
-| `/api/Booking` | GET | List bookings |
-| `/api/Booking` | POST | Create a new booking |
-| `/api/Booking/availability` | GET | List bookings availability |
-| `/api/Booking/my` | GET | List user own bookings |
-| `/api/Booking/{id}/cancel` | PUT | Cancel a booking |
-| `/api/CommunityRoom` | GET | List communityrooms |
-| `/api/CommunityRoom` | POST | Create a new community room |
-| `/api/CommunityRoom/{id}` | PUT | Update communityroom |
-| `/api/CommunityRoom/{id}` | DELETE | Delete communityroom |
-| `/api/Dashboard` | GET| List statistics |
-| `/api/Document` | POST | Download a document |
-| `/api/Document` | GET | List documents |
-| `/api/ErrorReport` | GET | List error reports |
-| `/api/ErrorReport` | POST | Submit a new error report |
-| `/api/FloorPlan` | POST | Create a new floor plan|
-| `/api/FloorPlan` | GET | List floor plans |
-| `/api/Message/sent` | GET | List the sent messages |
-| `/api/Message` | POST | Send a new message |
-| `/api/Message/{id}` | DELETE | Delete message |
-| `/api/Message/recipients` | GET | List the recipients messages |
-| `/api/User/Register` | POST | User registration |
-| `/api/User/Login` | POST | User login |
-| `/api/User/Pendingusers` | GET | List pending users |
-| `/api/User/Pendingusers` | POST | Approve pending user |
-| `/api/User/Residents` | GET | List residents |
-| `/api/Vote` | GET | List votes |
-| `/api/Vote` | POST | Create a new vote |
-| `/api/Vote/{id}` | DELETE | Delete votes |
+Full API is available via Swagger UI.
 
 
 > Full API is available via Swagger UI.
