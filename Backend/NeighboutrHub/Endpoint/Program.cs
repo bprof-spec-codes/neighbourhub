@@ -146,8 +146,11 @@ public class Program
             app.UseSwaggerUI();
         }
 
-        app.UseCors("AllowAngularApp");
+        app.UseRouting();
+
         app.UseStaticFiles();
+        
+        app.UseCors("AllowAngularApp");
 
         app.UseAuthentication(); 
         app.UseAuthorization();
