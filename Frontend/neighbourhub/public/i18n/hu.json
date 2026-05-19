@@ -190,7 +190,8 @@
     "ACTIONS": {
       "VIEW": "Megtekintés",
       "EDIT": "Szerkesztés",
-      "DELETE": "Törlés"
+      "DELETE": "Törlés",
+      "COMMENTS": "Hozzászólások"
     },
     "CATEGORIES": {
       "PLUMBING": "Vízvezeték",
@@ -249,6 +250,12 @@
       "REPORTED_BY": "Bejelentette",
       "DESCRIPTION": "Leírás",
       "SCHEDULED_REPAIR_DATE": "Ütemezett javítás dátuma"
+    },
+    "COMMENT_MODAL": {
+      "TITLE": "Hozzászólások",
+      "NO_COMMENTS": "Még nincs hozzászólás.",
+      "PLACEHOLDER": "Írja meg a hozzászólást...",
+      "SUBMIT": "Beküldés"
     }
   },
   "ANNOUNCEMENTS": {

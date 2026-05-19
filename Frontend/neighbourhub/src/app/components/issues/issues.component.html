@@ -75,7 +75,7 @@
               <button class="action-btn view-btn" [attr.title]="'ISSUES.ACTIONS.VIEW' | translate" (click)="openViewModal(report.id)">
                 <i class="bi bi-eye"></i>
               </button>
-              <button class="action-btn comment-btn" title="Comments" (click)="openCommentModal(report.id)">
+              <button class="action-btn comment-btn" [attr.title]="'ISSUES.ACTIONS.COMMENTS' | translate" (click)="openCommentModal(report.id)">
                 <i class="bi bi-chat"></i>
                 <span *ngIf="report.commentCount > 0" class="comment-badge">{{ report.commentCount }}</span>
               </button>

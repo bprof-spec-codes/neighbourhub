@@ -190,7 +190,8 @@
     "ACTIONS": {
       "VIEW": "View",
       "EDIT": "Edit",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "COMMENTS": "Comments"
     },
     "CATEGORIES": {
       "PLUMBING": "Plumbing",
@@ -249,6 +250,12 @@
       "REPORTED_BY": "Reported By",
       "DESCRIPTION": "Description",
       "SCHEDULED_REPAIR_DATE": "Scheduled Repair Date"
+    },
+    "COMMENT_MODAL": {
+      "TITLE": "Comments",
+      "NO_COMMENTS": "No comments yet.",
+      "PLACEHOLDER": "Write a comment...",
+      "SUBMIT": "Submit"
     }
   },
   "ANNOUNCEMENTS": {
