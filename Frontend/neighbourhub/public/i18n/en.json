@@ -17,8 +17,10 @@
       "ISSUES": "Issues",
       "ANNOUNCEMENTS": "Announcements",
       "BOOKINGS": "Bookings",
+      "FLOOR_PLANS": "Floor Plans",
       "RESIDENTS": "Residents",
       "DOCUMENTS": "Documents",
+      "MESSAGES": "Messages",
       "LOADING_PROFILE": "Loading profile...",
       "PROFILE": "Profile"
     }
