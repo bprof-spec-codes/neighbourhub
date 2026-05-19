@@ -4,7 +4,6 @@
 
 This Code of Conduct defines the policies, rules, and expectations for all employees and contributors. It ensures a respectful, collaborative, and productive working environment, guided by our company's core values and mission. These guidelines outline how individuals should appropriately interact and perform their roles in the workplace.
 
-[Learn more about the Benefits of a Code of Conduct](https://www.indeed.com/career-advice/career-development/code-of-conduct-examples)
 
 ## Communication
 
@@ -44,8 +43,8 @@ Where # marks sprint no. 1, 2, 3 or 4, so there should be a to do, in progress, 
 
 **Branch Naming Convention:**
 
-- `feature/#xy-short-branch-name-with-dashes`
-- `bugfix/#xy-short-branch-name-with-dashes`
+- `feat/#xy-short-branch-name-with-dashes`
+- `fix/#xy-short-branch-name-with-dashes`
 
 Where `#xy` is the ticket ID in GitHub.
 
