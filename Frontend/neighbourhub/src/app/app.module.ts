@@ -68,7 +68,7 @@ import { AnnouncementCarouselComponent } from './components/announcement-list/an
     MessagingComponent,
     MessageNewModalComponent,
     MessageViewModalComponent,
-    IssueCommentModalComponent
+    IssueCommentModalComponent,
     AnnouncementCarouselComponent
   ],
   imports: [
