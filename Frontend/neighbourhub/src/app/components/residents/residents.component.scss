@@ -1,0 +1,302 @@
+@use "../../../styles/colors" as *;
+
+.residents-page {
+	color: $text-base;
+}
+
+.residents-table-wrap {
+	background: $white;
+	border: 1px solid $border-muted;
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow: 0 3px 10px $shadow-xs;
+}
+
+.residents-table {
+	min-width: 860px;
+
+	thead th {
+		border-bottom: 1px solid $border-muted;
+		color: $text-base;
+		font-size: 0.92rem;
+		font-weight: 700;
+		padding: 1rem 1.15rem;
+		background-color: $white;
+	}
+
+	tbody td {
+		border-top: 1px solid $border-muted;
+		padding: 0.95rem 1.15rem;
+		vertical-align: middle;
+		color: $dark-gray;
+	}
+}
+
+.resident-row {
+	transition: background-color 0.18s ease;
+
+	&:hover {
+		background: $surface-auth;
+	}
+
+	&:hover .edit-button,
+	&:focus-within .edit-button {
+		opacity: 1;
+		transform: translateX(0);
+		pointer-events: auto;
+	}
+}
+
+.resident-cell {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+.resident-avatar {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background: $surface-primary-soft;
+	color: $blue;
+	display: inline-grid;
+	place-items: center;
+	font-size: 0.84rem;
+	font-weight: 700;
+	overflow: hidden;
+}
+
+.resident-avatar-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.resident-name {
+	font-weight: 600;
+	color: $text-base;
+}
+
+.resident-value {
+	color: $light-gray;
+	font-weight: 500;
+}
+
+.resident-tag-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.resident-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.2rem 0.5rem;
+	border-radius: 999px;
+	background: $surface-primary-soft;
+	border: 1px solid $surface-primary-soft;
+	color: $blue;
+	font-size: 0.74rem;
+	font-weight: 700;
+	line-height: 1.15;
+}
+
+.actions-head,
+.actions-cell {
+	width: 3.25rem;
+	text-align: right;
+}
+
+.edit-button {
+	border: 0;
+	background: $surface-primary-soft;
+	color: $blue;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 8px;
+	display: inline-grid;
+	place-items: center;
+	opacity: 0;
+	transform: translateX(6px);
+	pointer-events: none;
+	transition: opacity 0.16s ease, transform 0.16s ease, background-color 0.16s ease;
+
+	&:hover {
+		background-color: $surface-primary-soft;
+	}
+}
+
+.modal-backdrop-custom {
+	position: fixed;
+	inset: 0;
+	background: $overlay-panel;
+	display: grid;
+	place-items: center;
+	z-index: 1050;
+	padding: 1.25rem;
+}
+
+.edit-modal {
+	width: min(100%, 520px);
+	background: $white;
+	border-radius: 14px;
+	overflow: hidden;
+	box-shadow: 0 18px 52px $shadow-lg;
+}
+
+.edit-modal-header,
+.edit-modal-footer {
+	padding: 1rem 1.2rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.8rem;
+}
+
+.edit-modal-header {
+	border-bottom: 1px solid $border-muted;
+}
+
+.edit-modal-body {
+	max-height: 500px;
+	overflow-y: scroll;
+	padding: 1rem 1.2rem;
+
+	.form-control,
+	.input-group-text {
+		border-color: $border-muted;
+	}
+
+	.form-control {
+		background: $card-background-grey;
+		color: $text-base;
+		font-weight: 500;
+		transition: border-color 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+
+		&:focus {
+			background: $white;
+			border-color: $border-focus-blue;
+			box-shadow: 0 0 0 0.2rem $focus-primary-strong;
+		}
+	}
+}
+
+.edit-modal-footer {
+	border-top: 1px solid $border-muted;
+	justify-content: flex-end;
+}
+
+.icon-close {
+	border: 0;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 8px;
+	color: $light-gray;
+	background: transparent;
+	display: grid;
+	place-items: center;
+
+	&:hover {
+		background: $card-background-grey;
+	}
+}
+
+.profile-image-preview-wrap {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.resident-profile-avatar-upload {
+	width: 84px;
+	height: 84px;
+	border-radius: 50%;
+	position: relative;
+	overflow: hidden;
+	background: $surface-primary-soft;
+	color: $blue;
+	display: grid;
+	place-items: center;
+	font-size: 1rem;
+	font-weight: 700;
+	cursor: pointer;
+	border: 1px solid $border-muted;
+	transition: transform 0.16s ease, box-shadow 0.16s ease;
+
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 20px rgba(20, 66, 122, 0.14);
+	}
+
+	&:hover .resident-profile-avatar-overlay,
+	&:focus-within .resident-profile-avatar-overlay {
+		opacity: 1;
+	}
+}
+
+.resident-profile-avatar-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(18, 33, 58, 0.62);
+	color: $white;
+	display: grid;
+	place-items: center;
+	gap: 0.2rem;
+	opacity: 0;
+	transition: opacity 0.16s ease;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+
+	i {
+		font-size: 0.95rem;
+	}
+}
+
+.form-item {
+	position: relative;
+}
+
+.form-label-icon {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: $text-base;
+	letter-spacing: 0.01em;
+
+	i {
+		font-size: 0.82rem;
+		color: $dark-gray;
+	}
+}
+
+.form-control-icon {
+	.input-group-text {
+		background: $surface-primary-soft;
+		color: $dark-gray;
+	}
+}
+
+.field-help-text {
+	margin-top: 0.35rem;
+	font-size: 0.76rem;
+	color: $light-gray;
+}
+
+.profile-image-preview {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 1px solid $border-muted;
+}
+
+@media (max-width: 992px) {
+	.residents-page {
+		padding-left: 1.1rem !important;
+		padding-right: 1.1rem !important;
+	}
+}

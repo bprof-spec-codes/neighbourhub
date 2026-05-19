@@ -1,0 +1,50 @@
+<div *ngIf="isOpen" class="vote-add-modal-overlay" (click)="onClose()">
+  <div class="vote-add-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="vote-add-modal-header">
+      <h5 class="mb-0">Create New Vote</h5>
+      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vote-add-modal-body">
+      <div class="mb-3">
+        <label class="form-label" for="vote-question">Question</label>
+        <input
+          id="vote-question"
+          type="text"
+          class="form-control"
+          placeholder="Enter the voting question"
+          [class.is-invalid]="isControlInvalid('title')"
+          formControlName="title"
+        />
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('title')">
+          {{ getErrorText('title') }}
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" for="vote-deadline">Deadline</label>
+        <input
+          id="vote-deadline"
+          type="datetime-local"
+          class="form-control"
+          [min]="today"
+          [class.is-invalid]="isControlInvalid('deadline')"
+          formControlName="deadline"
+        />
+        <div class="invalid-feedback d-block" *ngIf="isControlInvalid('deadline')">
+          {{ getErrorText('deadline') }}
+        </div>
+        <div class="invalid-feedback d-block" *ngIf="deadlineError">
+          {{ deadlineError }}
+        </div>
+      </div>
+
+      <div class="vote-add-modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Vote</button>
+      </div>
+    </form>
+  </div>
+</div>

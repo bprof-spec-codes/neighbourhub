@@ -1,0 +1,306 @@
+@use 'sass:color';
+@use 'sass:string';
+@use '../../../styles/colors' as *;
+
+.login-page {
+  background: radial-gradient(circle at top left, color.adjust($blue, $lightness: 40%) 0%, $surface-auth 70%, $surface-auth 100%);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+
+  .logo {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: $blue;
+    margin-bottom: 2.5rem;
+    cursor: pointer;
+    text-shadow: 0 4px 10px $shadow-sm;
+    transition: transform 280ms cubic-bezier(.22, .61, .36, 1);
+    will-change: transform;
+
+    &:hover {
+      transform: scale(1.05);
+      text-shadow: 0 6px 14px $shadow-md;
+    }
+  }
+}
+
+.login-wrapper {
+  display: block;
+  width: min(90%, 450px);
+  min-height: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px $shadow-sm;
+  position: relative;
+  background: $white;
+  transition: box-shadow 280ms ease;
+}
+
+.login-left {
+  flex: none;
+  width: 100%;
+  background: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  border-radius: 20px;
+  margin-right: 0;
+  box-shadow: none;
+  padding: 3rem 2rem;
+
+  form {
+    width: 100%;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0;
+    transition: none;
+
+    h4 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: $blue;
+      margin-bottom: 2.5rem;
+      text-shadow: none;
+    }
+
+    .input-group {
+      width: 100%;
+      margin-bottom: 1.5rem;
+
+      .input-group-text {
+        background: $card-background-grey;
+        color: color.scale($blue, $lightness: -20%);
+        border-right: none;
+        border-radius: 8px 0 0 8px;
+        border: 1px solid color.adjust($card-background-grey, $lightness: 5%);
+      }
+
+      .form-control {
+        background: $card-background-grey;
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        color: $text-base;
+        font-weight: 500;
+        padding: 0.75rem 1rem;
+        border: 1px solid color.adjust($card-background-grey, $lightness: 5%);
+
+        &:focus {
+          outline: none;
+          border-color: $blue;
+          box-shadow: 0 0 0 2px color.scale($blue, $alpha: -70%);
+        }
+
+        &::placeholder {
+          color: $light-gray;
+        }
+      }
+    }
+
+    .btn-primary {
+      background: $blue;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      width: 100%;
+      padding: 0.8rem 0;
+      margin-top: 1rem;
+      box-shadow: 0 10px 30px $shadow-brand-soft;
+
+      &:hover {
+        background: $blue;
+        transform: translateY(-1px);
+        box-shadow: 0 12px 35px $shadow-brand-strong;
+      }
+    }
+
+    p {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: $light-gray;
+      text-align: center;
+    }
+
+    .register-link,
+    .login-link {
+      color: $blue;
+      font-weight: 700;
+
+      &:hover {
+        text-decoration: underline;
+        color: $blue;
+      }
+    }
+  }
+}
+
+.login-right {
+  display: none;
+  flex: none;
+}
+
+.register-page {
+  background: radial-gradient(circle at top left, color.adjust($blue, $lightness: 40%) 0%, $surface-auth 70%, $surface-auth 100%);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+
+  .logo {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: $blue;
+    margin-bottom: 2.5rem;
+    cursor: pointer;
+    text-shadow: 0 4px 10px $shadow-sm;
+    transition: transform 280ms cubic-bezier(.22, .61, .36, 1);
+    will-change: transform;
+
+    &:hover {
+      transform: scale(1.05);
+      text-shadow: 0 6px 14px $shadow-md;
+    }
+  }
+}
+
+.register-wrapper {
+  display: block;
+  width: min(90%, 450px);
+  min-height: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px $shadow-sm;
+  position: relative;
+  background: $white;
+  transition: box-shadow 280ms ease;
+}
+
+.register-left {
+  flex: none;
+  width: 100%;
+  background: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  border-radius: 20px;
+  margin-right: 0;
+  box-shadow: none;
+  padding: 3rem 2rem;
+
+  form {
+    width: 100%;
+    background: transparent;
+    padding: 0;
+
+    h4 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: $blue;
+      margin-bottom: 2.5rem;
+    }
+
+    .input-group {
+      width: 100%;
+      margin-bottom: 1.5rem;
+
+      .input-group-text {
+        background: $card-background-grey;
+        color: color.scale($blue, $lightness: -20%);
+        border-right: none;
+        border-radius: 8px 0 0 8px;
+        border: 1px solid color.adjust($card-background-grey, $lightness: 5%);
+      }
+
+      .form-control, .form-select {
+        background: $card-background-grey;
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        color: $text-base;
+        font-weight: 500;
+        padding: 0.75rem 1rem;
+        border: 1px solid color.adjust($card-background-grey, $lightness: 5%);
+
+        &:focus {
+          outline: none;
+          border-color: $blue;
+          box-shadow: 0 0 0 2px color.scale($blue, $alpha: -70%);
+        }
+      }
+
+      // Egyedi stílus a Role választónak (nyíllal)
+      .form-select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23#{string.slice(#{$brand-accent}, 2)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 16px 12px;
+      }
+    }
+
+    .role-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $text-soft;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .btn {
+      background: $blue;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      width: 100%;
+      padding: 0.8rem 0;
+      margin-top: 1rem;
+      box-shadow: 0 10px 30px $shadow-brand-soft;
+      color: $white;
+      cursor: pointer;
+      transition: background 180ms ease, transform 120ms ease, box-shadow 180ms ease;
+
+      &:hover {
+        background: $blue;
+        transform: translateY(-1px);
+        box-shadow: 0 12px 35px $shadow-brand-strong;
+      }
+    }
+
+    p {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: $light-gray;
+      text-align: center;
+    }
+
+    .register-link,
+    .login-link {
+      color: $blue;
+      font-weight: 700;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        color: $blue;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .register-wrapper {
+    width: 95vw;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px $shadow-sm;
+  }
+  .register-left {
+    padding: 2rem 1rem;
+  }
+}

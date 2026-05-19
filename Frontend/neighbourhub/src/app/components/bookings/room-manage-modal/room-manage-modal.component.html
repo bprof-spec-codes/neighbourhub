@@ -1,0 +1,36 @@
+<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">{{ isEditMode ? 'Edit Facility' : 'Add Facility' }}</h5>
+      <button type="button" class="btn btn-sm btn-light" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" formControlName="name" placeholder="e.g. Community Room" [class.is-invalid]="isInvalid('name')">
+          <div class="invalid-feedback">Name is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" formControlName="description" rows="3" placeholder="Brief description of the facility"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Capacity</label>
+          <input type="number" class="form-control" formControlName="capacity" min="1" [class.is-invalid]="isInvalid('capacity')">
+          <div class="invalid-feedback">Capacity must be at least 1.</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-grow-1">{{ isEditMode ? 'Save Changes' : 'Add Facility' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

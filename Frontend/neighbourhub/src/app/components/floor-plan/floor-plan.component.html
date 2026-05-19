@@ -1,0 +1,179 @@
+<section class="container-fluid py-4 ps-5 pe-5 floor-plan-page">
+	<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+		<div>
+			<h1 class="h2 mb-1">Floor Plans</h1>
+		</div>
+
+		<div class="d-flex align-items-center gap-2">
+			<button *ngIf="isAdmin()" type="button" class="btn btn-primary" (click)="openAddFloorPlanModal()">
+				<i class="bi bi-image me-1"></i>
+				Upload floor plan
+			</button>
+
+			<div class="alert alert-light border mb-0 py-2 px-3" *ngIf="isLoading">
+				Loading floor plans...
+			</div>
+		</div>
+	</div>
+
+	<div class="alert alert-danger" *ngIf="errorMessage">
+		{{ errorMessage }}
+	</div>
+
+	<div class="alert alert-light border" *ngIf="!isLoading && floorPlans.length === 0 && !errorMessage" role="status">
+		<i class="bi bi-info-circle-fill me-2"></i>
+		No floor plans found.
+	</div>
+
+	<div class="floor-plan-list" *ngIf="floorPlans.length > 0">
+		<section class="floor-plan-item" *ngFor="let floorPlan of floorPlans; trackBy: trackByFloorPlanId">
+			<div class="floor-plan-item__header mb-3">
+				<h2 class="h5 mb-0">Floor {{ floorPlan.floor }}</h2>
+
+				<div class="floor-plan-item__actions" *ngIf="isAdmin()">
+					<button
+						type="button"
+							class="btn btn-sm btn-success floor-plan-add-button"
+						(click)="togglePinPointPlacement(floorPlan.id, $event)"
+					>
+						<i class="bi bi-plus-lg me-1"></i>
+						{{ isPlacingPinPointForFloorPlan(floorPlan.id) ? 'Cancel add' : 'Add Pinpoint' }}
+					</button>
+
+					<button
+						type="button"
+							class="btn btn-sm btn-danger floor-plan-delete-button"
+						(click)="deleteFloorPlan(floorPlan.id, $event)"
+						aria-label="Delete floor plan"
+						title="Delete floor plan"
+					>
+						<i class="bi bi-trash me-1"></i>
+						Delete
+					</button>
+				</div>
+			</div>
+
+			<div class="floor-plan-canvas" [class.floor-plan-canvas--missing-image]="!floorPlan.imageObjectUrl">
+				<ng-container *ngIf="floorPlan.imageObjectUrl; else missingImage">
+					<div class="floor-plan-image-wrap" [class.floor-plan-image-wrap--placing]="isPlacingPinPointForFloorPlan(floorPlan.id)" (click)="onFloorPlanImageClick(floorPlan, $event)">
+						<img [src]="floorPlan.imageObjectUrl" [alt]="'Floor plan for floor ' + floorPlan.floor" />
+
+						<div
+							class="pin-point"
+							role="button"
+							tabindex="0"
+							(click)="togglePinPoint(pinPoint.id, $event)"
+							*ngFor="let pinPoint of floorPlan.pinPoints; trackBy: trackByPinPointId"
+							[style.left.%]="pinPoint.width"
+							[style.top.%]="pinPoint.height"
+							[title]="pinPoint.title"
+							[class.pin-point--active]="isPinPointActive(pinPoint.id)"
+						>
+							<span class="pin-point__dot"></span>
+							<div class="pin-point__label" *ngIf="isPinPointActive(pinPoint.id)">
+								<span class="pin-point__label-text">{{ pinPoint.title }}</span>
+								<div class="pin-point__label-actions">
+									<button *ngIf="isAdmin()" type="button" class="pin-point__delete" (click)="deletePinPoint(pinPoint.id, $event)" aria-label="Delete pinpoint" title="Delete pinpoint">
+										<i class="bi bi-trash"></i>
+									</button>
+									<button type="button" class="pin-point__close" (click)="closePinPoint($event)" aria-label="Close pinpoint">
+										<i class="bi bi-x"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+
+				<ng-template #missingImage>
+					<div class="floor-plan-canvas__placeholder">
+						The image could not be loaded.
+					</div>
+				</ng-template>
+			</div>
+		</section>
+	</div>
+
+	<div class="pinpoint-modal-backdrop" *ngIf="isAddPinPointModalOpen">
+		<div class="pinpoint-modal" role="dialog" aria-modal="true" aria-labelledby="pinpoint-modal-title">
+			<div class="pinpoint-modal__header">
+				<div>
+					<p class="pinpoint-modal__eyebrow mb-1">New pinpoint</p>
+					<h3 id="pinpoint-modal-title" class="h5 mb-0">Add pinpoint text</h3>
+				</div>
+
+				<button type="button" class="pinpoint-modal__close" (click)="closeAddPinPointModal()" aria-label="Close modal">
+					<i class="bi bi-x-lg"></i>
+				</button>
+			</div>
+
+			<div class="pinpoint-modal__body">
+				<label class="form-label pinpoint-modal__label" for="pinpoint-title">Pinpoint name</label>
+				<input
+					id="pinpoint-title"
+					type="text"
+					class="form-control pinpoint-modal__input"
+					placeholder="Enter pinpoint text"
+					[(ngModel)]="addPinPointTitle"
+					(keydown.enter)="savePinPoint()"
+				/>
+
+				<div class="pinpoint-modal__hint" *ngIf="pendingPinPointPlacement as placement">
+					Position: {{ placement.latitude | number:'1.0-2' }}% / {{ placement.longitude | number:'1.0-2' }}%
+				</div>
+			</div>
+
+			<div class="pinpoint-modal__footer">
+				<button type="button" class="btn btn-light" (click)="closeAddPinPointModal()">Cancel</button>
+				<button type="button" class="btn btn-primary" [disabled]="addPinPointTitle.trim().length === 0" (click)="savePinPoint()">Save pinpoint</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="pinpoint-modal-backdrop" *ngIf="isAddFloorPlanModalOpen">
+		<div class="pinpoint-modal" role="dialog" aria-modal="true" aria-labelledby="floorplan-modal-title">
+			<div class="pinpoint-modal__header">
+				<div>
+					<p class="pinpoint-modal__eyebrow mb-1">New floor plan</p>
+					<h3 id="floorplan-modal-title" class="h5 mb-0">Upload floor plan</h3>
+				</div>
+
+				<button type="button" class="pinpoint-modal__close" (click)="closeAddFloorPlanModal()" aria-label="Close modal">
+					<i class="bi bi-x-lg"></i>
+				</button>
+			</div>
+
+			<div class="pinpoint-modal__body">
+				<label class="form-label pinpoint-modal__label" for="floor-number">Floor number</label>
+				<input
+					id="floor-number"
+					type="number"
+					min="0"
+					class="form-control pinpoint-modal__input"
+					placeholder="Enter floor number"
+					[(ngModel)]="addFloorPlanNumber"
+				/>
+
+				<label class="form-label pinpoint-modal__label" for="floor-image">Floor image</label>
+				<input
+					id="floor-image"
+					type="file"
+					class="form-control pinpoint-modal__input"
+					accept="image/png,image/jpeg,image/webp,image/gif"
+					(change)="onAddFloorPlanFileSelected($event)"
+				/>
+
+				<div class="pinpoint-modal__hint" *ngIf="addFloorPlanImageFileName">
+					Selected file: {{ addFloorPlanImageFileName }}
+				</div>
+			</div>
+
+			<div class="pinpoint-modal__footer">
+				<button type="button" class="btn btn-light" (click)="closeAddFloorPlanModal()">Cancel</button>
+				<button type="button" class="btn btn-primary" [disabled]="isUploadingFloorPlan || addFloorPlanNumber === null || !addFloorPlanImageFile" (click)="saveFloorPlan()">
+					{{ isUploadingFloorPlan ? 'Uploading...' : 'Save floor plan' }}
+				</button>
+			</div>
+		</div>
+	</div>
+</section>

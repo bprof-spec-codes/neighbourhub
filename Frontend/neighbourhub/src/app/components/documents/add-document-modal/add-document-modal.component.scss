@@ -1,0 +1,68 @@
+@use "../../../../styles/colors" as *;
+
+.document-add-modal-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1250;
+	display: grid;
+	place-items: center;
+	padding: 1rem;
+	background: $overlay-panel;
+	backdrop-filter: blur(1.5px);
+}
+
+.document-add-modal-card {
+	width: min(100%, 34rem);
+	border-radius: 0.85rem;
+	background: $white;
+	border: 1px solid $border-muted;
+	box-shadow: 0 18px 36px $shadow-lg;
+	overflow: hidden;
+}
+
+.document-add-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 1.2rem;
+	border-bottom: 1px solid $border-muted;
+}
+
+.document-add-modal-body {
+	padding: 1rem 1.2rem 1.2rem;
+}
+
+.document-add-modal-footer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.6rem;
+}
+
+.document-dropzone {
+	border: 2px dashed $border-dashed-muted;
+	border-radius: 0.85rem;
+	padding: 1.25rem;
+	background: $card-background-grey;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+	user-select: none;
+}
+
+.document-dropzone:hover {
+	border-color: $blue;
+	background: $surface-primary-soft;
+}
+
+.document-dropzone.is-dragover {
+	border-color: $blue;
+	background: $border-primary-soft;
+	box-shadow: 0 0 0 0.2rem $focus-primary;
+}
+
+.selected-file-name {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: $blue;
+	word-break: break-word;
+}

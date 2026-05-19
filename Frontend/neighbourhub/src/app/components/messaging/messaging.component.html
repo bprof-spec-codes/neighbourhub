@@ -1,0 +1,127 @@
+<section class="container-fluid py-4 messaging-page ps-5 pe-5">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="h2 mb-1">Messages</h1>
+      <p class="text-muted mb-0">Send and receive messages</p>
+    </div>
+    <button type="button" class="btn btn-primary ps-3 pe-3" (click)="openComposeModal()">
+      + New Message
+    </button>
+  </div>
+
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'incoming'" (click)="switchTab('incoming')">
+        Inbox
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'sent'" (click)="switchTab('sent')">
+        Sent
+      </button>
+    </li>
+  </ul>
+
+  <ng-container *ngIf="activeTab === 'incoming'">
+    <ng-container *ngIf="incomingMessages$ | async as messages">
+      <div *ngIf="messages.length === 0" class="alert alert-light border" role="status">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        No incoming messages.
+      </div>
+
+      <div *ngIf="messages.length > 0" class="messages-table-wrapper table-responsive">
+        <table class="messages-table">
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let message of messages" [class.unread]="!message.isRead" (click)="openViewModal(message)">
+              <td class="sender-cell">
+                <span class="sender-name">{{ message.senderName }}</span>
+                <span *ngIf="message.senderApartmentNumber" class="sender-apartment text-muted small d-block">
+                  Flat(s): {{ message.senderApartmentNumber }}
+                </span>
+              </td>
+              <td class="subject-cell">{{ message.subject }}</td>
+              <td class="date-cell">{{ message.sentAt | date:'MMM d, y' }}</td>
+              <td class="action-cell" (click)="$event.stopPropagation()">
+                <button class="btn btn-outline-primary btn-sm" title="Reply" (click)="openComposeModal(message)">
+                  <i class="bi bi-reply"></i> Reply
+                </button>
+                <button class="btn btn-outline-danger btn-sm" title="Delete" (click)="openDeleteModal(message.id, false)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab === 'sent'">
+    <ng-container *ngIf="sentMessages$ | async as messages">
+      <div *ngIf="messages.length === 0" class="alert alert-light border" role="status">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        No sent messages.
+      </div>
+
+      <div *ngIf="messages.length > 0" class="messages-table-wrapper table-responsive">
+        <table class="messages-table">
+          <thead>
+            <tr>
+              <th>To</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let message of messages" (click)="openSentViewModal(message)" style="cursor: pointer;">
+              <td class="sender-cell">
+                <span class="sender-name">{{ message.receiverName }}</span>
+                <span *ngIf="message.receiverApartmentNumber" class="sender-apartment text-muted small d-block">
+                  Flat(s): {{ message.receiverApartmentNumber }}
+                </span>
+              </td>
+              <td class="subject-cell">{{ message.subject }}</td>
+              <td class="date-cell">{{ message.sentAt | date:'MMM d, y' }}</td>
+              <td class="action-cell" (click)="$event.stopPropagation()">
+                <button class="btn btn-outline-danger btn-sm" title="Delete" (click)="openDeleteModal(message.id, true)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </ng-container>
+</section>
+
+<app-message-new-modal
+  [isOpen]="isComposeModalOpen"
+  [replyTo]="selectedMessage"
+  (send)="sendMessage($event)"
+  (close)="closeComposeModal()"
+/>
+
+<app-message-view-modal
+  [isOpen]="isViewModalOpen"
+  [message]="selectedMessage"
+  [sentMessage]="selectedSentMessage"
+  (reply)="replyToSelected()"
+  (close)="selectedSentMessage ? closeSentViewModal() : closeViewModal()"
+/>
+
+<app-delete-modal
+  [isOpen]="isDeleteModalOpen"
+  [content]="'Are you sure you want to delete this message?'"
+  (confirm)="deleteMessage()"
+  (cancel)="closeDeleteModal()"
+/>

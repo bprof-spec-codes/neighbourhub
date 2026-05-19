@@ -1,0 +1,10 @@
+@use "../../../styles/colors" as *;
+
+.vote-card {
+  border-left: 0.3rem solid $blue;
+}
+
+.vote-card-inactive {
+  border-left-color: $light-gray;
+  opacity: 0.75;
+}

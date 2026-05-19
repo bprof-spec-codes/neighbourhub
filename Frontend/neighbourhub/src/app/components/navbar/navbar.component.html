@@ -1,0 +1,125 @@
+<aside class="sidebar" [class.sidebar-collapsed]="collapsed">
+  <header class="sidebar-header">
+    <div class="brand" [class.justify-content-center]="collapsed">
+      <div
+        class="brand-icon"
+        [class.brand-icon-clickable]="collapsed"
+        (click)="collapsed && toggleSidebar()"
+        [attr.title]="collapsed ? 'Open sidebar' : null"
+      >
+        <i class="bi bi-buildings-fill"></i>
+      </div>
+
+      <div *ngIf="!collapsed" class="brand-text">
+        <h5>NeighbourHub</h5>
+        <small>Property Management</small>
+      </div>
+
+      <button
+        *ngIf="!collapsed"
+        type="button"
+        class="sidebar-toggle"
+        (click)="toggleSidebar()"
+        aria-label="Close sidebar"
+        title="Close sidebar"
+      >
+        <i class="bi bi-chevron-left"></i>
+      </button>
+    </div>
+  </header>
+
+  <nav class="sidebar-nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+      class="nav-link-item"
+      [class.justify-content-center]="collapsed"
+      [title]="item.label"
+    >
+      <i [class]="item.iconClass + ' nav-icon'"></i>
+      <span *ngIf="!collapsed">{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <a *ngIf="isAdmin()" 
+     routerLink="/pendingUsers" 
+     class="nav-link-item" 
+     title="Pending Users">
+    <i class="bi bi-person-check-fill nav-icon"></i>
+    <span *ngIf="!collapsed">Pending Users</span>
+  </a>
+
+  <footer class="sidebar-footer">
+    <div class="profile-popover-wrap" [class.is-open]="profileCardOpen">
+      <div class="profile-popover" *ngIf="profileCardOpen">
+        <div class="profile-popover-header">
+          <div>
+            <div class="profile-popover-title">My Profile</div>
+          </div>
+          <button type="button" class="profile-popover-close" (click)="closeProfileCard()" aria-label="Close profile card">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="profile-popover-body" *ngIf="currentResident as resident; else loadingProfile">
+          <div class="profile-avatar-upload" (click)="onAvatarClick()" role="button" tabindex="0" aria-label="Change profile picture">
+            <ng-container *ngIf="getProfileAvatarUrl() as avatarUrl; else avatarInitial">
+              <img [src]="avatarUrl" [alt]="profileName" class="profile-avatar-image" />
+            </ng-container>
+            <ng-template #avatarInitial>{{ getResidentInitial(resident.firstName, resident.lastName) }}</ng-template>
+
+            <div class="profile-avatar-overlay">
+              <i class="bi bi-camera-fill"></i>
+              <span>Change</span>
+            </div>
+          </div>
+
+          <div class="profile-meta">
+            <div class="profile-name">{{ profileName }}</div>
+            <div class="profile-email">{{ profileEmail }}</div>
+            <div class="profile-phone" *ngIf="profilePhoneNumber">{{ profilePhoneNumber }}</div>
+            <div class="profile-apartment">{{ profileSubtitle }}</div>
+
+            <input
+              #profileImageInput
+              type="file"
+              class="d-none"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              (change)="onProfileImageSelected($event)"
+            />
+
+            <div class="profile-upload-state" *ngIf="isProfileImageUploading">
+              Uploading image...
+            </div>
+            
+          </div>
+            <div>
+              <button class="btn btn-danger" (click)="onLogout()">Logout</button>
+            </div>
+        </div>
+
+        <ng-template #loadingProfile>
+          <div class="profile-popover-loading">Loading profile...</div>
+        </ng-template>
+      </div>
+
+      <button class="profile-button" [class.justify-content-center]="collapsed" type="button" (click)="toggleProfileCard()">
+        <div class="profile-avatar">
+          <ng-container *ngIf="getProfileAvatarUrl() as footerAvatarUrl; else footerInitial">
+            <img [src]="footerAvatarUrl" [alt]="profileName" class="profile-avatar-image" />
+          </ng-container>
+          <ng-template #footerInitial>
+            {{ currentResident ? getResidentInitial(currentResident.firstName, currentResident.lastName) : 'U' }}
+          </ng-template>
+        </div>
+
+        <div *ngIf="!collapsed" class="profile-details">
+          <div class="profile-name">{{ currentResident ? profileName : 'Profile' }}</div>
+          <small>{{ currentResident ? profileSubtitle : 'Open your profile card' }}</small>
+        </div>
+      </button>
+    </div>
+  </footer>
+</aside>

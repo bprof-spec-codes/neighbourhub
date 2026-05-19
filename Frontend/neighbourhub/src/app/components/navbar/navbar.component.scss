@@ -1,0 +1,352 @@
+@use "../../../styles/colors" as *;
+
+.sidebar {
+	width: 280px;
+    max-width: 280px;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background: linear-gradient(180deg, $white 0%, $card-background-grey 100%);
+	border-right: 1px solid $border-muted;
+	transition: width 0.25s ease;
+	overflow: hidden;
+}
+
+.sidebar-collapsed {
+	width: 76px;
+}
+
+.sidebar-header {
+	padding: 1rem;
+	border-bottom: 1px solid $border-muted;
+}
+
+.sidebar-toggle {
+	margin-left: auto;
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	border: 1px solid $border-muted;
+	border-radius: 8px;
+	background: $white;
+	color: $dark-gray;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.sidebar-toggle:hover {
+	background-color: $surface-primary-soft;
+	color: $blue;
+	border-color: $border-primary-soft;
+}
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-width: 0;
+}
+
+.brand-icon {
+	width: 42px;
+	height: 42px;
+	border-radius: 12px;
+	display: grid;
+	place-items: center;
+	background: $blue;
+	color: $white;
+	font-size: 1.2rem;
+	box-shadow: 0 8px 18px $shadow-primary;
+}
+
+.brand-icon-clickable {
+	cursor: pointer;
+}
+
+.brand-icon-clickable:hover {
+	filter: brightness(1.05);
+}
+
+.brand-text h5 {
+	margin: 0;
+	font-size: 1rem;
+	color: $text-base;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.brand-text small {
+	color: $light-gray;
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.brand-text {
+	flex: 1;
+	min-width: 0;
+}
+
+.sidebar-nav {
+	flex: 1;
+	padding: 1rem 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.nav-link-item {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-height: 44px;
+	padding: 0.6rem 0.85rem;
+	border-radius: 10px;
+	color: $text-base;
+	text-decoration: none;
+	font-weight: 500;
+	transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.nav-link-item:hover {
+	background-color: $surface-primary-soft;
+	color: $blue;
+}
+
+.nav-link-item.active {
+	background-color: $surface-primary-soft;
+	color: $blue;
+}
+
+.nav-icon {
+	width: 20px;
+	text-align: center;
+	font-size: 1rem;
+	flex-shrink: 0;
+}
+
+.sidebar-footer {
+	border-top: 1px solid $border-muted;
+	padding: 1rem 0.75rem;
+}
+
+.profile-popover-wrap {
+	position: relative;
+}
+
+.profile-popover {
+	position: fixed;
+	left: 0.75rem;
+	right: auto;
+	width: min(360px, calc(100vw - 1.5rem));
+	bottom: 5.5rem;
+	z-index: 1200;
+	background: $white;
+	border: 1px solid $border-muted;
+	border-radius: 16px;
+	box-shadow: 0 18px 42px $shadow-lg;
+	padding: 0.9rem;
+	animation: popoverFadeIn 0.16s ease;
+}
+
+.sidebar-collapsed .profile-popover {
+	left: 0.5rem;
+	width: min(340px, calc(100vw - 1rem));
+}
+
+.profile-popover-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin-bottom: 0.85rem;
+}
+
+.profile-popover-title {
+	font-size: 0.95rem;
+	font-weight: 700;
+	color: $text-base;
+}
+
+.profile-popover-subtitle,
+.profile-email,
+.profile-phone,
+.profile-upload-state,
+.profile-popover-loading,
+.profile-apartment {
+	font-size: 0.78rem;
+	color: $light-gray;
+}
+
+.profile-popover-close {
+	border: 0;
+	background: transparent;
+	color: $light-gray;
+	width: 30px;
+	height: 30px;
+	border-radius: 8px;
+	display: grid;
+	place-items: center;
+	transition: background-color 0.18s ease, color 0.18s ease;
+
+	&:hover {
+		background: $card-background-grey;
+		color: $text-base;
+	}
+}
+
+.profile-popover-body {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+}
+
+.profile-avatar-upload {
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	position: relative;
+	overflow: hidden;
+	flex-shrink: 0;
+	background: $surface-primary-soft;
+	color: $blue;
+	display: grid;
+	place-items: center;
+	font-size: 1.05rem;
+	font-weight: 700;
+	cursor: pointer;
+	border: 1px solid $border-muted;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 22px rgba(20, 66, 122, 0.14);
+	}
+
+	&:hover .profile-avatar-overlay,
+	&:focus-within .profile-avatar-overlay {
+		opacity: 1;
+	}
+}
+
+.profile-avatar-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profile-avatar-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(18, 33, 58, 0.62);
+	color: $white;
+	display: grid;
+	place-items: center;
+	gap: 0.2rem;
+	opacity: 0;
+	transition: opacity 0.18s ease;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+
+	i {
+		font-size: 0.95rem;
+	}
+}
+
+.profile-meta {
+	min-width: 0;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+
+.profile-name {
+	font-size: 0.93rem;
+	font-weight: 700;
+	color: $text-base;
+}
+
+.profile-email {
+	word-break: break-word;
+}
+
+.profile-upload-state {
+	margin-top: 0.25rem;
+	color: $blue;
+}
+
+.profile-button {
+	width: 100%;
+	border: 0;
+	background: transparent;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.5rem;
+	transition: background-color 0.18s ease;
+}
+
+.profile-button:hover {
+	background-color: $surface-primary-soft;
+}
+
+.profile-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	background: $surface-primary-soft;
+	color: $blue;
+	font-weight: 700;
+	font-size: 0.8rem;
+		overflow: hidden;
+	}
+
+	.profile-avatar .profile-avatar-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+}
+
+.profile-details {
+	text-align: left;
+}
+
+.profile-name {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: $text-base;
+}
+
+.profile-details small {
+	color: $light-gray;
+}
+
+.version-text {
+	margin: 0.6rem 0 0;
+	text-align: center;
+	color: $light-gray;
+	font-size: 0.77rem;
+}
+
+@keyframes popoverFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

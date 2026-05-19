@@ -1,0 +1,77 @@
+@use "../../../styles/colors" as *;
+
+.announcement-card {
+	border-left: 0.3rem solid $green;
+}
+
+.announcement-content {
+	color: $dark-gray;
+	line-height: 1.6;
+}
+
+.badge-close {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+}
+
+.announcement-badge {
+	font-size: 0.75rem;
+	letter-spacing: 0.02em;
+}
+
+.badge-maintenance {
+	background-color: $orange;
+	color: $white;
+}
+
+.badge-event {
+	background-color: $blue;
+	color: $white;
+}
+
+.badge-policy {
+	background-color: $red;
+	color: $white;
+}
+
+.badge-general {
+	background-color: $green;
+	color: $white;
+}
+
+.close-btn {
+	line-height: 1;
+	color: $light-gray;
+	border: 0;
+	background: transparent;
+}
+
+.close-btn.btn:focus,
+.close-btn.btn:focus-visible,
+.close-btn.btn:active,
+.close-btn.btn.show {
+	outline: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+
+.close-btn .bi-x {
+	font-size: 1.1rem;
+}
+
+.category-maintenance {
+	border-left-color: $orange;
+}
+
+.category-event {
+	border-left-color: $blue;
+}
+
+.category-policy {
+	border-left-color: $red;
+}
+
+.category-general {
+	border-left-color: $green;
+}

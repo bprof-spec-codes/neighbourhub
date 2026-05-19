@@ -1,0 +1,209 @@
+<section class="container-fluid py-4 residents-page ps-5 pe-5">
+	<div class="mb-4">
+		<h1 class="h2 mb-1">Residents</h1>
+		<p class="text-muted mb-0">View information of all residents.</p>
+	</div>
+
+	<ng-container *ngIf="residents$ | async as residents">
+		<div class="residents-table-wrap" *ngIf="residents.length > 0; else emptyState">
+			<div class="table-responsive">
+				<table class="table align-middle mb-0 residents-table" aria-label="Residents list">
+					<thead>
+						<tr>
+							<th scope="col">Resident</th>
+							<th scope="col">Flat(s)</th>
+							<th scope="col">Mobile Number</th>
+							<th scope="col">Parking Space(s)</th>
+							<th scope="col">Storage Number(s)</th>
+							<th scope="col" *ngIf="isAdmin" class="actions-head">
+								<span class="visually-hidden">Actions</span>
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr class="resident-row" *ngFor="let resident of residents">
+							<td>
+								<div class="resident-cell">
+									<span class="resident-avatar">
+										<ng-container *ngIf="getResidentProfileImageUrl(resident.profileImagePath) as avatarUrl; else initialAvatar">
+											<img [src]="avatarUrl" [alt]="getResidentName(resident)" class="resident-avatar-image" />
+										</ng-container>
+										<ng-template #initialAvatar>{{ getResidentInitial(resident.firstName, resident.lastName) }}</ng-template>
+									</span>
+									<span class="resident-name">{{ getResidentName(resident) }}</span>
+								</div>
+							</td>
+							<td class="resident-value">
+								<div class="resident-tag-list" *ngIf="resident.apartmentNumber !== '-'; else emptyApartmentTags">
+									<span class="resident-tag" *ngFor="let apartmentTag of getCodeTags(resident.apartmentNumber)">{{ apartmentTag }}</span>
+								</div>
+								<ng-template #emptyApartmentTags>-</ng-template>
+							</td>
+							<td class="resident-value">{{ resident.phoneNumber }}</td>
+							<td class="resident-value">
+								<div class="resident-tag-list" *ngIf="resident.parkingSpace !== '-'; else emptyParkingTags">
+									<span class="resident-tag" *ngFor="let parkingTag of getCodeTags(resident.parkingSpace)">{{ parkingTag }}</span>
+								</div>
+								<ng-template #emptyParkingTags>-</ng-template>
+							</td>
+							<td class="resident-value">
+								<div class="resident-tag-list" *ngIf="resident.storage !== '-'; else emptyStorageTags">
+									<span class="resident-tag" *ngFor="let storageTag of getCodeTags(resident.storage)">{{ storageTag }}</span>
+								</div>
+								<ng-template #emptyStorageTags>-</ng-template>
+							</td>
+							<td *ngIf="isAdmin" class="actions-cell">
+								<button
+									type="button"
+									class="edit-button"
+									(click)="openEditModal(resident)"
+									aria-label="Edit resident"
+									title="Edit resident"
+								>
+									<i class="bi bi-pencil"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</ng-container>
+
+	<ng-template #emptyState>
+		<div class="alert alert-light border" role="status">
+			<i class="bi bi-info-circle-fill me-2"></i>
+			No residents found.
+		</div>
+	</ng-template>
+</section>
+
+<div class="modal-backdrop-custom" *ngIf="isEditModalOpen && isAdmin">
+	<section class="edit-modal" *ngIf="editDraft as draft" role="dialog" aria-modal="true" aria-label="Edit resident">
+		<div class="edit-modal-header">
+			<h2 class="h5 mb-0">Edit Resident</h2>
+			<button type="button" class="icon-close" (click)="closeEditModal()" aria-label="Close">
+				<i class="bi bi-x-lg"></i>
+			</button>
+		</div>
+
+		<div class="edit-modal-body">
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-profile-image-file-hidden">
+					<i class="bi bi-image"></i>
+					<span>Profile Picture</span>
+				</label>
+
+				<input
+					#residentProfileImageInput
+					id="resident-profile-image-file-hidden"
+					type="file"
+					class="d-none"
+					accept="image/png,image/jpeg,image/webp,image/gif"
+					(change)="onProfileImageSelected($event)"
+				/>
+
+				<div
+					class="resident-profile-avatar-upload mt-2"
+					(click)="openProfileImagePicker()"
+					role="button"
+					tabindex="0"
+					(title)="'Click to change profile picture'"
+				>
+					<ng-container *ngIf="getResidentProfileImageUrl(draft.profileImagePath) as draftImageUrl; else draftAvatarInitial">
+						<img
+							[src]="draftImageUrl"
+							alt="Profile image preview"
+							class="profile-image-preview"
+						/>
+					</ng-container>
+					<ng-template #draftAvatarInitial>{{ getResidentInitial(draft.firstName, draft.lastName) }}</ng-template>
+
+					<div class="resident-profile-avatar-overlay">
+						<i class="bi bi-camera-fill"></i>
+						<span>Change</span>
+					</div>
+				</div>
+
+				<div class="field-help-text">Click the profile picture to upload JPG, PNG, WEBP or GIF. The file is saved into server storage.</div>
+				<div class="field-help-text" *ngIf="isUploadingProfileImage">Uploading image...</div>
+			</div>
+
+			<div class="row g-2 mb-3">
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-first-name">
+						<i class="bi bi-person"></i>
+						<span>First Name</span>
+					</label>
+					<input id="resident-first-name" type="text" class="form-control" [(ngModel)]="draft.firstName" />
+				</div>
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-last-name">
+						<i class="bi bi-person-badge"></i>
+						<span>Last Name</span>
+					</label>
+					<input id="resident-last-name" type="text" class="form-control" [(ngModel)]="draft.lastName" />
+				</div>
+			</div>
+
+			<div class="form-item mb-3">
+				<label class="form-label form-label-icon" for="resident-email">
+					<i class="bi bi-envelope"></i>
+					<span>Email</span>
+				</label>
+				<input id="resident-email" type="email" class="form-control" [(ngModel)]="draft.email" />
+			</div>
+
+			<div class="row g-2 mb-3">
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-mobile">
+						<i class="bi bi-telephone"></i>
+						<span>Mobile Number</span>
+					</label>
+					<input id="resident-mobile" type="text" class="form-control" [(ngModel)]="draft.phoneNumber" />
+				</div>
+
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-flat">
+						<i class="bi bi-building"></i>
+						<span>Flat(s)</span>
+					</label>
+					<input id="resident-flat" type="text" class="form-control" placeholder="A12 | B04" [(ngModel)]="draft.apartmentNumber" />
+					<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>A12 | B04</strong> or <strong>A12, B04</strong>).</div>
+				</div>
+			</div>
+
+			<div class="row g-2 mb-3">
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-parking">
+						<i class="bi bi-p-square"></i>
+						<span>Parking Space(s)</span>
+					</label>
+					<input id="resident-parking" type="text" class="form-control" placeholder="P-01 | P-02" [(ngModel)]="draft.parkingSpace" />
+					<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>P-01 | P-02</strong> or <strong>P-01, P-02</strong>).</div>
+				</div>
+
+				<div class="col-12 col-md-6 form-item">
+					<label class="form-label form-label-icon" for="resident-storage">
+						<i class="bi bi-box-seam"></i>
+						<span>Storage Number(s)</span>
+					</label>
+					<input id="resident-storage" type="text" class="form-control" placeholder="S-01 | S-07" [(ngModel)]="draft.storage" />
+					<div class="field-help-text">Separate multiple values with <strong>|</strong> or <strong>,</strong> (examples: <strong>S-01 | S-07</strong> or <strong>S-01, S-07</strong>).</div>
+				</div>
+			</div>
+
+			<div class="alert alert-danger mt-3 mb-0" *ngIf="saveErrorMessage">
+				{{ saveErrorMessage }}
+			</div>
+		</div>
+
+		<div class="edit-modal-footer">
+			<button type="button" class="btn btn-light" (click)="closeEditModal()">Cancel</button>
+			<button type="button" class="btn btn-primary" (click)="saveResidentChanges()" [disabled]="isDraftInvalid(draft) || isUploadingProfileImage">
+				Save Changes
+			</button>
+		</div>
+	</section>
+</div>

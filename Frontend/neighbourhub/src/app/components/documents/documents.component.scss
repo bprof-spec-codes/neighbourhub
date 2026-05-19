@@ -1,0 +1,61 @@
+@use "../../../styles/colors" as *;
+
+.documents-page .form-control:focus {
+	box-shadow: none;
+	border-color: $border-muted;
+}
+
+.doc-icon {
+	width: 44px;
+	height: 44px;
+	background: $border-primary-soft;
+}
+
+.list-group-item {
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.list-group-item:hover {
+	background-color: $card-background-grey;
+}
+
+.min-w-0 {
+	min-width: 0;
+}
+
+.doc-download-btn {
+	border: 0;
+	background: transparent;
+	color: $blue;
+	font-weight: 600;
+	padding: 0.45rem 0.9rem;
+	border-radius: 0.75rem;
+	box-shadow: none;
+	transition: 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.doc-download-btn:hover {
+	color: $blue;
+	background: $border-primary-soft;
+    transition: 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.close-btn {
+	line-height: 1;
+	color: $light-gray;
+	border: 0;
+	background: transparent;
+}
+
+.close-btn.btn:focus,
+.close-btn.btn:focus-visible,
+.close-btn.btn:active,
+.close-btn.btn.show {
+	outline: none;
+	box-shadow: none;
+	border-color: transparent;
+}
+
+.close-btn .bi-x {
+	font-size: 1.1rem;
+}

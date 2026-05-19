@@ -1,0 +1,80 @@
+<div *ngIf="isOpen" class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="mb-0">Book a Facility</h5>
+      <button type="button" class="btn btn-sm btn-light" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Facility</label>
+          <select class="form-select" formControlName="communityRoomId" [class.is-invalid]="isInvalid('communityRoomId')">
+            <option value="">Select a facility</option>
+            <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
+          </select>
+          <div class="invalid-feedback">Please select a facility.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" formControlName="bookingDate" [class.is-invalid]="isInvalid('bookingDate')">
+          <div class="invalid-feedback">Date is required.</div>
+        </div>
+
+        <div *ngIf="bookedSlots.length > 0 || form.get('communityRoomId')!.value && form.get('bookingDate')!.value" class="mb-3">
+          <label class="form-label">Availability</label>
+          <div class="timeline-wrapper">
+            <div class="timeline-track">
+              <div *ngFor="let slot of bookedSlots" class="timeline-block booked" [ngStyle]="getSlotStyle(slot)"></div>
+              <div *ngIf="getSelectionStyle() as sel" class="timeline-block selected" [ngStyle]="sel" [class.conflict]="hasConflict"></div>
+            </div>
+            <div class="timeline-labels">
+              <span *ngFor="let h of getHourMarkers()" class="timeline-hour" [style.left]="(h / 24 * 100) + '%'">
+                {{ h % 6 === 0 ? (h + ':00') : '' }}
+              </span>
+            </div>
+          </div>
+          <div *ngIf="bookedSlots.length === 0" class="text-muted small mt-1">No bookings on this day.</div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <label class="form-label">Start Time</label>
+            <input type="time" class="form-control" formControlName="startTime" [class.is-invalid]="isInvalid('startTime')">
+            <div class="invalid-feedback">Start time is required.</div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">End Time</label>
+            <input type="time" class="form-control" formControlName="endTime" [class.is-invalid]="isInvalid('endTime')">
+            <div class="invalid-feedback">End time is required.</div>
+          </div>
+        </div>
+
+        <div *ngIf="hasConflict" class="alert alert-danger py-2 mb-3">
+          <i class="bi bi-exclamation-triangle me-1"></i>
+          The selected time overlaps with an existing booking.
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Number of People Attending</label>
+          <input type="number" class="form-control" formControlName="numberOfPeople" min="1" [max]="selectedRoomCapacity ?? 9999" [class.is-invalid]="isInvalid('numberOfPeople')">
+          <div class="invalid-feedback">
+            <ng-container *ngIf="form.get('numberOfPeople')?.errors as errs">
+              <span *ngIf="errs['max']">Max {{ selectedRoomCapacity }} person.</span>
+              <span *ngIf="!errs['max'] && errs['min']">At least 1 person required.</span>
+              <span *ngIf="!errs['max'] && !errs['min'] && errs['required']">This field is required.</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-grow-1" [disabled]="hasConflict">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+</div>
