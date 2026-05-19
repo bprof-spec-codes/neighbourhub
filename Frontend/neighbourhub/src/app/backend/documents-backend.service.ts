@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentShortViewDto } from '../entities/dtos/document-short-view-dto.model';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { DocumentAddDto } from '../entities/dtos/document-add-dto.model';
 
 @Injectable({

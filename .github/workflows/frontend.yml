@@ -1,0 +1,47 @@
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Replace backend URL in environment.ts
+        env:
+          BACKEND_URL: https://api.edushareoe.hu/api
+        run: |
+          sed -i "s|apiUrl: .*|apiUrl: '${BACKEND_URL}',|" ./Frontend/neighbourhub/src/environments/environment.ts
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./Frontend/neighbourhub
+          file: ./Frontend/neighbourhub/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/neighbourhub-frontend:latest
+
+      -
+        name: Deploy on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: edushareoe.hu
+          username: root
+          key: ${{ secrets.SSH_KEY }}s
+          passphrase: ${{ secrets.SSH_PASS }}
+          script: |
+            cd /root/docker/neighbourhub
+            ./deploy-frontend.sh

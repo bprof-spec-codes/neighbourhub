@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { RegisterDto } from '../entities/dtos/register-dto';
 import { Observable } from 'rxjs/internal/Observable';
 import { LoginResult } from '../entities/dtos/login-result';

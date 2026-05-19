@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { ErrorReportListItem, ErrorReportDetail, ErrorReportSummary } from '../entities/models/error-report.model';
 import { ErrorReportCreateDto } from '../entities/dtos/error-report-create-dto.model';
 import { ErrorReportUpdateDto } from '../entities/dtos/error-report-update-dto.model';

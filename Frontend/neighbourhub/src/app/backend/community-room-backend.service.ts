@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { CommunityRoom } from '../entities/models/community-room.model';
 import { CommunityRoomCreateDto } from '../entities/dtos/community-room-create-dto.model';
 import { CommunityRoomUpdateDto } from '../entities/dtos/community-room-update-dto.model';
