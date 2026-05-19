@@ -18,10 +18,13 @@ export class VoteAddModalComponent implements OnChanges {
 
   protected readonly form;
 
+  protected readonly today = new Date().toISOString().slice(0, 16)
+  protected deadlineError = ""
+
   constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.form = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
-      deadline: ['', [Validators.required]]
+      deadline: ['', [Validators.required, ]]
     });
   }
 
@@ -39,6 +42,12 @@ export class VoteAddModalComponent implements OnChanges {
     }
 
     const raw = this.form.getRawValue();
+    if (new Date(raw.deadline) <= new Date()) {
+      this.deadlineError = 'Deadline must be a future date.';
+      return;
+    }
+
+    this.deadlineError = '';
     this.add.emit(new VoteAddDto(raw.title, raw.deadline));
     this.resetFormToDefault();
   }
@@ -65,6 +74,7 @@ export class VoteAddModalComponent implements OnChanges {
   private resetFormToDefault(): void {
     this.form.reset({ title: '', deadline: '' });
     this.form.markAsUntouched();
+    this.deadlineError = '';
   }
 
 

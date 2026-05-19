@@ -75,6 +75,10 @@
               <button class="action-btn view-btn" [attr.title]="'ISSUES.ACTIONS.VIEW' | translate" (click)="openViewModal(report.id)">
                 <i class="bi bi-eye"></i>
               </button>
+              <button class="action-btn comment-btn" title="Comments" (click)="openCommentModal(report.id)">
+                <i class="bi bi-chat"></i>
+                <span *ngIf="report.commentCount > 0" class="comment-badge">{{ report.commentCount }}</span>
+              </button>
               <button *ngIf="canModifyReport()" class="action-btn edit-btn" [attr.title]="'ISSUES.ACTIONS.EDIT' | translate" (click)="openEditModal(report.id)">
                 <i class="bi bi-pencil"></i>
               </button>
@@ -99,6 +103,7 @@
   [isOpen]="isViewModalOpen"
   [report]="selectedReport$ | async"
   (close)="closeViewModal()"
+  (openComments)="openCommentsFromView($event)"
 />
 
 <app-issue-edit-modal
@@ -113,4 +118,13 @@
   [content]="'ISSUES.DELETE_CONFIRM' | translate"
   (confirm)="deleteErrorReport()"
   (cancel)="closeDeleteModal()"
+/>
+
+<app-issue-comment-modal
+  [isOpen]="isCommentModalOpen"
+  [errorReportId]="selectedCommentReportId"
+  [currentUserId]="currentUserId"
+  [isAdmin]="canModifyReport()"
+  (close)="closeCommentModal()"
+  (commented)="onCommentChanged()"
 />

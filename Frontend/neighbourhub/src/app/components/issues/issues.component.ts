@@ -22,6 +22,9 @@ export class IssuesComponent implements OnInit {
   protected isViewModalOpen = false;
   protected isEditModalOpen = false;
   protected isDeleteModalOpen = false;
+  protected isCommentModalOpen = false;
+  protected selectedCommentReportId: string | null = null;
+  protected currentUserId: string | null = null;
 
   private idToDelete = '';
 
@@ -37,6 +40,7 @@ export class IssuesComponent implements OnInit {
     this.errorReports$ = this.errorReportService.errorReports$;
     this.summary$ = this.errorReportService.summary$;
     this.selectedReport$ = this.errorReportService.selectedReport$;
+    this.currentUserId = this.authService.getUserId();
   }
 
   protected canModifyReport(): boolean {
@@ -86,6 +90,25 @@ export class IssuesComponent implements OnInit {
 
   protected closeDeleteModal(): void {
     this.isDeleteModalOpen = false;
+  }
+
+  protected openCommentModal(id: string): void {
+    this.selectedCommentReportId = id;
+    this.isCommentModalOpen = true;
+  }
+
+  protected closeCommentModal(): void {
+    this.isCommentModalOpen = false;
+    this.selectedCommentReportId = null;
+  }
+
+  protected onCommentChanged(): void {
+    this.errorReportService.loadAll();
+  }
+
+  protected openCommentsFromView(id: string): void {
+    this.isViewModalOpen = false;
+    this.openCommentModal(id);
   }
 
   protected deleteErrorReport(): void {

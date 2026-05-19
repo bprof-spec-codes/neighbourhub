@@ -13,6 +13,7 @@ export class IssueViewModalComponent {
   @Input() report: ErrorReportDetail | null = null;
 
   @Output() close = new EventEmitter<void>();
+  @Output() openComments = new EventEmitter<string>();
 
   constructor(private translate: TranslateService) {}
 
@@ -26,6 +27,12 @@ export class IssueViewModalComponent {
 
   protected getPriorityText(priority: string): string {
     return this.translate.instant(`ISSUES.PRIORITIES.${priority.toUpperCase()}`);
+  }
+
+  protected onOpenComments(): void {
+    if (this.report) {
+      this.openComments.emit(this.report.id);
+    }
   }
 
   protected getPriorityClass(priority: string): string {

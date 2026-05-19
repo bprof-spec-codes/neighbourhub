@@ -107,4 +107,8 @@ export class AnnouncementListComponent implements OnInit {
         return 'category-general';
     }
   }
+
+  protected openDisplay(): void {
+    window.open('/display', '_blank');
+  }
 }
