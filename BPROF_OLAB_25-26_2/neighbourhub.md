@@ -1,4 +1,4 @@
-# Lakóközösségi és Ingatlankezelő Platform (NeighbourHub)
+# Lakóközösségi Platform (NeighbourHub)
 
 ## Projektleírás
 
