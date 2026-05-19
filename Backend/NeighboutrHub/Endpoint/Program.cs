@@ -52,7 +52,7 @@ public class Program
         
 
         builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
-        var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+        var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()!;
 
         builder.Services.AddAuthentication(options =>
         {
@@ -77,7 +77,7 @@ public class Program
         });
 
         var frontendUrl = builder.Configuration["Cors:FrontendUrl"];
-        builder.WebHost.UseUrls("http://localhost:5001");
+        builder.WebHost.UseUrls("http://0.0.0.0:5001");
 
         builder.Services.AddCors(option =>
         {
