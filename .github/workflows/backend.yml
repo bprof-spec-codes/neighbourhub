@@ -27,3 +27,15 @@ jobs:
           file: ./Backend/NeighboutrHub/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/neighbourhub-backend:latest
+
+      -
+        name: Deploy on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: edushareoe.hu
+          username: root
+          key: ${{ secrets.SSH_KEY }}s
+          passphrase: ${{ secrets.SSH_PASS }}
+          script: |
+            cd /root/docker/neighbourhub
+            ./deploy-backend.sh
