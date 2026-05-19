@@ -39,11 +39,11 @@ import { BookingCreateModalComponent } from './components/bookings/booking-creat
 import { RoomManageModalComponent } from './components/bookings/room-manage-modal/room-manage-modal.component';
 import { IssueCommentModalComponent } from './components/issues/issue-comment-modal/issue-comment-modal.component';
 import { AnnouncementCarouselComponent } from './components/announcement-list/announcement-carousel/announcement-carousel.component';
+import { FloorPlanComponent } from './components/floor-plan/floor-plan.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     IssuesComponent,
     IssueCreateModalComponent,
     IssueViewModalComponent,
@@ -67,9 +67,11 @@ import { AnnouncementCarouselComponent } from './components/announcement-list/an
     PendingUsersComponent,
     MessagingComponent,
     MessageNewModalComponent,
+    DashboardComponent,
     MessageViewModalComponent,
     IssueCommentModalComponent,
-    AnnouncementCarouselComponent
+    AnnouncementCarouselComponent,
+    FloorPlanComponent
   ],
   imports: [
     BrowserModule,

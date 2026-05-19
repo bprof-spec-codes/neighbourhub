@@ -94,7 +94,11 @@
             <div class="profile-upload-state" *ngIf="isProfileImageUploading">
               {{ 'NAVBAR.UPLOADING_IMAGE' | translate }}
             </div>
+            
           </div>
+            <div>
+              <button class="btn btn-danger" (click)="onLogout()">Logout</button>
+            </div>
         </div>
 
         <ng-template #loadingProfile>

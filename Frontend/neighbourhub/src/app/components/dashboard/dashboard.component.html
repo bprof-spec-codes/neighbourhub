@@ -1,1 +1,72 @@
-<p>{{ 'DASHBOARD.PLACEHOLDER' | translate }}</p>
+<div class="dashboard-container" *ngIf="stats; else loading">
+  <header class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to NeighbourHub, {{ stats.userName || 'User' }}! 👋</h1>
+      <p>Your digital companion for seamless property management. Stay updated with announcements, participate in community voting, and track maintenance requests — all in one place.</p>
+    </div>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-info">
+        <span class="stat-label">Active Votes</span>
+        <span class="stat-value">{{ stats.activeVotes }}</span>
+      </div>
+      <div class="bi bi-check2-square"></div>
+    </div>
+
+    <div class="stat-card red">
+      <div class="stat-info">
+        <span class="stat-label">Unread Messages</span>
+        <span class="stat-value">{{ stats.unreadMessages }}</span>
+      </div>
+      <div class="bi bi-envelope-fill"></div>
+    </div>
+
+    <div class="stat-card orange">
+      <div class="stat-info">
+        <span class="stat-label">Pending Bookings</span>
+        <span class="stat-value">{{ stats.pendingBookings }}</span>
+      </div>
+      <div class="bi bi-calendar-week-fill"></div>
+    </div>
+
+    <div class="stat-card green">
+      <div class="stat-info">
+        <span class="stat-label">Recent Updates</span>
+        <span class="stat-value">{{ stats.recentUpdates }}</span>
+      </div>
+      <div class="bi bi-megaphone-fill"></div>
+    </div>
+  </section>
+
+  <section class="details-section">
+    <div class="chart-box">
+      <h3>Weekly Activity Overview</h3>
+      <div class="bar-chart">
+        <div *ngFor="let val of stats.weeklyActivity; let i = index" 
+             class="bar" 
+             [style.height.px]="val * 8 + 5"
+             [title]="val + ' activity points'">
+          
+          <span class="day-label">{{ stats?.activityLabels?.[i]}}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="info-box">
+      <h3>Why NeighbourHub?</h3>
+      <ul class="info-list">
+        <li><strong>Real-time Alerts:</strong> Never miss a utility maintenance or building meeting.</li>
+        <li><strong>Digital Archive:</strong> Access all building rules, certificates, and meeting minutes anytime.</li>
+        <li><strong>Quick Support:</strong> Report the error in just two clicks.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="spinner"></div> <p>Loading your dashboard data...</p>
+  </div>
+</ng-template>

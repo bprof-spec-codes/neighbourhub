@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit {
     { label: 'Issues', route: '/issues', iconClass: 'bi bi-exclamation-triangle-fill' },
     { label: 'Announcements', route: '/announcements', iconClass: 'bi bi-megaphone-fill' },
     { label: 'Bookings', route: '/bookings', iconClass: 'bi bi-calendar-week-fill' },
+    { label: 'Floor Plans', route: '/floor-plans', iconClass: 'bi bi-map-fill' },
     { label: 'Residents', route: '/residents', iconClass: 'bi bi-people-fill' },
     { label: 'Documents', route: '/documents', iconClass: 'bi bi-file-earmark-text-fill' },
     { label: 'Messages', route: '/messaging', iconClass: 'bi bi-envelope-fill' }
@@ -197,5 +198,8 @@ export class NavbarComponent implements OnInit {
 
   isAdmin(): boolean {
     return this.authService.isAdmin();
+  }
+  onLogout(): void {
+    this.authService.logout();
   }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20260414155444_Initial")]
+    [Migration("20260517205041_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,6 +24,31 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Entities.Helpers.PinPoint", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FloorPlanId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FloorPlanId");
+
+                    b.ToTable("PinPoints");
+                });
 
             modelBuilder.Entity("Entities.Models.Announcement", b =>
                 {
@@ -50,6 +75,73 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("Entities.Models.Booking", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BookedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("BookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CommunityRoomId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("NumberOfPeople")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookedById");
+
+                    b.HasIndex("CommunityRoomId");
+
+                    b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("Entities.Models.CommunityRoom", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommunityRooms");
                 });
 
             modelBuilder.Entity("Entities.Models.Document", b =>
@@ -115,6 +207,121 @@ namespace Data.Migrations
                     b.HasIndex("ReportedById");
 
                     b.ToTable("ErrorReports");
+                });
+
+            modelBuilder.Entity("Entities.Models.ErrorReportComment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ErrorReportId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ErrorReportId");
+
+                    b.ToTable("ErrorReportComments");
+                });
+
+            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FloorPlans");
+                });
+
+            modelBuilder.Entity("Entities.Models.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeletedByReceiver")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeletedBySender")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReplyToId")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("ReplyToId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Entities.Models.UserLoginLog", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("LoginDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLoginLogs");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>
@@ -405,9 +612,10 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("ProfileImageUrl")
+                    b.Property<string>("ProfileImagePath")
                         .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasColumnType("nvarchar(2048)")
+                        .HasColumnName("ProfileImageUrl");
 
                     b.Property<int>("RequestedRole")
                         .HasColumnType("int");
@@ -420,6 +628,32 @@ namespace Data.Migrations
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
+            modelBuilder.Entity("Entities.Helpers.PinPoint", b =>
+                {
+                    b.HasOne("Entities.Models.FloorPlan", null)
+                        .WithMany("PinPoints")
+                        .HasForeignKey("FloorPlanId");
+                });
+
+            modelBuilder.Entity("Entities.Models.Booking", b =>
+                {
+                    b.HasOne("Entities.Models.AppUser", "BookedBy")
+                        .WithMany()
+                        .HasForeignKey("BookedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.CommunityRoom", "CommunityRoom")
+                        .WithMany()
+                        .HasForeignKey("CommunityRoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BookedBy");
+
+                    b.Navigation("CommunityRoom");
+                });
+
             modelBuilder.Entity("Entities.Models.ErrorReport", b =>
                 {
                     b.HasOne("Entities.Models.AppUser", "ReportedBy")
@@ -429,6 +663,51 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ReportedBy");
+                });
+
+            modelBuilder.Entity("Entities.Models.ErrorReportComment", b =>
+                {
+                    b.HasOne("Entities.Models.AppUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.ErrorReport", "ErrorReport")
+                        .WithMany("Comments")
+                        .HasForeignKey("ErrorReportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("ErrorReport");
+                });
+
+            modelBuilder.Entity("Entities.Models.Message", b =>
+                {
+                    b.HasOne("Entities.Models.AppUser", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Message", "ReplyTo")
+                        .WithMany()
+                        .HasForeignKey("ReplyToId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Entities.Models.AppUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("ReplyTo");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>
@@ -510,6 +789,16 @@ namespace Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Models.ErrorReport", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Entities.Models.FloorPlan", b =>
+                {
+                    b.Navigation("PinPoints");
                 });
 
             modelBuilder.Entity("Entities.Models.Vote", b =>
