@@ -2,7 +2,7 @@
   <div class="modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h5 class="mb-0 modal-title">{{ displayMessage.subject }}</h5>
-      <button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+      <button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
       </button>
     </div>
@@ -10,36 +10,36 @@
     <div class="modal-body">
       <div class="mb-3">
         <ng-container *ngIf="isReplyable">
-          <span class="detail-label">From</span>
+          <span class="detail-label">{{ 'MESSAGING.VIEW_MODAL.FROM' | translate }}</span>
           <span class="detail-value">{{ message!.senderName }}</span>
           <span *ngIf="message!.senderApartmentNumber" class="text-muted small d-block">
-            Flat(s): {{ message!.senderApartmentNumber }}
+            {{ 'MESSAGING.FLATS' | translate }}: {{ message!.senderApartmentNumber }}
           </span>
         </ng-container>
         <ng-container *ngIf="!isReplyable">
-          <span class="detail-label">To</span>
+          <span class="detail-label">{{ 'MESSAGING.VIEW_MODAL.TO' | translate }}</span>
           <span class="detail-value">{{ sentMessage!.receiverName }}</span>
           <span *ngIf="sentMessage!.receiverApartmentNumber" class="text-muted small d-block">
-            Flat(s): {{ sentMessage!.receiverApartmentNumber }}
+            {{ 'MESSAGING.FLATS' | translate }}: {{ sentMessage!.receiverApartmentNumber }}
           </span>
         </ng-container>
       </div>
 
       <div class="mb-3">
-        <span class="detail-label">Date</span>
+        <span class="detail-label">{{ 'MESSAGING.VIEW_MODAL.DATE' | translate }}</span>
         <span class="detail-value">{{ displayMessage.sentAt | date:'MMM d, yyyy, HH:mm' }}</span>
       </div>
 
       <div class="mb-3">
-        <span class="detail-label">Message</span>
+        <span class="detail-label">{{ 'MESSAGING.VIEW_MODAL.MESSAGE' | translate }}</span>
         <p class="detail-value detail-description mb-0">{{ displayMessage.body }}</p>
       </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="onClose()">Close</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="onClose()">{{ 'COMMON.CLOSE' | translate }}</button>
       <button *ngIf="isReplyable" type="button" class="btn btn-primary" (click)="onReply()">
-        <i class="bi bi-reply me-1"></i> Reply
+        <i class="bi bi-reply me-1"></i> {{ 'MESSAGING.ACTIONS.REPLY' | translate }}
       </button>
     </div>
   </div>

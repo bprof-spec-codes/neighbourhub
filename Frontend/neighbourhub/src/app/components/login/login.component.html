@@ -4,20 +4,20 @@
   <div class="login-wrapper">
     <div class="login-left">
       <form (ngSubmit)="onLogin()" autocomplete="off">
-        <h4 class="text-center mb-3">Login </h4>
+        <h4 class="text-center mb-3">{{ 'AUTH.LOGIN.TITLE' | translate }}</h4>
         <div class="input-group mb-3">
           <span class="input-group-text">
             <i class="bi bi-envelope"></i>
           </span>
-          <input [(ngModel)]="email" name="email" type="email" class="form-control" placeholder="Email" required/>
+          <input [(ngModel)]="email" name="email" type="email" class="form-control" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate" required/>
         </div>
 
         <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text"><i class="bi bi-lock"></i></span>
           
-          <input *ngIf="hidePass" type="password" id="password" [(ngModel)]="password" name="password" class="form-control" placeholder="Password" />
-          <input *ngIf="!hidePass" type="text" id="shownpw" [(ngModel)]="password" name="password_visible" class="form-control" placeholder="Password" />
+          <input *ngIf="hidePass" type="password" id="password" [(ngModel)]="password" name="password" class="form-control" [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate" />
+          <input *ngIf="!hidePass" type="text" id="shownpw" [(ngModel)]="password" name="password_visible" class="form-control" [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate" />
           
           <button (click)="passwordVisibility('password')" type="button" class="btn btn-primary" style="border-radius: 0 8px 8px 0; width: auto; padding: 0 15px; margin: 0;">
             <i [class]="hidePass ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
@@ -26,7 +26,7 @@
         </div>
 
         <button class="btn btn-primary w-100 mb-2" type="submit" [disabled]="loading"> 
-          <i class="bi bi-box-arrow-in-right me-2"></i> Login 
+          <i class="bi bi-box-arrow-in-right me-2"></i> {{ 'AUTH.LOGIN.SUBMIT' | translate }}
         </button>
 
         <div *ngIf="error" class="alert alert-danger mt-2 text-center">
@@ -35,8 +35,8 @@
 
 
         <p class="text-center md-3">
-          New to NeighbourHub?
-          <a class="register-link" routerLink="/auth/register">Register</a>
+          {{ 'AUTH.LOGIN.SIGN_UP_PROMPT' | translate }}
+          <a class="register-link" routerLink="/auth/register">{{ 'AUTH.LOGIN.SIGN_UP_LINK' | translate }}</a>
         </p>
       </form>
     </div>

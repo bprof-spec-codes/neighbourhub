@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AnnouncementCategory } from '../../../entities/enums/announcement-category.model';
 import { AnnouncementAddDto } from '../../../entities/dtos/announcement-add-dto.model';
 
@@ -24,7 +25,7 @@ export class AnnouncementAddModalComponent implements OnChanges {
     AnnouncementCategory.General
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.form = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
       content: ['', [Validators.required]],
@@ -59,7 +60,7 @@ export class AnnouncementAddModalComponent implements OnChanges {
   }
 
   protected getCategoryText(category: AnnouncementCategory): string {
-    return this.announcementCategory[category];
+    return this.translate.instant(`ANNOUNCEMENTS.CATEGORIES.${this.announcementCategory[category].toUpperCase()}`);
   }
 
   protected isControlInvalid(controlName: 'title' | 'content' | 'category'): boolean {
@@ -73,15 +74,15 @@ export class AnnouncementAddModalComponent implements OnChanges {
     if (control.errors?.['required']) {
       switch (controlName) {
         case 'title':
-          return 'Title is required.';
+          return this.translate.instant('ANNOUNCEMENTS.ADD_MODAL.VALIDATION.TITLE_REQUIRED');
         case 'content':
-          return 'Content is required.';
+          return this.translate.instant('ANNOUNCEMENTS.ADD_MODAL.VALIDATION.CONTENT_REQUIRED');
         default:
-          return 'Category is required.';
+          return this.translate.instant('ANNOUNCEMENTS.ADD_MODAL.VALIDATION.CATEGORY_REQUIRED');
       }
     }
 
-    return 'Invalid value.';
+    return this.translate.instant('ANNOUNCEMENTS.ADD_MODAL.VALIDATION.INVALID_VALUE');
   }
 
   private resetFormToDefault(): void {

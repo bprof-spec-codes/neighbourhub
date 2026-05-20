@@ -1,8 +1,8 @@
 <div *ngIf="isOpen" class="delete-modal-overlay" (click)="onBackdropClick()">
 	<div class="delete-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
 		<div class="delete-modal-header">
-			<h5 class="mb-0">Confirm Delete</h5>
-			<button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onCancel()">
+			<h5 class="mb-0">{{ 'DELETE_MODAL.TITLE' | translate }}</h5>
+			<button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onCancel()">
 				<i class="bi bi-x-lg"></i>
 			</button>
 		</div>
@@ -12,8 +12,8 @@
 		</div>
 
 		<div class="delete-modal-footer">
-			<button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
-			<button type="button" class="btn btn-danger" (click)="onConfirm()">Delete</button>
+			<button type="button" class="btn btn-outline-secondary" (click)="onCancel()">{{ 'DELETE_MODAL.CANCEL' | translate }}</button>
+			<button type="button" class="btn btn-danger" (click)="onConfirm()">{{ 'DELETE_MODAL.DELETE' | translate }}</button>
 		</div>
 	</div>
 </div>

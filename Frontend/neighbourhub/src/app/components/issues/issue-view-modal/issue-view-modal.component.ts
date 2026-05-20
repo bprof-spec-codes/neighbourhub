@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ErrorReportDetail } from '../../../entities/models/error-report.model';
 
 @Component({
@@ -14,8 +15,18 @@ export class IssueViewModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() openComments = new EventEmitter<string>();
 
+  constructor(private translate: TranslateService) {}
+
   protected onClose(): void {
     this.close.emit();
+  }
+
+  protected getCategoryText(category: string): string {
+    return this.translate.instant(`ISSUES.CATEGORIES.${category.toUpperCase()}`);
+  }
+
+  protected getPriorityText(priority: string): string {
+    return this.translate.instant(`ISSUES.PRIORITIES.${priority.toUpperCase()}`);
   }
 
   protected onOpenComments(): void {
@@ -43,6 +54,6 @@ export class IssueViewModalComponent {
   }
 
   protected getStatusText(status: string): string {
-    return status === 'InProgress' ? 'In Progress' : status;
+    return this.translate.instant(`ISSUES.STATUSES.${status.toUpperCase()}`);
   }
 }

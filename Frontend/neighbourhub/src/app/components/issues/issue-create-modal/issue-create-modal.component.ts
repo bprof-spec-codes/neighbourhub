@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ErrorReportCreateDto } from '../../../entities/dtos/error-report-create-dto.model';
 
 @Component({
@@ -19,7 +20,7 @@ export class IssueCreateModalComponent implements OnChanges {
     'Plumbing', 'Electrical', 'HVAC', 'Maintenance', 'Structural', 'Other'
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.form = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -58,12 +59,12 @@ export class IssueCreateModalComponent implements OnChanges {
     const control = this.form.controls[controlName];
     if (control.errors?.['required']) {
       switch (controlName) {
-        case 'title': return 'Title is required.';
-        case 'description': return 'Description is required.';
-        default: return 'Category is required.';
+        case 'title': return this.translate.instant('ISSUES.CREATE_MODAL.VALIDATION.TITLE_REQUIRED');
+        case 'description': return this.translate.instant('ISSUES.CREATE_MODAL.VALIDATION.DESCRIPTION_REQUIRED');
+        default: return this.translate.instant('ISSUES.CREATE_MODAL.VALIDATION.CATEGORY_REQUIRED');
       }
     }
-    return 'Invalid value.';
+    return this.translate.instant('ISSUES.CREATE_MODAL.VALIDATION.INVALID_VALUE');
   }
 
   private resetForm(): void {

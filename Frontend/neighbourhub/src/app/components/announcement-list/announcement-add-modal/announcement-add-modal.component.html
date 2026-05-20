@@ -1,15 +1,15 @@
 <div *ngIf="isOpen" class="announcement-add-modal-overlay" (click)="onClose()">
 	<div class="announcement-add-modal-card" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
 		<div class="announcement-add-modal-header">
-			<h5 class="mb-0">Add Announcement</h5>
-			<button type="button" class="btn btn-sm btn-light" aria-label="Close" (click)="onClose()">
+			<h5 class="mb-0">{{ 'ANNOUNCEMENTS.ADD_MODAL.TITLE' | translate }}</h5>
+			<button type="button" class="btn btn-sm btn-light" [attr.aria-label]="'COMMON.CLOSE' | translate" (click)="onClose()">
 				<i class="bi bi-x-lg"></i>
 			</button>
 		</div>
 
 		<form [formGroup]="form" (ngSubmit)="onSubmit()" class="announcement-add-modal-body">
 			<div class="mb-3">
-				<label class="form-label" for="announcement-title">Title</label>
+				<label class="form-label" for="announcement-title">{{ 'ANNOUNCEMENTS.ADD_MODAL.TITLE_LABEL' | translate }}</label>
 				<input
 					id="announcement-title"
 					type="text"
@@ -23,7 +23,7 @@
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label" for="announcement-content">Content</label>
+				<label class="form-label" for="announcement-content">{{ 'ANNOUNCEMENTS.ADD_MODAL.CONTENT_LABEL' | translate }}</label>
 				<textarea
 					id="announcement-content"
 					rows="4"
@@ -37,7 +37,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label class="form-label" for="announcement-category">Category</label>
+				<label class="form-label" for="announcement-category">{{ 'ANNOUNCEMENTS.ADD_MODAL.CATEGORY_LABEL' | translate }}</label>
 				<select
 					id="announcement-category"
 					class="form-select"
@@ -54,8 +54,8 @@
 			</div>
 
 			<div class="announcement-add-modal-footer">
-				<button type="button" class="btn btn-outline-secondary" (click)="onClose()">Cancel</button>
-				<button type="submit" class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-outline-secondary" (click)="onClose()">{{ 'ANNOUNCEMENTS.ADD_MODAL.CANCEL' | translate }}</button>
+				<button type="submit" class="btn btn-primary">{{ 'ANNOUNCEMENTS.ADD_MODAL.SAVE' | translate }}</button>
 			</div>
 		</form>
 	</div>

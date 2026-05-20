@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ErrorReportDetail } from '../../../entities/models/error-report.model';
 import { ErrorReportUpdateDto } from '../../../entities/dtos/error-report-update-dto.model';
 
@@ -23,7 +24,7 @@ export class IssueEditModalComponent implements OnChanges {
   protected statusOptions = ['Open', 'InProgress', 'Resolved'];
   protected minScheduledDate = this.getTodayDateString();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translate: TranslateService) {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -73,6 +74,18 @@ export class IssueEditModalComponent implements OnChanges {
   protected isScheduledRepairDateInvalid(): boolean {
     const control = this.form.get('scheduledRepairDate');
     return !!control && control.touched && control.hasError('pastDate');
+  }
+
+  protected getCategoryText(category: string): string {
+    return this.translate.instant(`ISSUES.CATEGORIES.${category.toUpperCase()}`);
+  }
+
+  protected getPriorityText(priority: string): string {
+    return this.translate.instant(`ISSUES.PRIORITIES.${priority.toUpperCase()}`);
+  }
+
+  protected getStatusText(status: string): string {
+    return this.translate.instant(`ISSUES.STATUSES.${status.toUpperCase()}`);
   }
 
   private notPastDateValidator(): ValidatorFn {

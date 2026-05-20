@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { Resident } from '../../entities/models/resident.model';
 import { ResidentService } from '../../services/resident.service';
@@ -49,7 +50,8 @@ export class ResidentsComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly residentService: ResidentService
+    private readonly residentService: ResidentService,
+    private readonly translate: TranslateService
   ) {}
 
   public ngOnInit(): void {
@@ -211,7 +213,7 @@ export class ResidentsComponent implements OnInit {
 
   private readErrorMessage(error: unknown): string {
     if (!(error instanceof HttpErrorResponse)) {
-      return 'Failed to update resident.';
+      return this.translate.instant('RESIDENTS.UPDATE_FAILED');
     }
 
     if (typeof error.error === 'string' && error.error.trim().length > 0) {
@@ -222,7 +224,7 @@ export class ResidentsComponent implements OnInit {
       return String(error.error[0]);
     }
 
-    return 'Failed to update resident.';
+    return this.translate.instant('RESIDENTS.UPDATE_FAILED');
   }
 
   protected isDraftInvalid(draft: ResidentDraft): boolean {

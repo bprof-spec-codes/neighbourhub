@@ -1,0 +1,488 @@
+{
+  "NAVBAR": {
+    "PROPERTY_MANAGEMENT": "Property Management",
+    "PENDING_USERS": "Pending Users",
+    "MY_PROFILE": "My Profile",
+    "OPEN_PROFILE": "Open your profile card",
+    "CHANGE_PICTURE": "Change",
+    "CLOSE_SIDEBAR": "Close sidebar",
+    "OPEN_SIDEBAR": "Open sidebar",
+    "CLOSE_PROFILE_CARD": "Close profile card",
+    "CLOSE": "Close",
+    "NO_APARTMENT": "No apartment assigned",
+    "UPLOADING_IMAGE": "Uploading image...",
+    "NAV_ITEMS": {
+      "DASHBOARD": "Dashboard",
+      "VOTING": "Voting",
+      "ISSUES": "Issues",
+      "ANNOUNCEMENTS": "Announcements",
+      "BOOKINGS": "Bookings",
+      "FLOOR_PLANS": "Floor Plans",
+      "RESIDENTS": "Residents",
+      "DOCUMENTS": "Documents",
+      "MESSAGES": "Messages",
+      "LOADING_PROFILE": "Loading profile...",
+      "PROFILE": "Profile"
+    }
+  },
+  "COMMON": {
+    "CLOSE": "Close"
+  },
+  "DASHBOARD": {
+    "PLACEHOLDER": "Dashboard works!",
+    "HERO": {
+      "TITLE": "Welcome to NeighbourHub, {{name}}! 👋",
+      "DESCRIPTION": "Your digital companion for seamless property management. Stay updated with announcements, participate in community voting, and track maintenance requests — all in one place."
+    },
+    "STATS": {
+      "ACTIVE_VOTES": "Active Votes",
+      "UNREAD_MESSAGES": "Unread Messages",
+      "PENDING_BOOKINGS": "Pending Bookings",
+      "RECENT_UPDATES": "Recent Updates"
+    },
+    "WEEKLY_OVERVIEW": {
+      "TITLE": "Weekly Activity Overview",
+      "ACTIVITY_POINTS": "{{count}} activity points"
+    },
+    "INFO": {
+      "TITLE": "Why NeighbourHub?",
+      "ITEM1": { "TITLE": "Real-time Alerts:", "DESCRIPTION": "Never miss a utility maintenance or building meeting." },
+      "ITEM2": { "TITLE": "Digital Archive:", "DESCRIPTION": "Access all building rules, certificates, and meeting minutes anytime." },
+      "ITEM3": { "TITLE": "Quick Support:", "DESCRIPTION": "Report the error in just two clicks." }
+    },
+    "LOADING": { "TEXT": "Loading your dashboard data..." }
+  },
+  "FLOOR_PLANS": {
+    "TITLE": "Floor Plans",
+    "UPLOAD": "Upload floor plan",
+    "LOADING": "Loading floor plans...",
+    "EMPTY": "No floor plans found.",
+    "FLOOR": "Floor {{floor}}",
+    "CANCEL_ADD": "Cancel add",
+    "ADD_PINPOINT": "Add Pinpoint",
+    "DELETE_FLOOR_PLAN": "Delete floor plan",
+    "DELETE_PINPOINT": "Delete pinpoint",
+    "CLOSE_PINPOINT": "Close pinpoint",
+    "IMAGE_LOAD_ERROR": "The image could not be loaded.",
+    "PINPOINT": {
+      "NEW": "New pinpoint",
+      "ADD_TITLE": "Add pinpoint text",
+      "NAME_LABEL": "Pinpoint name",
+      "PLACEHOLDER": "Enter pinpoint text",
+      "POSITION": "Position: {{lat}}% / {{lng}}%",
+      "CANCEL": "Cancel",
+      "SAVE": "Save pinpoint"
+    },
+    "FLOOR_PLAN_MODAL": {
+      "NEW": "New floor plan",
+      "UPLOAD_TITLE": "Upload floor plan",
+      "FLOOR_NUMBER_LABEL": "Floor number",
+      "FLOOR_NUMBER_PLACEHOLDER": "Enter floor number",
+      "FLOOR_IMAGE_LABEL": "Floor image",
+      "SELECTED_FILE": "Selected file: {{filename}}",
+      "CANCEL": "Cancel",
+      "SAVE": "Save floor plan",
+      "UPLOADING": "Uploading..."
+    }
+  },
+  "DELETE_MODAL": {
+    "TITLE": "Confirm Delete",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete"
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Login",
+      "EMAIL_PLACEHOLDER": "Email",
+      "PASSWORD_PLACEHOLDER": "Password",
+      "SUBMIT": "Login",
+      "SIGN_UP_PROMPT": "New to NeighbourHub?",
+      "SIGN_UP_LINK": "Register"
+    },
+    "REGISTER": {
+      "TITLE": "Registration",
+      "FIRST_NAME_PLACEHOLDER": "First Name",
+      "LAST_NAME_PLACEHOLDER": "Last Name",
+      "EMAIL_PLACEHOLDER": "Email",
+      "PASSWORD_PLACEHOLDER": "Password",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm Password",
+      "APARTMENT_NUMBER_PLACEHOLDER": "Apartment Number",
+      "PHONE_NUMBER_PLACEHOLDER": "Phone Number",
+      "SUBMIT": "Register",
+      "LOGIN_PROMPT": "Already have an account?",
+      "LOGIN_LINK": "Login",
+      "ROLES": {
+        "OCCUPANT": "Occupant",
+        "OWNER": "Owner",
+        "TENANT": "Tenant"
+      },
+      "VALIDATION": {
+        "FIRST_NAME_REQUIRED": "First name is required.",
+        "FIRST_NAME_MINLENGTH": "First name must be at least 3 characters.",
+        "LAST_NAME_REQUIRED": "Last name is required.",
+        "LAST_NAME_MINLENGTH": "Last name must be at least 3 characters.",
+        "EMAIL_REQUIRED": "Email is required.",
+        "EMAIL_PATTERN": "Invalid email format.",
+        "PASSWORD_REQUIRED": "Password is required.",
+        "PASSWORD_MINLENGTH": "Password must be at least 8 characters long.",
+        "PASSWORD_PATTERN": "Password must contain at least one number and one uppercase letter.",
+        "CONFIRM_PASSWORD_REQUIRED": "Password confirmation is required.",
+        "PASSWORD_MISMATCH": "The two passwords do not match.",
+        "APARTMENT_REQUIRED": "Apartment number is required.",
+        "PHONE_REQUIRED": "Phone number is required.",
+        "PHONE_PATTERN": "Invalid phone number format."
+      }
+    }
+  },
+  "VOTING": {
+    "TITLE": "Voting",
+    "DESCRIPTION": "Participate in building decisions.",
+    "NEW_VOTE": "New Vote",
+    "EMPTY": "No votes yet.",
+    "ACTIVE_VOTES": "Active Votes",
+    "CLOSED_VOTES": "Closed Votes",
+    "YES": "Yes",
+    "NO": "No",
+    "ABSTAIN": "Abstain",
+    "VOTE": "Vote",
+    "DELETE": "Delete",
+    "DELETE_CONFIRM": "Are you sure you want to delete this vote?",
+    "ADD_MODAL": {
+      "TITLE": "Create New Vote",
+      "QUESTION_LABEL": "Question",
+      "QUESTION_PLACEHOLDER": "Enter the voting question",
+      "DEADLINE_LABEL": "Deadline",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Create Vote",
+      "VALIDATION": {
+        "QUESTION_REQUIRED": "Question is required.",
+        "DEADLINE_REQUIRED": "Deadline is required.",
+        "INVALID_VALUE": "Invalid value."
+      }
+    },
+    "VOTE_MODAL": {
+      "TITLE": "Cast Your Vote",
+      "DESCRIPTION": "Choose your vote option:",
+      "CANCEL": "Cancel"
+    }
+  },
+  "ISSUES": {
+    "TITLE": "Issues",
+    "DESCRIPTION": "Manage reported problems and repairs",
+    "NEW_ISSUE": "New Issue",
+    "EMPTY": "No issues reported yet.",
+    "NOT_SCHEDULED": "Not scheduled",
+    "DELETE_CONFIRM": "Are you sure you want to delete this issue?",
+    "SUMMARY": {
+      "TOTAL": "Total Issues",
+      "OPEN": "Open Issues",
+      "IN_PROGRESS": "In Progress",
+      "RESOLVED": "Resolved"
+    },
+    "TABLE": {
+      "TITLE": "Title",
+      "CATEGORY": "Category",
+      "PRIORITY": "Priority",
+      "STATUS": "Status",
+      "REPAIR_DATE": "Repair Date",
+      "ACTION": "Action"
+    },
+    "ACTIONS": {
+      "VIEW": "View",
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "COMMENTS": "Comments"
+    },
+    "CATEGORIES": {
+      "PLUMBING": "Plumbing",
+      "ELECTRICAL": "Electrical",
+      "HVAC": "HVAC",
+      "MAINTENANCE": "Maintenance",
+      "STRUCTURAL": "Structural",
+      "OTHER": "Other"
+    },
+    "PRIORITIES": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High"
+    },
+    "STATUSES": {
+      "OPEN": "Open",
+      "INPROGRESS": "In Progress",
+      "RESOLVED": "Resolved"
+    },
+    "CREATE_MODAL": {
+      "TITLE": "Report New Issue",
+      "TITLE_LABEL": "Title",
+      "TITLE_PLACEHOLDER": "Brief description of the issue",
+      "DESCRIPTION_LABEL": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Detailed description of the issue",
+      "CATEGORY_LABEL": "Category",
+      "CATEGORY_PLACEHOLDER": "Select a category",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Submit Issue",
+      "VALIDATION": {
+        "TITLE_REQUIRED": "Title is required.",
+        "DESCRIPTION_REQUIRED": "Description is required.",
+        "CATEGORY_REQUIRED": "Category is required.",
+        "INVALID_VALUE": "Invalid value."
+      }
+    },
+    "EDIT_MODAL": {
+      "TITLE": "Edit Issue",
+      "TITLE_LABEL": "Title",
+      "DESCRIPTION_LABEL": "Description",
+      "CATEGORY_LABEL": "Category",
+      "PRIORITY_LABEL": "Priority",
+      "STATUS_LABEL": "Status",
+      "SCHEDULED_REPAIR_DATE_LABEL": "Scheduled Repair Date",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "VALIDATION": {
+        "PAST_DATE": "Scheduled Repair Date cannot be earlier than today."
+      }
+    },
+    "VIEW_MODAL": {
+      "CATEGORY": "Category",
+      "PRIORITY": "Priority",
+      "STATUS": "Status",
+      "REPORTED_DATE": "Reported Date",
+      "REPORTED_BY": "Reported By",
+      "DESCRIPTION": "Description",
+      "SCHEDULED_REPAIR_DATE": "Scheduled Repair Date"
+    },
+    "COMMENT_MODAL": {
+      "TITLE": "Comments",
+      "NO_COMMENTS": "No comments yet.",
+      "PLACEHOLDER": "Write a comment...",
+      "SUBMIT": "Submit"
+    }
+  },
+  "ANNOUNCEMENTS": {
+    "TITLE": "Announcements",
+    "DESCRIPTION": "Stay updated with building news and updates.",
+    "NEW_ANNOUNCEMENT": "New Announcement",
+    "EMPTY": "No announcements yet.",
+    "DELETE_CONFIRM": "Are you sure you want to delete this announcement?",
+    "CATEGORIES": {
+      "MAINTENANCE": "Maintenance",
+      "EVENT": "Event",
+      "POLICY": "Policy",
+      "GENERAL": "General"
+    },
+    "ADD_MODAL": {
+      "TITLE": "Add Announcement",
+      "TITLE_LABEL": "Title",
+      "CONTENT_LABEL": "Content",
+      "CATEGORY_LABEL": "Category",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "VALIDATION": {
+        "TITLE_REQUIRED": "Title is required.",
+        "CONTENT_REQUIRED": "Content is required.",
+        "CATEGORY_REQUIRED": "Category is required.",
+        "INVALID_VALUE": "Invalid value."
+      }
+    }
+  },
+  "DOCUMENTS": {
+    "TITLE": "Documents",
+    "DESCRIPTION": "Access building documents and important files",
+    "ADD_DOCUMENT": "Add Document",
+    "SEARCH_PLACEHOLDER": "Search documents...",
+    "PREVIEW": "Preview",
+    "DOWNLOAD": "Download",
+    "DELETE_ARIA": "Delete document",
+    "EMPTY": "No documents found",
+    "DELETE_CONFIRM": "Are you sure you want to delete this document?",
+    "ADD_MODAL": {
+      "TITLE": "Add Document",
+      "TITLE_LABEL": "Title",
+      "PDF_LABEL": "PDF File",
+      "DROPZONE_TITLE": "Drag and drop your PDF here",
+      "DROPZONE_HINT": "or click to choose a file",
+      "NO_FILE_SELECTED": "No file selected",
+      "FILE_HINT": "Only PDF files are allowed.",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "VALIDATION": {
+        "TITLE_REQUIRED": "Title is required.",
+        "PDF_REQUIRED": "PDF file is required.",
+        "ONLY_PDF": "Only PDF files are allowed.",
+        "INVALID_VALUE": "Invalid value."
+      }
+    }
+  },
+  "BOOKINGS": {
+    "TITLE": "Community Area Bookings",
+    "DESCRIPTION": "Reserve shared facilities for your needs",
+    "ADD_FACILITY": "Add Facility",
+    "NEW_BOOKING": "New Booking",
+    "AVAILABLE_FACILITIES": "Available Facilities",
+    "CAPACITY": "Capacity",
+    "PEOPLE": "people",
+    "RESERVE_NOW": "Reserve Now",
+    "EDIT": "Edit",
+    "CANCEL": "Cancel",
+    "BOOKED_BY": "Booked by",
+    "EMPTY_UPCOMING": "No upcoming bookings.",
+    "EMPTY_PAST": "No past bookings.",
+    "STATUSES": {
+      "ACTIVE": "Active",
+      "CANCELLED": "Cancelled"
+    },
+    "FILTERS": {
+      "ALL_FACILITIES": "All Facilities",
+      "ALL_STATUSES": "All Statuses",
+      "UPCOMING": "Upcoming",
+      "MY_BOOKINGS": "My Bookings",
+      "PAST_BOOKINGS": "Past Bookings",
+      "RESET": "Reset"
+    },
+    "SECTIONS": {
+      "UPCOMING_BOOKINGS": "Upcoming Bookings",
+      "MY_BOOKINGS": "My Bookings",
+      "PAST_BOOKINGS": "Past Bookings"
+    },
+    "CREATE_MODAL": {
+      "TITLE": "Book a Facility",
+      "FACILITY": "Facility",
+      "SELECT_FACILITY": "Select a facility",
+      "DATE": "Date",
+      "AVAILABILITY": "Availability",
+      "NO_BOOKINGS_DAY": "No bookings on this day.",
+      "START_TIME": "Start Time",
+      "END_TIME": "End Time",
+      "ATTENDEES": "Number of People Attending",
+      "CANCEL": "Cancel",
+      "CONFIRM": "Confirm Booking",
+      "VALIDATION": {
+        "SELECT_FACILITY": "Please select a facility.",
+        "DATE_REQUIRED": "Date is required.",
+        "START_REQUIRED": "Start time is required.",
+        "END_REQUIRED": "End time is required.",
+        "OVERLAP": "The selected time overlaps with an existing booking.",
+        "MAX_PERSON": "Max {{max}} person.",
+        "MIN_PERSON": "At least 1 person required.",
+        "FIELD_REQUIRED": "This field is required."
+      }
+    },
+    "ROOM_MODAL": {
+      "ADD_TITLE": "Add Facility",
+      "EDIT_TITLE": "Edit Facility",
+      "NAME": "Name",
+      "NAME_PLACEHOLDER": "e.g. Community Room",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Brief description of the facility",
+      "CAPACITY": "Capacity",
+      "CANCEL": "Cancel",
+      "SAVE": "Save Changes",
+      "ADD": "Add Facility",
+      "VALIDATION": {
+        "NAME_REQUIRED": "Name is required.",
+        "CAPACITY_MIN": "Capacity must be at least 1."
+      }
+    }
+  },
+  "PENDING_USERS": {
+    "TITLE": "Pending Registrations",
+    "DESCRIPTION": "Here you can approve the access of new residents to the system.",
+    "EMPTY": "There are no pending registrations at the moment.",
+    "TABLE": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "APARTMENT_NUMBER": "Apartment Number",
+      "ROLES": "Roles",
+      "OPERATIONS": "Operations"
+    }
+  },
+  "MESSAGING": {
+    "TITLE": "Messages",
+    "DESCRIPTION": "Send and receive messages",
+    "NEW_MESSAGE": "New Message",
+    "DELETE_CONFIRM": "Are you sure you want to delete this message?",
+    "FLATS": "Flat(s)",
+    "TABS": {
+      "INBOX": "Inbox",
+      "SENT": "Sent"
+    },
+    "EMPTY": {
+      "INCOMING": "No incoming messages.",
+      "SENT": "No sent messages."
+    },
+    "TABLE": {
+      "FROM": "From",
+      "TO": "To",
+      "SUBJECT": "Subject",
+      "DATE": "Date",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "REPLY": "Reply",
+      "DELETE": "Delete"
+    },
+    "NEW_MODAL": {
+      "NEW_TITLE": "New Message",
+      "REPLY_TITLE": "Reply",
+      "RE_PREFIX": "Re",
+      "TO": "To",
+      "SEARCH_PLACEHOLDER": "Search by name or apartment...",
+      "SUBJECT": "Subject",
+      "SUBJECT_PLACEHOLDER": "Enter subject",
+      "MESSAGE": "Message",
+      "MESSAGE_PLACEHOLDER": "Write your message here...",
+      "CANCEL": "Cancel",
+      "SEND": "Send",
+      "VALIDATION": {
+        "RECIPIENT_REQUIRED": "Recipient is required.",
+        "SUBJECT_REQUIRED": "Subject is required.",
+        "SUBJECT_MAX": "Subject cannot exceed 200 characters.",
+        "MESSAGE_REQUIRED": "Message is required."
+      }
+    },
+    "VIEW_MODAL": {
+      "FROM": "From",
+      "TO": "To",
+      "DATE": "Date",
+      "MESSAGE": "Message"
+    }
+  },
+  "RESIDENTS": {
+    "TITLE": "Residents",
+    "DESCRIPTION": "View information of all residents.",
+    "EMPTY": "No residents found.",
+    "UPDATE_FAILED": "Failed to update resident.",
+    "TABLE": {
+      "ARIA_LABEL": "Residents list",
+      "RESIDENT": "Resident",
+      "FLATS": "Flat(s)",
+      "MOBILE_NUMBER": "Mobile Number",
+      "PARKING_SPACES": "Parking Space(s)",
+      "STORAGE_NUMBERS": "Storage Number(s)",
+      "ACTIONS": "Actions"
+    },
+    "EDIT_MODAL": {
+      "TITLE": "Edit Resident",
+      "OPEN": "Edit resident",
+      "ARIA_LABEL": "Edit resident",
+      "PROFILE_PICTURE": "Profile Picture",
+      "CLICK_TO_CHANGE_PROFILE_PICTURE": "Click to change profile picture",
+      "PROFILE_IMAGE_PREVIEW_ALT": "Profile image preview",
+      "CHANGE": "Change",
+      "PROFILE_IMAGE_HELP": "Click the profile picture to upload JPG, PNG, WEBP or GIF. The file is saved into server storage.",
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "EMAIL": "Email",
+      "MOBILE_NUMBER": "Mobile Number",
+      "FLATS": "Flat(s)",
+      "FLATS_PLACEHOLDER": "A12 | B04",
+      "PARKING_SPACES": "Parking Space(s)",
+      "PARKING_PLACEHOLDER": "P-01 | P-02",
+      "STORAGE_NUMBERS": "Storage Number(s)",
+      "STORAGE_PLACEHOLDER": "S-01 | S-07",
+      "MULTI_VALUE_HELP": "Separate multiple values with | or , (examples: A12 | B04 or A12, B04).",
+      "CANCEL": "Cancel",
+      "SAVE": "Save Changes"
+    }
+  }
+}
