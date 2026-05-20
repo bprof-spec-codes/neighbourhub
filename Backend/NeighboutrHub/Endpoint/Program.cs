@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.FileProviders;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -156,6 +157,12 @@ public class Program
         app.UseRouting();
 
         app.UseStaticFiles();
+
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(builder.Configuration["FileStorageSettings:StoragePath"]!),
+            RequestPath = string.Empty
+        });
         
         app.UseCors("AllowAngularApp");
 
