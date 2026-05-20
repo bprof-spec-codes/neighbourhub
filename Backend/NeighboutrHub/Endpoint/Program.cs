@@ -22,6 +22,11 @@ public class Program
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         var builder = WebApplication.CreateBuilder(args);
 
+        var rawStoragePath = builder.Configuration["FileStorageSettings:StoragePath"] ?? "wwwroot";
+        if (!Path.IsPathRooted(rawStoragePath))
+            builder.Configuration["FileStorageSettings:StoragePath"] =
+                Path.Combine(builder.Environment.ContentRootPath, rawStoragePath);
+
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
         builder.Services.Configure<FileStorageSettings>(
