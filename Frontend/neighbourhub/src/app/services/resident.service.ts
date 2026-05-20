@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Resident } from '../entities/models/resident.model';
 import { ResidentBackendService } from '../backend/resident-backend.service';
@@ -57,6 +57,10 @@ export class ResidentService {
         onError?.(err);
       }
     });
+  }
+
+  public fetchProfileImageBlobUrl(id: string): Observable<string> {
+    return this.residentBackendService.fetchProfileImageBlobUrl(id);
   }
 
   public resolveApiUrl(path: string): string {

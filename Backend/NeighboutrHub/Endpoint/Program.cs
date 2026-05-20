@@ -22,13 +22,6 @@ public class Program
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         var builder = WebApplication.CreateBuilder(args);
 
-        var rawStoragePath = builder.Configuration["FileStorageSettings:StoragePath"] ?? "wwwroot";
-        if (!Path.IsPathRooted(rawStoragePath))
-            builder.Configuration["FileStorageSettings:StoragePath"] =
-                Path.Combine(builder.Environment.ContentRootPath, rawStoragePath);
-
-        Directory.CreateDirectory(builder.Configuration["FileStorageSettings:StoragePath"]!);
-
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
         builder.Services.Configure<FileStorageSettings>(
@@ -156,7 +149,7 @@ public class Program
         app.UseRouting();
 
         app.UseStaticFiles();
-        
+
         app.UseCors("AllowAngularApp");
 
         app.UseAuthentication(); 

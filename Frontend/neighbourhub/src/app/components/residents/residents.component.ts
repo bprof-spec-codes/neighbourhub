@@ -46,7 +46,8 @@ export class ResidentsComponent implements OnInit {
   protected saveErrorMessage = '';
   protected isUploadingProfileImage = false;
 
-  private selectedResidentId: string | null = null;
+  protected selectedResidentId: string | null = null;
+  protected profileImageUrls = new Map<string, string>();
 
   constructor(
     private readonly authService: AuthService,
@@ -62,6 +63,16 @@ export class ResidentsComponent implements OnInit {
     this.residents$ = this.residentService.residents$.pipe(
       map((residents) => residents.map((resident) => this.toViewModel(resident)))
     );
+    this.residentService.residents$.subscribe((residents) => {
+      residents.forEach((resident) => {
+        if (resident.profileImagePath && !this.profileImageUrls.has(resident.id)) {
+          this.residentService.fetchProfileImageBlobUrl(resident.id).subscribe({
+            next: (url) => this.profileImageUrls.set(resident.id, url),
+            error: () => {}
+          });
+        }
+      });
+    });
     this.residentService.loadResidents();
   }
 
@@ -107,17 +118,6 @@ export class ResidentsComponent implements OnInit {
     return `${resident.firstName} ${resident.lastName}`.trim();
   }
 
-  protected getResidentProfileImageUrl(profileImagePath: string | null): string | null {
-    if (!profileImagePath || profileImagePath.trim().length === 0) {
-      return null;
-    }
-
-    if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
-      return profileImagePath;
-    }
-
-    return this.residentService.resolveApiUrl(profileImagePath);
-  }
 
   protected openEditModal(resident: ResidentViewModel): void {
     if (!this.isAdmin) {
@@ -167,6 +167,13 @@ export class ResidentsComponent implements OnInit {
           this.editDraft.profileImagePath = profileImagePath;
         }
         this.isUploadingProfileImage = false;
+        if (this.selectedResidentId) {
+          this.profileImageUrls.delete(this.selectedResidentId);
+          this.residentService.fetchProfileImageBlobUrl(this.selectedResidentId).subscribe({
+            next: (url) => this.profileImageUrls.set(this.selectedResidentId!, url),
+            error: () => {}
+          });
+        }
         this.residentService.loadResidents();
       },
       (error) => {

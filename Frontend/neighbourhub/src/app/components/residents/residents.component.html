@@ -26,7 +26,7 @@
 							<td>
 								<div class="resident-cell">
 									<span class="resident-avatar">
-										<ng-container *ngIf="getResidentProfileImageUrl(resident.profileImagePath) as avatarUrl; else initialAvatar">
+										<ng-container *ngIf="profileImageUrls.get(resident.id) as avatarUrl; else initialAvatar">
 											<img [src]="avatarUrl" [alt]="getResidentName(resident)" class="resident-avatar-image" />
 										</ng-container>
 										<ng-template #initialAvatar>{{ getResidentInitial(resident.firstName, resident.lastName) }}</ng-template>
@@ -111,7 +111,7 @@
 					tabindex="0"
 					[attr.title]="'RESIDENTS.EDIT_MODAL.CLICK_TO_CHANGE_PROFILE_PICTURE' | translate"
 				>
-					<ng-container *ngIf="getResidentProfileImageUrl(draft.profileImagePath) as draftImageUrl; else draftAvatarInitial">
+					<ng-container *ngIf="selectedResidentId && profileImageUrls.get(selectedResidentId) as draftImageUrl; else draftAvatarInitial">
 						<img
 							[src]="draftImageUrl"
 							[attr.alt]="'RESIDENTS.EDIT_MODAL.PROFILE_IMAGE_PREVIEW_ALT' | translate"

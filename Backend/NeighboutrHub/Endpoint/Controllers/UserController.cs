@@ -283,6 +283,21 @@ namespace Endpoint.Controllers
         }
 
 
+        [Authorize]
+        [HttpGet("Residents/{id}/profile-image")]
+        public async Task<IActionResult> GetResidentProfileImage(string id)
+        {
+            try
+            {
+                var (bytes, contentType) = await userLogic.GetProfileImageAsync(id);
+                return File(bytes, contentType);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpDelete("RejectUser/{userId}")]
         public async Task<IActionResult> RejectUser(string userId)

@@ -35,6 +35,12 @@ export class ResidentBackendService {
       .pipe(map((response) => response.profileImagePath));
   }
 
+  public fetchProfileImageBlobUrl(id: string): Observable<string> {
+    return this.http.get(`${this.baseApiUrl}/User/Residents/${id}/profile-image`, {
+      responseType: 'blob'
+    }).pipe(map(blob => URL.createObjectURL(blob)));
+  }
+
   public resolveApiUrl(path: string): string {
     if (path.startsWith('http://') || path.startsWith('https://')) {
       return path;

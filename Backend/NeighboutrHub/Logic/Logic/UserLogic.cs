@@ -140,6 +140,30 @@ public class UserLogic
 		return Array.Empty<string>();
 	}
 
+	public async Task<(byte[] Bytes, string ContentType)> GetProfileImageAsync(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id);
+		if (user == null || string.IsNullOrEmpty(user.ProfileImagePath))
+			throw new KeyNotFoundException("Profile image not found.");
+
+		var fullPath = Path.Combine(_fileStorageSettings.StoragePath, user.ProfileImagePath);
+		if (!File.Exists(fullPath))
+			throw new KeyNotFoundException("Profile image file not found.");
+
+		var ext = Path.GetExtension(fullPath).ToLowerInvariant();
+		var contentType = ext switch
+		{
+			".jpg" or ".jpeg" => "image/jpeg",
+			".png" => "image/png",
+			".webp" => "image/webp",
+			".gif" => "image/gif",
+			_ => "application/octet-stream"
+		};
+
+		var bytes = await File.ReadAllBytesAsync(fullPath);
+		return (bytes, contentType);
+	}
+
 	public async Task<string> UploadResidentProfileImageAsync(string id, Stream fileStream, string originalFileName)
 	{
 		var user = await _userManager.FindByIdAsync(id);

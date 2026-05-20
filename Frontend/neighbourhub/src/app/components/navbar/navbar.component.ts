@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   protected profileCardOpen = false;
   protected isProfileImageUploading = false;
   protected currentResident: Resident | null = null;
+  protected profileImageBlobUrl: string | null = null;
   protected currentLang = 'en';
   protected langMenuOpen = false;
 
@@ -129,7 +130,7 @@ export class NavbarComponent implements OnInit {
   }
 
   protected getProfileAvatarUrl(): string | null {
-    return this.getResidentProfileImageUrl(this.currentResident?.profileImagePath ?? null);
+    return this.profileImageBlobUrl;
   }
 
   protected getResidentInitial(firstName: string, lastName: string): string {
@@ -159,6 +160,10 @@ export class NavbarComponent implements OnInit {
         if (this.currentResident) {
           this.currentResident = { ...this.currentResident, profileImagePath };
         }
+        this.residentService.fetchProfileImageBlobUrl(this.currentUserId!).subscribe({
+          next: (url) => { this.profileImageBlobUrl = url; },
+          error: () => {}
+        });
         input.value = '';
       },
       () => {
@@ -166,18 +171,6 @@ export class NavbarComponent implements OnInit {
         input.value = '';
       }
     );
-  }
-
-  protected getResidentProfileImageUrl(profileImagePath: string | null): string | null {
-    if (!profileImagePath || profileImagePath.trim().length === 0) {
-      return null;
-    }
-
-    if (profileImagePath.startsWith('http://') || profileImagePath.startsWith('https://')) {
-      return profileImagePath;
-    }
-
-    return this.residentService.resolveApiUrl(profileImagePath);
   }
 
   private loadCurrentResident(): void {
@@ -189,6 +182,12 @@ export class NavbarComponent implements OnInit {
     this.residentService.getResidentById(userId).subscribe({
       next: (resident) => {
         this.currentResident = resident;
+        if (resident.profileImagePath) {
+          this.residentService.fetchProfileImageBlobUrl(userId).subscribe({
+            next: (url) => { this.profileImageBlobUrl = url; },
+            error: () => { this.profileImageBlobUrl = null; }
+          });
+        }
       },
       error: (error) => {
         console.error('Failed to load current resident profile', error);
