@@ -27,6 +27,8 @@ public class Program
             builder.Configuration["FileStorageSettings:StoragePath"] =
                 Path.Combine(builder.Environment.ContentRootPath, rawStoragePath);
 
+        Directory.CreateDirectory(builder.Configuration["FileStorageSettings:StoragePath"]!);
+
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
         builder.Services.Configure<FileStorageSettings>(
