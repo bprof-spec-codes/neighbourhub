@@ -7,7 +7,7 @@
 
 | Name                         | Role | GitHub profile |
 |------------------------------| ---- |---------------|
-| Hanusz Bettina Alexandra     | Manager | [[hanuszbettina](https://github.com/hanuszbettina) |
+| Hanusz Bettina Alexandra     | Manager | [hanuszbettina](https://github.com/hanuszbettina) |
 | Nagy Zsombor                 | Architect | [nzsombor04](http://github.com/nzsombor04) |
 | Szabó Benedek Zoltán         | Fullstack developer | [szabo-benedek](https://github.com/szabo-benedek) |
 | Tolnai Levente               | Fullstack developer | [levitolnai](https://github.com/levitolnai) |
